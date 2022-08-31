@@ -1,83 +1,19 @@
-
 export const containers = [
   {
     type: 'grid',
     category: 'container',
-    icon: 'grid',
+    icon: 'widget-grid',
     cols: [],
     options: {
       name: '',
       hidden: false,
       gutter: 12,
-      colHeight: null,  //栅格列统一高度属性，用于解决栅格列设置响应式布局浮动后被挂住的问题！！
-      customClass: '',  //自定义css类名
-    }
+      colHeight: null, //栅格列统一高度属性，用于解决栅格列设置响应式布局浮动后被挂住的问题！！
+      customClass: '', //自定义css类名
+    },
   },
 
-  {
-    type: 'table',
-    category: 'container',
-    icon: 'table',
-    rows: [],
-    options: {
-      name: '',
-      hidden: false,
-      customClass: '',  //自定义css类名
-    }
-  },
-
-  {
-    type: 'tab',
-    category: 'container',
-    icon: 'tab',
-    displayType: 'border-card',
-    tabs: [],
-    options: {
-      name: '',
-      hidden: false,
-      customClass: '',  //自定义css类名
-    }
-  },
-
-  {
-    type: 'sub-form',
-    category: 'container',
-    icon: 'sub-form',
-    widgetList: [],
-    options: {
-      name: '',
-      showBlankRow: true,
-      showRowNumber: true,
-      labelAlign: 'label-center-align',
-      hidden: false,
-      actionColumnPosition: 'left',  //操作按钮列位置
-      customClass: '',  //自定义css类名
-      onSubFormRowAdd: '',
-      onSubFormRowInsert: '',
-      onSubFormRowDelete: '',
-      onSubFormRowChange: '',
-    }
-  },
-
-  {
-    type: 'grid-sub-form',
-    category: 'container',
-    icon: 'grid-sub-form',
-    widgetList: [],
-    options: {
-      name: '',
-      showBlankRow: true,
-      showRowNumber: true,
-      hidden: false,
-      actionColumnPosition: 'left',  //操作按钮列位置
-      customClass: '',  //自定义css类名
-      onSubFormRowAdd: '',
-      onSubFormRowInsert: '',
-      onSubFormRowDelete: '',
-      onSubFormRowChange: '',
-    }
-  },
-
+  // 栅格单元，依赖于栅格组件
   {
     type: 'grid-col',
     category: 'container',
@@ -91,14 +27,27 @@ export const containers = [
       offset: 0,
       push: 0,
       pull: 0,
-      responsive: false,  //是否开启响应式布局
+      responsive: false, //是否开启响应式布局
       md: 12,
       sm: 12,
       xs: 12,
-      customClass: '',  //自定义css类名
-    }
+      customClass: '', //自定义css类名
+    },
   },
 
+  // 表格组件
+  {
+    type: 'table',
+    category: 'container',
+    icon: 'widget-table',
+    rows: [],
+    options: {
+      name: '',
+      hidden: false,
+      customClass: '', //自定义css类名
+    },
+  },
+  // 依赖于表格组件
   {
     type: 'table-cell',
     category: 'container',
@@ -112,10 +61,24 @@ export const containers = [
       cellHeight: '',
       colspan: 1,
       rowspan: 1,
-      customClass: '',  //自定义css类名
-    }
+      customClass: '', //自定义css类名
+    },
   },
 
+  // 标签页组件
+  {
+    type: 'tab',
+    category: 'container',
+    icon: 'widget-tabs',
+    displayType: 'border-card',
+    tabs: [],
+    options: {
+      name: '',
+      hidden: false,
+      customClass: '', //自定义css类名
+    },
+  },
+  // 标签页内容，依赖于标签页组件
   {
     type: 'tab-pane',
     category: 'container',
@@ -128,14 +91,33 @@ export const containers = [
       hidden: false,
       active: false,
       disabled: false,
-      customClass: '',  //自定义css类名
-    }
+      customClass: '', //自定义css类名
+    },
+  },
+
+  {
+    type: 'grid-sub-form',
+    category: 'container',
+    icon: 'grid-sub-form',
+    widgetList: [],
+    options: {
+      name: '',
+      showBlankRow: true,
+      showRowNumber: true,
+      hidden: false,
+      actionColumnPosition: 'left', //操作按钮列位置
+      customClass: '', //自定义css类名
+      onSubFormRowAdd: '',
+      onSubFormRowInsert: '',
+      onSubFormRowDelete: '',
+      onSubFormRowChange: '',
+    },
   },
 
   {
     type: 'data-table',
     category: 'container',
-    icon: 'data-table',
+    icon: 'widget-data-table',
     widgetList: [],
     options: {
       name: '',
@@ -153,60 +135,170 @@ export const containers = [
       showSummary: false, // 是否合计
       border: true, // 是否带有纵向边框（拖拽）
       tableSize: 'default', // 表格大小，large大、default中、small小
-      tableColumns: [ //表格列信息
-        {columnId: 1, prop:'name', label:'姓名', width:'100', show:true, align:'left', fixed:'left', sortable:true},
-        {columnId: 2, prop:'date', label:'日期1', width:'160', show:true, align:'left', formatS:'d1'},
-        {columnId: 3, prop:'date2', label:'日期2',width:'160',show:true,align:'left',formatS:'d4'},
-        {columnId: 4, prop:'date3', label:'日期3',width:'160',show:true,align:'left',formatS:'d5'},
-        {columnId: 5, prop:'f1', label:'基金',width:'150',show:true,align:'right',sortable:true,formatS:'n1'},
-        {columnId: 6, prop:'f2',label:'股票',width:'150',show:true,align:'right',sortable:true,formatS:'n2'},
-        {columnId: 7, prop:'f3',label:'存款',width:'150',show:true,align:'right',sortable:true,formatS:'n3'},
-        {columnId: 8, prop:'f4',label:'基金2',width:'150',show:true,align:'right',sortable:true,formatS:'n4'},
-        {columnId: 9, prop:'f5',label:'股票2',width:'150',show:true,align:'right',sortable:true,formatS:'n5'},
-        {columnId: 10, prop:'f6',label:'存款2',width:'150',show:true,align:'right',sortable:true,formatS:'n6'},
-        {columnId: 11, prop:'f7',label:'成功率',width:'140',show:true,align:'right',sortable:true,formatS:'n7'},
-        {columnId: 12, prop:'add',label:'地址',width:'250',show:true, render: ''},
-        {columnId: 13, prop:'ss',label:'秘密',width:'100',show:false},
+      tableColumns: [
+        //表格列信息
+        {
+          columnId: 1,
+          prop: 'name',
+          label: '姓名',
+          width: '100',
+          show: true,
+          align: 'left',
+          fixed: 'left',
+          sortable: true,
+        },
+        {
+          columnId: 2,
+          prop: 'date',
+          label: '日期1',
+          width: '160',
+          show: true,
+          align: 'left',
+          formatS: 'd1',
+        },
+        {
+          columnId: 3,
+          prop: 'date2',
+          label: '日期2',
+          width: '160',
+          show: true,
+          align: 'left',
+          formatS: 'd4',
+        },
+        {
+          columnId: 4,
+          prop: 'date3',
+          label: '日期3',
+          width: '160',
+          show: true,
+          align: 'left',
+          formatS: 'd5',
+        },
+        {
+          columnId: 5,
+          prop: 'f1',
+          label: '基金',
+          width: '150',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n1',
+        },
+        {
+          columnId: 6,
+          prop: 'f2',
+          label: '股票',
+          width: '150',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n2',
+        },
+        {
+          columnId: 7,
+          prop: 'f3',
+          label: '存款',
+          width: '150',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n3',
+        },
+        {
+          columnId: 8,
+          prop: 'f4',
+          label: '基金2',
+          width: '150',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n4',
+        },
+        {
+          columnId: 9,
+          prop: 'f5',
+          label: '股票2',
+          width: '150',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n5',
+        },
+        {
+          columnId: 10,
+          prop: 'f6',
+          label: '存款2',
+          width: '150',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n6',
+        },
+        {
+          columnId: 11,
+          prop: 'f7',
+          label: '成功率',
+          width: '140',
+          show: true,
+          align: 'right',
+          sortable: true,
+          formatS: 'n7',
+        },
+        {
+          columnId: 12,
+          prop: 'add',
+          label: '地址',
+          width: '250',
+          show: true,
+          render: '',
+        },
+        { columnId: 13, prop: 'ss', label: '秘密', width: '100', show: false },
       ],
       showButtonsColumn: false, // 是否显示操作列
       buttonsColumnFixed: 'right',
       buttonsColumnTitle: '操作',
       buttonsColumnWidth: 120,
-      operationButtons: [{ // 操作按钮配置
-        name: 'detail',
-        label: '详情',
-        type: 'text',
-        size: 'small',
-        round: false,
-        hidden: true,
-        disabled: false,
-      }, {
-        name: 'edit',
-        label: '编辑',
-        type: 'text',
-        size: 'small',
-        round: false,
-        hidden: false,
-        disabled: false,
-      }, {
-        name: 'delete',
-        label: '删除',
-        type: 'text',
-        size: 'small',
-        round: false,
-        hidden: false,
-        disabled: false,
-      },
+      operationButtons: [
+        {
+          // 操作按钮配置
+          name: 'detail',
+          label: '详情',
+          type: 'text',
+          size: 'small',
+          round: false,
+          hidden: true,
+          disabled: false,
+        },
+        {
+          name: 'edit',
+          label: '编辑',
+          type: 'text',
+          size: 'small',
+          round: false,
+          hidden: false,
+          disabled: false,
+        },
+        {
+          name: 'delete',
+          label: '删除',
+          type: 'text',
+          size: 'small',
+          round: false,
+          hidden: false,
+          disabled: false,
+        },
       ],
-      pagination: { // 分页信息
+      pagination: {
+        // 分页信息
         currentPage: 1,
         pageSizes: [10, 15, 20, 30, 50, 100, 200],
         pageSize: 20,
         total: 366,
       },
       dsEnabled: false, //是否使用数据源数据
-      dsName: '',  //数据源名称
-      tableData: [ //表格数据
+      dsName: '', //数据源名称
+      tableData: [
+        //表格数据
         {
           date: '2016-05-02',
           date2: '2016-05-02 23:12:12',
@@ -221,7 +313,8 @@ export const containers = [
           f7: 0.25,
           add: '上海市普陀区金沙江路 1518 弄',
           ss: 100,
-        }, {
+        },
+        {
           date: '2016-05-04',
           date2: '2016-05-02 11:12:12',
           date3: '2016-05-02 9:11:12',
@@ -235,7 +328,8 @@ export const containers = [
           f7: 0.256,
           add: '上海市普陀区金沙江路 1518 弄',
           ss: 100,
-        }, {
+        },
+        {
           date: '2016-05-01',
           date2: '2016-05-02 12:12:12',
           date3: '2016-05-02 9:11:12',
@@ -249,7 +343,8 @@ export const containers = [
           f7: 0.2569,
           add: '上海市普陀区金沙江路 1518 弄',
           ss: 100,
-        }, {
+        },
+        {
           date: '2016-05-03',
           date2: '2016-05-02 12:12:12',
           date3: '2016-05-02 9:11:12',
@@ -294,7 +389,7 @@ export const containers = [
       onGetRowClassName: '',
       //合并行、列事件
       onGetSpanMethod: '',
-    }
+    },
   },
 
   {
@@ -322,7 +417,7 @@ export const containers = [
       onCancelButtonClick: '',
       onDialogOpened: '',
       onDialogBeforeClose: '',
-    }
+    },
   },
 
   {
@@ -349,15 +444,14 @@ export const containers = [
       onCancelButtonClick: '',
       onDrawerOpened: '',
       onDrawerBeforeClose: '',
-    }
+    },
   },
-
 ]
 
 export const basicFields = [
   {
     type: 'input',
-    icon: 'text-field',
+    icon: 'widget-input',
     formItemFlag: true,
     options: {
       name: '',
@@ -380,7 +474,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -406,7 +500,7 @@ export const basicFields = [
 
   {
     type: 'textarea',
-    icon: 'textarea-field',
+    icon: 'widget-textarea',
     formItemFlag: true,
     options: {
       name: '',
@@ -427,7 +521,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -447,7 +541,7 @@ export const basicFields = [
 
   {
     type: 'number',
-    icon: 'number-field',
+    icon: 'widget-calc',
     formItemFlag: true,
     options: {
       name: '',
@@ -466,7 +560,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -487,7 +581,7 @@ export const basicFields = [
 
   {
     type: 'radio',
-    icon: 'radio-field',
+    icon: 'widget-radio',
     formItemFlag: true,
     options: {
       name: '',
@@ -508,16 +602,16 @@ export const basicFields = [
       labelKey: 'label',
       valueKey: 'value',
       optionItems: [
-        {label: 'radio 1', value: 1},
-        {label: 'radio 2', value: 2},
-        {label: 'radio 3', value: 3},
+        { label: 'radio 1', value: 1 },
+        { label: 'radio 2', value: 2 },
+        { label: 'radio 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -531,7 +625,7 @@ export const basicFields = [
 
   {
     type: 'checkbox',
-    icon: 'checkbox-field',
+    icon: 'widget-checkbox',
     formItemFlag: true,
     options: {
       name: '',
@@ -552,16 +646,16 @@ export const basicFields = [
       labelKey: 'label',
       valueKey: 'value',
       optionItems: [
-        {label: 'check 1', value: 1},
-        {label: 'check 2', value: 2},
-        {label: 'check 3', value: 3},
+        { label: 'check 1', value: 1 },
+        { label: 'check 2', value: 2 },
+        { label: 'check 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -575,7 +669,7 @@ export const basicFields = [
 
   {
     type: 'select',
-    icon: 'select-field',
+    icon: 'widget-select',
     formItemFlag: true,
     options: {
       name: '',
@@ -593,7 +687,7 @@ export const basicFields = [
       filterable: false,
       allowCreate: false,
       remote: false,
-      automaticDropdown: false,  //自动下拉
+      automaticDropdown: false, //自动下拉
       multiple: false,
       multipleLimit: 0,
       dsEnabled: false, // 是否使用数据源数据
@@ -601,16 +695,16 @@ export const basicFields = [
       labelKey: 'label',
       valueKey: 'value',
       optionItems: [
-        {label: 'select 1', value: 1},
-        {label: 'select 2', value: 2},
-        {label: 'select 3', value: 3},
+        { label: 'select 1', value: 1 },
+        { label: 'select 2', value: 2 },
+        { label: 'select 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -645,13 +739,13 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'HH:mm:ss',  //时间格式
+      format: 'HH:mm:ss', //时间格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -686,13 +780,13 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'HH:mm:ss',  //时间格式
+      format: 'HH:mm:ss', //时间格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -727,14 +821,14 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'YYYY-MM-DD',  //日期显示格式
-      valueFormat: 'YYYY-MM-DD',  //日期对象格式
+      format: 'YYYY-MM-DD', //日期显示格式
+      valueFormat: 'YYYY-MM-DD', //日期对象格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -770,14 +864,14 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'YYYY-MM-DD',  //日期显示格式
-      valueFormat: 'YYYY-MM-DD',  //日期对象格式
+      format: 'YYYY-MM-DD', //日期显示格式
+      valueFormat: 'YYYY-MM-DD', //日期对象格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -793,7 +887,7 @@ export const basicFields = [
 
   {
     type: 'switch',
-    icon: 'switch-field',
+    icon: 'widget-switch',
     formItemFlag: true,
     options: {
       name: '',
@@ -806,7 +900,7 @@ export const basicFields = [
       disabled: false,
       hidden: false,
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -842,7 +936,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -880,7 +974,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -912,7 +1006,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -940,7 +1034,7 @@ export const basicFields = [
       hidden: false,
       textContent: 'static text',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
       onMounted: '',
@@ -957,7 +1051,7 @@ export const basicFields = [
       hidden: false,
       htmlContent: '<b>html text</b>',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
       onMounted: '',
@@ -982,7 +1076,7 @@ export const basicFields = [
       circle: false,
       icon: null,
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
       onMounted: '',
@@ -1002,7 +1096,7 @@ export const basicFields = [
       contentPosition: 'center',
       hidden: false,
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
       onMounted: '',
@@ -1010,7 +1104,6 @@ export const basicFields = [
   },
 
   //
-
 ]
 
 export const advancedFields = [
@@ -1042,7 +1135,7 @@ export const advancedFields = [
       fileTypes: ['jpg', 'jpeg', 'png'],
       //headers: [],
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -1056,7 +1149,6 @@ export const advancedFields = [
       onValidate: '',
       //onFileChange: '',
     },
-
   },
 
   {
@@ -1087,7 +1179,7 @@ export const advancedFields = [
       fileTypes: ['doc', 'docx', 'xls', 'xlsx'],
       //headers: [],
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -1123,7 +1215,7 @@ export const advancedFields = [
       customRule: '',
       customRuleHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -1156,23 +1248,27 @@ export const advancedFields = [
       clearable: true,
       filterable: false,
       multiple: false,
-      checkStrictly: false,  //可选择任意一级选项，默认不开启
+      checkStrictly: false, //可选择任意一级选项，默认不开启
       dsEnabled: false, // 是否使用数据源数据
       dsName: '', // 数据源名称
       labelKey: 'label',
       valueKey: 'value',
       childrenKey: 'children',
       optionItems: [
-        {label: 'select 1', value: 1, children: [{label: 'child 1', value: 11}]},
-        {label: 'select 2', value: 2},
-        {label: 'select 3', value: 3},
+        {
+          label: 'select 1',
+          value: 1,
+          children: [{ label: 'child 1', value: 11 }],
+        },
+        { label: 'select 2', value: 2 },
+        { label: 'select 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
       customRule: '',
       customRuleHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -1193,15 +1289,12 @@ export const advancedFields = [
     options: {
       name: '',
       label: '',
-      customClass: '',  //自定义css类名
-    }
+      customClass: '', //自定义css类名
+    },
   },
-
 ]
 
-export const customFields = [
-
-]
+export const customFields = []
 
 export function addContainerWidgetSchema(containerSchema) {
   containers.push(containerSchema)

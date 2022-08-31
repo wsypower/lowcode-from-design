@@ -1,7 +1,7 @@
 export const cardSchema = {
   type: 'card',
   category: 'container',
-  icon: 'card',
+  icon: 'widget-card',
   widgetList: [],
   options: {
     name: '',
@@ -12,7 +12,7 @@ export const cardSchema = {
     cardWidth: '100%',
     shadow: 'never',
     customClass: '',
-  }
+  },
 }
 
 export const alertSchema = {
@@ -32,5 +32,5 @@ export const alertSchema = {
     hidden: false,
     onClose: '',
     customClass: '',
-  }
+  },
 }

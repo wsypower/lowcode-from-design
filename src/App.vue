@@ -1,8 +1,6 @@
 <template>
   <el-config-provider :locale="elLocale">
-  <div id="app">
     <VFormDesigner :designer-config="designerConfig" :global-dsv="globalDsv" />
-  </div>
   </el-config-provider>
 </template>
 
@@ -19,7 +17,26 @@ export default {
   },
   data() {
     return {
-      formJson: {"widgetList":[],"formConfig":{"modelName":"formData","refName":"vForm","rulesName":"rules","labelWidth":80,"labelPosition":"left","size":"","labelAlign":"label-left-align","cssCode":"","customClass":"","functions":"","layoutType":"PC","onFormCreated":"","onFormMounted":"","onFormDataChange":"","onFormValidate":""}},
+      formJson: {
+        widgetList: [],
+        formConfig: {
+          modelName: 'formData',
+          refName: 'vForm',
+          rulesName: 'rules',
+          labelWidth: 80,
+          labelPosition: 'left',
+          size: '',
+          labelAlign: 'label-left-align',
+          cssCode: '',
+          customClass: '',
+          functions: '',
+          layoutType: 'PC',
+          onFormCreated: '',
+          onFormMounted: '',
+          onFormDataChange: '',
+          onFormValidate: '',
+        },
+      },
       formData: {},
       optionData: {},
 
@@ -29,7 +46,7 @@ export default {
 
       //全局数据源变量
       globalDsv: {
-        testApiHost: 'http://www.test.com/api'
+        testApiHost: 'http://www.test.com/api',
       },
 
       elLocaleMap: {
@@ -43,24 +60,26 @@ export default {
       let curLocale = localStorage.getItem('v_form_locale') || 'zh-CN'
       return this.elLocaleMap[curLocale]
     },
-
   },
   methods: {
     submitForm() {
-      this.$refs.vFormRef.getFormData().then(formData => {
-        // Form Validation OK
-        alert( JSON.stringify(formData) )
-      }).catch(error => {
-        // Form Validation failed
-        this.$message.error(error)
-      })
-    }
-  }
+      this.$refs.vFormRef
+        .getFormData()
+        .then((formData) => {
+          // Form Validation OK
+          alert(JSON.stringify(formData))
+        })
+        .catch((error) => {
+          // Form Validation failed
+          this.$message.error(error)
+        })
+    },
+  },
 }
 </script>
 
 <style lang="scss">
-  #app {
-    height: 100%;
-  }
+#app {
+  height: 100%;
+}
 </style>
