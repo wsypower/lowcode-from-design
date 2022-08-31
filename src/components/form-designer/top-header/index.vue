@@ -17,11 +17,11 @@
         />
       </el-select>
 
-      <el-input v-model="formWidth" />
+      <el-input-number v-model="formWidth" controls-position="right" />
       <span class="icon-multi-wrap">
         <svg-icon icon-class="op-close" />
       </span>
-      <el-input v-model="formHeight" />
+      <el-input-number v-model="formHeight" controls-position="right" />
     </div>
     <div class="right">
       <svg-icon icon-class="op-delete" />
@@ -33,11 +33,7 @@
       <svg-icon icon-class="op-code" />
       <i class="divider"></i>
 
-      <el-select
-        class="setting-sizes-drop"
-        v-model="settingSize"
-        @change="notifySettingSizeChange"
-      >
+      <el-select v-model="settingSize" @change="notifySettingSizeChange">
         <el-option
           v-for="size in settingSizes"
           :key="size"
@@ -90,10 +86,29 @@ function notifySettingSizeChange(size) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 48px !important;
+  height: 48px;
   min-width: 800px;
   background: #f0f0f0;
   border-bottom: 1px solid rgb(204, 204, 204);
+
+  :deep(.el-input__inner) {
+    height: 26px;
+    line-height: 26px;
+  }
+  :deep(.el-input-number) {
+    width: 100px;
+    height: 28px;
+  }
+  :deep(.el-input-number.is-controls-right .el-input-number__decrease) {
+    height: 14px;
+  }
+  :deep(.el-input-number.is-controls-right .el-input-number__increase) {
+    height: 14px;
+  }
+  :deep(.el-input-number .el-icon) {
+    position: relative;
+    top: 3px;
+  }
 
   .left,
   .right,
@@ -131,20 +146,10 @@ function notifySettingSizeChange(size) {
     justify-content: center;
     font-size: 12px;
 
-    .el-select {
+    :deep(.el-select) {
       margin: 0 16px 0 8px;
-      width: 110px;
-
-      .el-input__wrapper {
-        height: 28px;
-        background-color: #f0f0f0;
-      }
-    }
-
-    .el-input {
-      width: 54px;
-      height: 28px;
-      border-radius: 6px;
+      width: 126px;
+      line-height: 26px;
     }
 
     .icon-multi-wrap {
@@ -161,7 +166,7 @@ function notifySettingSizeChange(size) {
   }
 
   .right {
-    width: 360px;
+    width: 500px;
     justify-content: flex-end;
 
     .svg-icon {
@@ -174,10 +179,10 @@ function notifySettingSizeChange(size) {
       }
     }
 
-    .setting-sizes-drop {
+    :deep(.el-select) {
       width: 100px;
       height: 28px;
-      overflow: hidden;
+      line-height: 28px;
     }
   }
 
