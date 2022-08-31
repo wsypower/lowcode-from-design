@@ -43,11 +43,11 @@ export function createDesigner(vueInstance) {
       steps: [],
     },
 
-    settingSize: 'default',
+    settingSize: localStorage.getItem('v_form_settingSize') || 'default',
 
     changeSettingSize(size) {
+      localStorage.setItem('v_form_settingSize', size)
       this.settingSize = size
-      console.log('setting size is', size)
     },
 
     initDesigner(resetFormJson) {

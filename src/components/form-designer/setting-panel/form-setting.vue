@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="formConfig" size="small" label-position="left" label-width="120px"
+    <el-form :model="formConfig" :size="designer.settingSize" label-position="left" label-width="120px"
              class="setting-form" @submit.prevent>
       <el-collapse v-model="formActiveCollapseNames" class="setting-collapse">
         <el-collapse-item name="1" :title="i18nt('designer.setting.basicSetting')">
@@ -343,17 +343,29 @@
 
     .custom-divider.el-divider--horizontal {
       margin: 10px 0;
+      :deep(.el-divider__text.is-center) {
+        background: #f0f0f0;
+      }
     }
   }
 
   .setting-collapse {
+    padding: 0 10px;
     :deep(.el-collapse-item__content) {
       padding-bottom: 6px;
+      background: #f0f0f0;
     }
 
     :deep(.el-collapse-item__header) {
-      font-style: italic;
       font-weight: bold;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      height: 40px;
+      font-weight: 700;
+      background-color: inherit;
+    }
+    :deep(.el-collapse-item__arrow) {
+      margin: 0 8px 0 0;
     }
   }
 

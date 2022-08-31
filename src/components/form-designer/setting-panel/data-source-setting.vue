@@ -444,8 +444,9 @@
   /*}*/
 
   .ds-list {
+    padding: 10px;
     :deep(.el-descriptions) {
-      width: 284px;
+      // width: 284px;
       overflow-x: hidden;
       margin-bottom: 15px;
       padding: 8px;

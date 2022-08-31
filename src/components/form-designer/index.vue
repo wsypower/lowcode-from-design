@@ -411,7 +411,7 @@ export default {
     /* 防止aside样式被外部样式覆盖！！ */
     margin: 0;
     padding: 0;
-    background: inherit;
+    background: #f0f0f0;
   }
 }
 

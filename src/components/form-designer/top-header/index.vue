@@ -77,7 +77,7 @@ const formSizes = ref([
   '1580 x 1960',
 ])
 
-const settingSize = ref('default')
+const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 const settingSizes = ref(['default', 'large', 'small'])
 
 function notifySettingSizeChange(size) {

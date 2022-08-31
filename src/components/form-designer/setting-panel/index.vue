@@ -1,11 +1,11 @@
 <template>
   <el-container class="panel-container">
-    <el-tabs :active-name="activeTab" style="height: 100%;width: 100%;overflow: hidden">
+    <el-tabs type="border-card" :active-name="activeTab" style="height: 100%;width: 100%;overflow: hidden">
       <el-tab-pane :label="i18nt('designer.hint.widgetSetting')" name="1">
         <el-scrollbar class="setting-scrollbar" :style="{height: scrollerHeight}">
 
           <template v-if="!!designer.selectedWidget && !designer.selectedWidget.category">
-            <el-form :model="optionModel" size="small" label-position="left" label-width="120px" class="setting-form"
+            <el-form :model="optionModel" :size="designer.settingSize" label-position="left" label-width="120px" class="setting-form"
                      @submit.prevent>
               <el-collapse v-model="widgetActiveCollapseNames" class="setting-collapse">
                 <el-collapse-item name="1" v-if="showCollapse(commonProps)" :title="i18nt('designer.setting.commonSetting')">
@@ -34,7 +34,7 @@
           </template>
 
           <template v-if="(!!designer.selectedWidget && !!designer.selectedWidget.category)">
-            <el-form :model="optionModel" size="small" label-position="left" label-width="120px" class="setting-form"
+            <el-form :model="optionModel" :size="designer.settingSize" label-position="left" label-width="120px" class="setting-form"
                      @submit.prevent>
               <el-collapse v-model="widgetActiveCollapseNames" class="setting-collapse">
                 <el-collapse-item name="1" v-if="showCollapse(commonProps)" :title="i18nt('designer.setting.commonSetting')">
@@ -328,7 +328,44 @@
 
 <style lang="scss" scoped>
   .panel-container {
-    padding: 0 8px;
+    // padding: 0 8px;
+    :deep(.el-tabs--border-card) {
+      background: #f0f0f0;
+      .el-tabs__header {
+        background: #dbdbdb;
+        .el-tabs__nav {
+          width: 100%;
+        }
+        .el-tabs__item {
+          transition: none;
+          color: rgba(48, 48, 48, 0.5);
+          width: 33.3333%;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+          &:first-child {
+            margin-left: 0;
+          }
+          &:last-child {
+            border-right: 0;
+          }
+          &:hover {
+            color: rgba(48, 48, 48, 0.5);
+          }
+        }
+        .el-tabs__item.is-active {
+          background: #f0f0f0;
+          color: rgba(48,48,48,1);
+          border-bottom: 0;
+          border-right-color: #ccc;
+        }
+        .el-tabs__item+.el-tabs__item {
+          margin-left: 0;
+        }
+      }
+      .el-tabs__content {
+        padding: 0;
+      }
+    }
   }
 
   .setting-scrollbar {
@@ -345,13 +382,22 @@
   }
 
   .setting-collapse {
+    padding: 0 10px;
     :deep(.el-collapse-item__content) {
       padding-bottom: 6px;
+      background: #f0f0f0;
     }
 
     :deep(.el-collapse-item__header) {
-      font-style: italic;
       font-weight: bold;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      height: 40px;
+      font-weight: 700;
+      background-color: inherit;
+    }
+    :deep(.el-collapse-item__arrow) {
+      margin: 0 8px 0 0;
     }
   }
 
@@ -381,6 +427,9 @@
 
   :deep(.custom-divider.el-divider--horizontal) {
     margin: 10px 0;
+    .el-divider__text.is-center {
+      background: #f0f0f0;
+    }
   }
 
   :deep(.custom-divider-margin-top.el-divider--horizontal) {
