@@ -7,21 +7,20 @@
       <svg-icon icon-class="op-redo" class-name="redo" />
     </div>
     <div class="middle">
-      <span>尺寸:</span>
-      <el-select v-model="formSize">
+      <span>表单宽度:</span>
+      <el-select v-model="formSize" @change="onFormSizeChange" can-edit>
         <el-option
-          v-for="size in formSizes"
+          v-for="(size, index) in designer.formWidthList"
           :key="size"
-          :label="size"
+          :label="index !== 0 ? `${size}px` : size"
           :value="size"
         />
       </el-select>
-
-      <el-input-number v-model="formWidth" controls-position="right" />
-      <span class="icon-multi-wrap">
-        <svg-icon icon-class="op-close" />
-      </span>
-      <el-input-number v-model="formHeight" controls-position="right" />
+      <el-input-number
+        v-model="designer.formWidth"
+        :disabled="!designer.isFormWidthCustomize"
+        controls-position="right"
+      />
     </div>
     <div class="right">
       <svg-icon icon-class="op-delete" />
@@ -46,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import SvgIcon from '@/components/svg-icon/index'
 
 const emit = defineEmits(['sizeChange'])
@@ -61,23 +60,27 @@ const props = defineProps({
   },
 })
 
-const formWidth = ref(834)
-const formHeight = ref(1194)
-const formSize = ref('自适应')
-const formSizes = ref([
-  '自适应',
-  '800 x 1200',
-  '980 x 1360',
-  '1024 x 1580',
-  '1208 x 1800',
-  '1580 x 1960',
-])
+const formSize = ref(props.designer.formWidth)
+const formWidth = ref(props.designer.formWidth)
 
 const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 const settingSizes = ref(['default', 'large', 'small'])
 
+watch(formSize, (val) => {
+  console.log(123, val)
+})
+
 function notifySettingSizeChange(size) {
   emit('sizeChange', size)
+}
+
+function onFormSizeChange(formSize) {
+  if (typeof formSize === 'number') {
+    props.designer.changeFormCustomize(false)
+    props.designer.changeformWidth(formSize)
+  } else {
+    props.designer.changeFormCustomize(true)
+  }
 }
 </script>
 
@@ -148,7 +151,7 @@ function notifySettingSizeChange(size) {
 
     :deep(.el-select) {
       margin: 0 16px 0 8px;
-      width: 126px;
+      width: 100px;
       line-height: 26px;
     }
 
