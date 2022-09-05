@@ -109,7 +109,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import useI18n from '@/hooks/useI18n'
 import usePreview from '@/hooks/usePreview'
 import SvgIcon from '@/components/svg-icon/index'
