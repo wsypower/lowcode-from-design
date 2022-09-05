@@ -47,7 +47,6 @@ function generateRulerDatas() {
 
   for (let i = 0, len = widthList.length; i < len; i++) {
     const width = widthList[i]
-    console.log(i, width, rulerWrapWidth.value)
     if (rulerWrapWidth.value > width) {
       startIndex = i
       break

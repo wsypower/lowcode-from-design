@@ -23,13 +23,13 @@
       />
     </div>
     <div class="right">
-      <svg-icon icon-class="op-delete" />
+      <svg-icon icon-class="op-delete" @click="clearFormWidget" />
       <i class="divider"></i>
 
-      <svg-icon icon-class="op-preview" />
-      <svg-icon icon-class="op-import" />
-      <svg-icon icon-class="op-export" />
-      <svg-icon icon-class="op-code" />
+      <svg-icon icon-class="op-preview" @click="showPreviewDialog" />
+      <svg-icon icon-class="op-import" @click="importJson" />
+      <svg-icon icon-class="op-export" @click="exportJson" />
+      <svg-icon icon-class="op-code" @click="exportCode" />
       <i class="divider"></i>
 
       <el-select v-model="settingSize" @change="notifySettingSizeChange">
@@ -41,34 +41,108 @@
         />
       </el-select>
     </div>
+
+    <div
+      v-if="previewDialogVisible"
+      class=""
+      v-drag="['.drag-dialog.el-dialog', '.drag-dialog .el-dialog__header']"
+    >
+      <el-dialog
+        :title="i18nt('designer.toolbar.preview')"
+        v-model="previewDialogVisible"
+        :show-close="true"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        center
+        :destroy-on-close="true"
+        :append-to-body="true"
+        custom-class="drag-dialog small-padding-dialog"
+        width="75%"
+      >
+        <div>
+          <div class="form-render-wrapper">
+            <VFormRender
+              ref="previewFormRef"
+              :form-json="previewFormJson"
+              :form-data="previewFormData"
+              :option-data="previewOptionData"
+              :global-dsv="props.globalDsv"
+              :preview-state="true"
+            >
+            </VFormRender>
+          </div>
+        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button type="primary" @click="getFormData">{{
+              i18nt('designer.hint.getFormData')
+            }}</el-button>
+            <el-button type="primary" @click="resetForm">{{
+              i18nt('designer.hint.resetForm')
+            }}</el-button>
+            <el-button type="primary" @click="setFormDisabled">{{
+              i18nt('designer.hint.disableForm')
+            }}</el-button>
+            <el-button type="primary" @click="setFormEnabled">{{
+              i18nt('designer.hint.enableForm')
+            }}</el-button>
+            <el-button type="primary" plain @click="switchReadMode">{{
+              i18nt('designer.hint.switchReadMode')
+            }}</el-button>
+            <el-button @click="previewDialogVisible = false">{{
+              i18nt('designer.hint.closePreview')
+            }}</el-button>
+            <el-button v-if="false" @click="testSetFormJson"
+              >setFormJson</el-button
+            >
+            <el-button v-if="false" @click="testSubFormHide"
+              >Test SFH</el-button
+            >
+            <el-button v-if="false" @click="testSetFormData"
+              >Test SFD</el-button
+            >
+          </div>
+        </template>
+      </el-dialog>
+    </div>
   </el-header>
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { ref } from 'vue'
+import useI18n from '@/hooks/useI18n'
+import usePreview from '@/hooks/usePreview'
 import SvgIcon from '@/components/svg-icon/index'
+
+const { i18nt } = useI18n()
 
 const emit = defineEmits(['sizeChange'])
 const props = defineProps({
   designer: {
     type: Object,
-    default: null,
+    default: () => ({}),
   },
   globalDsv: {
     type: Object,
-    default: null,
+    default: () => ({}),
   },
 })
 
-const formSize = ref(props.designer.formWidth)
-const formWidth = ref(props.designer.formWidth)
+const {
+  previewDialogVisible,
+  previewFormRef,
+  previewOptionData,
+  previewFormData,
+  previewFormJson,
+  clearFormWidget,
+  getFormData,
+  showPreviewDialog,
+} = usePreview(props.designer)
 
 const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 const settingSizes = ref(['default', 'large', 'small'])
 
-watch(formSize, (val) => {
-  console.log(123, val)
-})
+const formSize = ref(props.designer.formWidth)
 
 function notifySettingSizeChange(size) {
   emit('sizeChange', size)
