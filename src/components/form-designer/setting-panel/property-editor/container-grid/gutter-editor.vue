@@ -6,8 +6,8 @@
     <el-form-item :label="i18nt('designer.setting.gutter')">
       <el-input-number v-model="optionModel.gutter" style="width: 100%"></el-input-number>
     </el-form-item>
-    <el-form-item :label="i18nt('designer.setting.colsOfGrid')"></el-form-item>
-    <el-form-item label-width="0">
+    <el-form-item :label="i18nt('designer.setting.colsOfGrid')" style="margin-bottom: 0;"></el-form-item>
+    <el-form-item label-width="10px">
       <li v-for="(colItem, colIdx) in selectedWidget.cols" :key="colIdx" class="col-item">
         <span class="col-span-title">{{i18nt('designer.setting.colSpanTitle')}}{{colIdx + 1}}</span>
         <el-input-number v-model.number="colItem.options.span" :min="1" :max="24"
@@ -66,15 +66,20 @@
 <style lang="scss" scoped>
   li.col-item {
     list-style: none;
+    margin-bottom: 4px;
 
     span.col-span-title {
       display: inline-block;
       font-size: 13px;
-      width: 120px;
+      // width: 120px;
+      margin-right: 6px;
     }
 
     .col-delete-button {
       margin-left: 6px;
+    }
+    :deep(.el-input-number--large) {
+      width: 150px;
     }
   }
 

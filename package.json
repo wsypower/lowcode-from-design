@@ -7,7 +7,10 @@
     "build": "vite build",
     "lib": "vite build --config vite-lib.config.js",
     "lib-render": "vite build --config vite-lib-render.config.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^0.2.4",
@@ -34,7 +37,8 @@
     "rollup-plugin-visualizer": "^5.5.2",
     "sass": "^1.45.0",
     "vite": "2.7.3",
-    "vite-plugin-svg-icons": "^1.0.5"
+    "vite-plugin-svg-icons": "^1.0.5",
+    "vitepress": "^1.0.0-alpha.13"
   },
   "browserslist": [
     "> 1%",

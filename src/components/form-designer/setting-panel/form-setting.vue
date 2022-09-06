@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="formConfig" :size="designer.settingSize" label-position="left" label-width="120px"
+    <el-form :model="formConfig" :size="designer.settingSize" label-position="left" label-width="auto"
              class="setting-form" @submit.prevent>
       <el-collapse v-model="formActiveCollapseNames" class="setting-collapse">
         <el-collapse-item name="1" :title="i18nt('designer.setting.basicSetting')">
@@ -330,7 +330,7 @@
       white-space: nowrap;
     }
 
-    :deep(.el-form-item--small.el-form-item) {
+    :deep(.el-form-item) {
       margin-bottom: 10px;
     }
 

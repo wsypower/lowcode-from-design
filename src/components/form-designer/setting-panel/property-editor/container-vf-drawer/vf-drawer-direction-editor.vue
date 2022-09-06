@@ -32,6 +32,7 @@
 
 <style lang="scss" scoped>
   .radio-group-custom {
+    flex-wrap: nowrap;
     :deep(.el-radio-button__inner) {
       padding-left: 12px;
       padding-right: 12px;

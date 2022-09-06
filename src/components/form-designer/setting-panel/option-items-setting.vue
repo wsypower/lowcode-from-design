@@ -7,10 +7,10 @@
         <template #item="{ element: option, index: idx }">
           <li>
             <el-radio :label="option.value">
-              <el-input v-model="option.value" size="small" style="width: 100px"></el-input>
-              <el-input v-model="option.label" size="small" style="width: 100px"></el-input>
+              <el-input v-model="option.value" style="width: 70px"></el-input>
+              <el-input v-model="option.label" style="width: 100px"></el-input>
               <i class="iconfont icon-drag drag-option"></i>
-              <el-button circle plain size="small" type="danger" @click="deleteOption(option, idx)"
+              <el-button circle plain type="danger" @click="deleteOption(option, idx)"
                          icon="el-icon-minus" class="col-delete-button"></el-button>
             </el-radio>
           </li>
@@ -24,10 +24,10 @@
         <template #item="{ element: option, index: idx }">
           <li>
             <el-checkbox :label="option.value">
-              <el-input v-model="option.value" size="small" style="width: 100px"></el-input>
-              <el-input v-model="option.label" size="small" style="width: 100px"></el-input>
+              <el-input v-model="option.value" style="width: 70px"></el-input>
+              <el-input v-model="option.label" style="width: 100px"></el-input>
               <i class="iconfont icon-drag drag-option"></i>
-              <el-button circle plain size="small" type="danger" @click="deleteOption(option, idx)"
+              <el-button circle plain type="danger" @click="deleteOption(option, idx)"
                          icon="el-icon-minus" class="col-delete-button"></el-button>
             </el-checkbox>
           </li>
@@ -40,12 +40,12 @@
                    :placeholder="i18nt('render.hint.selectPlaceholder')">
       </el-cascader>
     </div>
-    <div v-if="(selectedWidget.type === 'cascader')">
+    <div class="treble-btn" v-if="(selectedWidget.type === 'cascader')">
       <el-button type="text" @click="importCascaderOptions">{{i18nt('designer.setting.importOptions')}}</el-button>
       <el-button type="text" @click="resetDefault">{{i18nt('designer.setting.resetDefault')}}</el-button>
     </div>
 
-    <div v-if="(selectedWidget.type === 'radio') || (selectedWidget.type === 'checkbox') || (selectedWidget.type === 'select')">
+    <div class="treble-btn" v-if="(selectedWidget.type === 'radio') || (selectedWidget.type === 'checkbox') || (selectedWidget.type === 'select')">
       <el-button type="text" @click="addOption">{{i18nt('designer.setting.addOption')}}</el-button>
       <el-button type="text" @click="importOptions">{{i18nt('designer.setting.importOptions')}}</el-button>
       <el-button type="text" @click="resetDefault">{{i18nt('designer.setting.resetDefault')}}</el-button>
@@ -223,10 +223,15 @@
 <style lang="scss" scoped>
   .option-items-pane {
     width: 100%;
-
+    :deep(.el-radio-group) {
+      line-height: 0;
+    }
     ul {
       padding-inline-start: 6px;
       padding-left: 6px; /* 重置IE11默认样式 */
+      li {
+        margin-bottom: 3px;
+      }
     }
   }
 
@@ -254,5 +259,11 @@
       width: 100% !important;
     }
   }
-
+  .treble-btn {
+    display: flex;
+    justify-content: space-around;
+    :deep(.el-button) {
+      padding: 0;
+    }
+  }
 </style>

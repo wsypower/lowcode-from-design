@@ -5,7 +5,7 @@
         <el-scrollbar class="setting-scrollbar" :style="{height: scrollerHeight}">
 
           <template v-if="!!designer.selectedWidget && !designer.selectedWidget.category">
-            <el-form :model="optionModel" :size="designer.settingSize" label-position="left" label-width="120px" class="setting-form"
+            <el-form :model="optionModel" :size="designer.settingSize" label-position="left" label-width="auto" class="setting-form"
                      @submit.prevent>
               <el-collapse v-model="widgetActiveCollapseNames" class="setting-collapse">
                 <el-collapse-item name="1" v-if="showCollapse(commonProps)" :title="i18nt('designer.setting.commonSetting')">
@@ -34,7 +34,7 @@
           </template>
 
           <template v-if="(!!designer.selectedWidget && !!designer.selectedWidget.category)">
-            <el-form :model="optionModel" :size="designer.settingSize" label-position="left" label-width="120px" class="setting-form"
+            <el-form :model="optionModel" :size="designer.settingSize" label-position="left" label-width="auto" class="setting-form"
                      @submit.prevent>
               <el-collapse v-model="widgetActiveCollapseNames" class="setting-collapse">
                 <el-collapse-item name="1" v-if="showCollapse(commonProps)" :title="i18nt('designer.setting.commonSetting')">
@@ -409,7 +409,7 @@
       white-space: nowrap;
     }
 
-    :deep(.el-form-item--small.el-form-item) {
+    :deep(.el-form-item) {
       margin-bottom: 10px;
     }
   }
@@ -434,6 +434,9 @@
 
   :deep(.custom-divider-margin-top.el-divider--horizontal) {
     margin: 20px 0;
+    .el-divider__text.is-center {
+      background: #f0f0f0;
+    }
   }
 
   .small-padding-dialog {

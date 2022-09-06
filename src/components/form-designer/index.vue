@@ -42,7 +42,7 @@
         </el-main>
       </el-container>
 
-      <el-aside>
+      <el-aside style="max-width: 330px;">
         <setting-panel
           :designer="designer"
           :selected-widget="designer.selectedWidget"
