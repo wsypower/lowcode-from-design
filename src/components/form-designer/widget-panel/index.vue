@@ -157,13 +157,6 @@
             </el-collapse-item>
           </el-collapse>
         </el-tab-pane>
-
-        <el-tab-pane name="formLib">
-          <template #label>
-            <span><svg-icon icon-class="el-set-up" />组件层</span>
-          </template>
-          <div>another tab</div>
-        </el-tab-pane>
       </el-tabs>
     </div>
   </el-scrollbar>

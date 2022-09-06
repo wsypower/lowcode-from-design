@@ -24,7 +24,7 @@
 
       <el-container class="center-layout-container">
         <el-header class="responsive-bar-wrap">
-          <sizes-bar :designer="designer" />
+          <ruler-bar :designer="designer" />
         </el-header>
         <el-main class="form-widget-main">
           <el-scrollbar
@@ -59,7 +59,7 @@
 import TopHeader from './top-header/index'
 import WidgetPanel from './widget-panel/index'
 import SettingPanel from './setting-panel/index'
-import SizesBar from './sizes-bar/index'
+import RulerBar from './ruler-bar/index'
 import VFormWidget from './form-widget/index'
 import { createDesigner } from '@/components/form-designer/designer'
 import {
@@ -82,7 +82,7 @@ export default {
   components: {
     SvgIcon,
     TopHeader,
-    SizesBar,
+    RulerBar,
     WidgetPanel,
     SettingPanel,
     VFormWidget,
@@ -422,6 +422,7 @@ export default {
 }
 
 .responsive-bar-wrap {
+  padding: 0;
   height: 19px;
   border-bottom: 1px solid #ccc;
   background-color: #d8d8d8;
@@ -443,5 +444,6 @@ export default {
   :deep(.el-scrollbar__view) {
     overflow-x: hidden;
   }
+  padding: 0 24px;
 }
 </style>

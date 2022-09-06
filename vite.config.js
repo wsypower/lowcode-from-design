@@ -2,9 +2,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import viteSvgIcons from 'vite-plugin-svg-icons'
+import autoImport from 'unplugin-auto-import/vite'
 import { resolve } from 'path'
 import commonjs from '@rollup/plugin-commonjs'
-import externalGlobals from "rollup-plugin-external-globals"
+import externalGlobals from 'rollup-plugin-external-globals'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,36 +30,40 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]',
     }),
 
+    autoImport({
+      include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/],
+      imports: ['vue'],
+    }),
   ],
 
   resolve: {
     alias: {
-        "@": resolve(__dirname, 'src'), // 路径别名
+      '@': resolve(__dirname, 'src'), // 路径别名
     },
-    extensions: ['.js', '.vue', '.json', '.ts'] // 使用路径别名时想要省略的后缀名，可以自己 增减
+    extensions: ['.js', '.vue', '.json', '.ts'], // 使用路径别名时想要省略的后缀名，可以自己 增减
   },
 
   optimizeDeps: {
-    include: ['@/../lib/vuedraggable/dist/vuedraggable.umd.js', 'quill']
+    include: ['@/../lib/vuedraggable/dist/vuedraggable.umd.js', 'quill'],
   },
 
   css: {
     preprocessorOptions: {
       scss: {
         /* 自动引入全局scss文件 */
-        additionalData: '@import "./src/styles/global.scss";'
-      }
-    }
+        additionalData: '@import "./src/styles/global.scss";',
+      },
+    },
   },
 
   build: {
     //minify: false,
     commonjsOptions: {
       exclude: [
-        'lib/vuedraggable/dist/vuedraggable.umd.js,',  //引号前的逗号不能删，不知何故？？
+        'lib/vuedraggable/dist/vuedraggable.umd.js,', //引号前的逗号不能删，不知何故？？
         //'vue/dist/*.js'
       ],
-      include: []
+      include: [],
       //requireReturnsDefault: true
     },
     rollupOptions: {
@@ -76,7 +81,6 @@ export default defineConfig({
       //     'element-plus': 'ElementPlus',
       //   }
       // }
-    }
-  }
-
+    },
+  },
 })

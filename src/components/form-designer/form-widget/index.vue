@@ -1,5 +1,10 @@
 <template>
-  <div class="form-widget-container">
+  <div
+    class="form-widget-container"
+    :style="{
+      width: `${designer.formWidth}px`,
+    }"
+  >
     <el-form
       class="full-height-width widget-form"
       :label-position="labelPosition"
@@ -230,15 +235,12 @@ export default {
 }
 
 .form-widget-container {
-  width: 1200px;
+  box-sizing: border-box;
+  min-width: 800px;
   margin: 32px auto;
   padding: 24px;
   background: #fff;
   border-radius: 3px;
-  box-shadow: 0 351px 98px 0 rgba(0, 0, 0, 0),
-    0 225px 90px 0 rgba(0, 0, 0, 0.01), 0 126px 76px 0 rgba(0, 0, 0, 0.03),
-    0 56px 56px 0 rgba(0, 0, 0, 0.04), 0 14px 31px 0 rgba(0, 0, 0, 0.05),
-    0 0 0 0 rgba(0, 0, 0, 0.05);
   overflow-x: hidden;
   overflow-y: auto;
 

@@ -5,7 +5,6 @@
  * date: 2021.08.18
  * remark: 如果要分发VForm源码，需在本文件顶部保留此文件头信息！！
  */
-
 import {
   deepClone,
   generateId,
@@ -43,7 +42,33 @@ export function createDesigner(vueInstance) {
       steps: [],
     },
 
+    // 表单宽度
+    commonScreenWidths: [1920, 1680, 1440, 1366, 1280, 1024, 800],
+    // 表单区宽度是否自定义
+    isFormWidthCustomize: false,
+    // 表单区宽度
+    formWidth: 1024,
+    // 表单区宽度选择列表
+    formWidthList: [],
+    // 设置区表单组件尺寸
     settingSize: localStorage.getItem('v_form_settingSize') || 'default',
+
+    changeFormCustomize(val) {
+      this.isFormWidthCustomize = val
+    },
+
+    changeformWidth(width) {
+      this.formWidth = width
+    },
+
+    changeFormWidthList(sizeArr) {
+      this.formWidthList = ['自定义'].concat(sizeArr)
+
+      // 如果当前 formWidth 的宽度大于最大可显示宽度
+      if (this.formWidth > sizeArr[0]) {
+        this.formWidth = sizeArr[0]
+      }
+    },
 
     changeSettingSize(size) {
       localStorage.setItem('v_form_settingSize', size)
