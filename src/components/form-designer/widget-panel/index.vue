@@ -362,6 +362,8 @@ export default {
 }
 
 .tabs-wrap {
+  padding-bottom: 20px;
+
   :deep(.el-tabs__header) {
     // 消除tab-header与tab-content之间的margin
     margin-bottom: 0;
