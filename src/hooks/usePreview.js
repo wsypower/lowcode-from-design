@@ -1,15 +1,23 @@
 import useMsg from './useMsg'
-import { deepClone, copyToClipboard } from '@/utils/util'
+import useClipboard from '@/hooks/useClipboard'
+import { deepClone } from '@/utils/util'
 
-const showMsg = useMsg()
+const { copyToClipboard } = useClipboard()
+const { showMsg } = useMsg()
 
 export default function usePreview(designer) {
   const previewDialogVisible = ref(false)
   const previewFormRef = ref(null)
   const previewOptionData = ref({})
-  const previewFormData = ref({})
   const previewFormDataJson = ref({})
   const previewFormDataJsonRaw = ref({})
+
+  const previewFormData = computed(async () => {
+    if (!previewFormRef.value) {
+      return {}
+    }
+    return await previewFormRef.value.getFormData()
+  })
 
   const previewFormJson = computed(() => {
     return {
@@ -22,8 +30,8 @@ export default function usePreview(designer) {
     previewDialogVisible.value = true
   }
 
-  function clearFormWidget() {
-    designer && designer.clearDesigner()
+  function hidePreviewDialog() {
+    previewDialogVisible.value = false
   }
 
   function getFormData() {
@@ -33,21 +41,26 @@ export default function usePreview(designer) {
         previewFormDataJson.value = JSON.stringify(formData, null, '  ')
         previewFormDataJsonRaw.value = JSON.stringify(formData)
         previewDialogVisible.value = true
-        console.log('formdata', formData)
       })
       .catch((error) => {
         showMsg(error, 'error')
       })
   }
 
+  function resetForm() {
+    previewFormRef.value.resetForm()
+  }
+
+  function disableForm() {
+    previewFormRef.value.disableForm()
+  }
+
+  function enableForm() {
+    previewFormRef.value.enableForm()
+  }
+
   function copyFormDataJson(e) {
-    copyToClipboard(
-      formDataRawJson.value,
-      e,
-      showMsg,
-      i18nt('designer.hint.copyJsonSuccess'),
-      i18nt('designer.hint.copyJsonFail')
-    )
+    copyToClipboard(formDataRawJson.value, e, '复制JSON成功', '复制JSON失败')
   }
 
   return {
@@ -57,8 +70,11 @@ export default function usePreview(designer) {
     previewFormData,
     previewFormJson,
     showPreviewDialog,
-    clearFormWidget,
+    hidePreviewDialog,
     getFormData,
+    resetForm,
+    disableForm,
+    enableForm,
     copyFormDataJson,
   }
 }

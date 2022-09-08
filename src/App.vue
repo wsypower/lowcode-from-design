@@ -79,7 +79,8 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  height: 100%;
+// 隐藏代码编辑器中的分隔线
+.ace-sqlserver .ace_print-margin {
+  display: none !important;
 }
 </style>
