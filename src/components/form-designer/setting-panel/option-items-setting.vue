@@ -261,7 +261,7 @@
   }
   .treble-btn {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     :deep(.el-button) {
       padding: 0;
     }

@@ -3,22 +3,24 @@
   <div class="ds-list">
     <template v-if="!!formConfig.dataSources && (formConfig.dataSources.length > 0)">
     <el-descriptions v-for="(ds, dsIdx) in formConfig.dataSources"
-                     :column="1" size="small" border>
+                     :column="1" :size="designer.settingSize" border>
       <template #title>
         <span :title="ds.description">{{ds.uniqueName}}</span>
       </template>
       <template #extra>
         <el-button type="primary" icon="el-icon-edit" plain circle
-                   size="small" @click="editDataSource(dsIdx)"></el-button>
+                   :size="designer.settingSize" @click="editDataSource(dsIdx)"></el-button>
         <el-button type="danger" icon="el-icon-delete" plian circle
-                   size="small" @click="deleteDataSource(dsIdx)"></el-button>
+                   :size="designer.settingSize" @click="deleteDataSource(dsIdx)"></el-button>
       </template>
       <el-descriptions-item>
         <template #label>
           <div :title="ds.requestURL">
-            <el-icon><platform /></el-icon></div>
+            <el-icon><platform /></el-icon>
+          </div>
         </template>
-        {{ds.requestURL}}</el-descriptions-item>
+        {{ds.requestURL}}
+      </el-descriptions-item>
 
       <!--
       <el-descriptions-item label="">{{ds.description}}</el-descriptions-item>
@@ -45,21 +47,28 @@
         <el-form-item :label="i18nt('designer.setting.dsUniqueName')" prop="uniqueName">
           <el-input v-model="dsModel.uniqueName"></el-input>
         </el-form-item>
-        <el-row style="width: 100%">
-          <el-col :span="20">
+        <!-- <el-row style="width: 100%">
+          <el-col :span="20"> -->
             <el-form-item :label="i18nt('designer.setting.dsRequestURL')" prop="requestURL">
-              <el-input v-model="dsModel.requestURL"></el-input>
+              <el-input v-model="dsModel.requestURL">
+                <template #append>
+                  <el-select v-model="dsModel.requestURLType" :placeholder="i18nt('designer.setting.dsRequestURLType')">
+                    <el-option :label="i18nt('designer.setting.dsURLStringType')" value="String"></el-option>
+                    <el-option :label="i18nt('designer.setting.dsURLVariableType')" value="Variable"></el-option>
+                  </el-select>
+                </template>
+              </el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item :label-width="0" prop="requestURLType" class="no-left-margin">
+          <!-- </el-col>
+          <el-col :span="4"> -->
+            <!-- <el-form-item :label-width="0" prop="requestURLType" class="no-left-margin">
               <el-select v-model="dsModel.requestURLType" :placeholder="i18nt('designer.setting.dsRequestURLType')">
                 <el-option :label="i18nt('designer.setting.dsURLStringType')" value="String"></el-option>
                 <el-option :label="i18nt('designer.setting.dsURLVariableType')" value="Variable"></el-option>
               </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            </el-form-item> -->
+          <!-- </el-col>
+        </el-row> -->
         <el-form-item :label="i18nt('designer.setting.dsDescription')" prop="description">
           <el-input type="textarea" v-model="dsModel.description" :rows="2"></el-input>
         </el-form-item>
@@ -451,6 +460,9 @@
       margin-bottom: 15px;
       padding: 8px;
       background: #f5f7fa;
+      .el-descriptions__label {
+        width: 30px;
+      }
     }
 
     :deep(.el-descriptions__title) {

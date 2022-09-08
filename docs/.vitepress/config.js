@@ -1,3 +1,5 @@
+import mdItCustomAttrs from 'markdown-it-custom-attrs'
+
 module.exports = {
   title: 'LowCode',
   description: 'LowCode document',
@@ -14,18 +16,25 @@ module.exports = {
     lastUpdated: true, // 获取每个文件最后一次 git 提交的 UNIX 时间戳(ms)，同时它将以合适的日期格式显示在每一页的底部
     smoothScroll: true, // 启动页面丝滑滚动
     logo: '/favicon.ico',
-    // 导航栏配置
-    nav: [
-      // {text: '我的个人网站', link: 'https://www.cooldream.fun/home' },
-      // {text: '掘金', link: 'https://juejin.cn/user/1855631359481847/posts'},
-      // {text: 'Github', link: 'https://github.com/Jack-Star-T'}
-    ],
     sidebar: {
       '/': getSidebar()
     }
   },
+  head: [
+    [
+      'link', {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css'},
+    ],
+    [
+      'script', {src: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js'}
+    ],
+  ],
   markdown: {
-    lineNumbers: true, // 代码块添加行标识 
+    lineNumbers: true, // 代码块添加行标识
+    config: (md) => {
+      md.use(mdItCustomAttrs, 'image', { // 点击图片可放大
+        'data-fancybox': 'gallery'
+      })
+    } 
   }
 }
 
@@ -34,17 +43,16 @@ function getSidebar() {
       {
           text: '介绍',
           items: [
-              { text: '基础', link: '/index.md' },
+              { text: '介绍', link: '/index.md' },
+              { text: '说明', link: '/instruction.md' },
           ],
           collapsible: true, // 配置可折叠侧边栏
-          // sidebarDepth:3
       },
       {
           text: '应用示例',
           items:[
-              { text: '基础', link: '/demo/demo.md' },
-              { text: '基础1', link: '/demo/demo1.md' },
-              { text: '基础2', link: '/demo/demo2.md' },
+              { text: '示例一', link: '/demo/demo1.md' },
+              { text: '示例二', link: '/demo/demo2.md' },
           ],
           collapsible: true,
       },
