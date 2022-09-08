@@ -3,16 +3,21 @@
     <div class="left">
       <img src="../../../assets/lowcode-logo.png" class="logo" />
       <i class="divider"></i>
-      <svg-icon
-        icon-class="op-undo"
-        :class-name="`undo ${undoDisabled ? 'disabled' : ''}`"
-        @click="undo"
-      />
-      <svg-icon
-        icon-class="op-redo"
-        :class-name="`redo ${redoDisabled ? 'disabled' : ''}`"
-        @click="redo"
-      />
+
+      <el-tooltip effect="light" content="撤销" placement="bottom">
+        <svg-icon
+          icon-class="op-undo"
+          :class-name="`undo ${undoDisabled ? 'disabled' : ''}`"
+          @click="undo"
+      /></el-tooltip>
+
+      <el-tooltip effect="light" content="重做" placement="bottom">
+        <svg-icon
+          icon-class="op-redo"
+          :class-name="`redo ${redoDisabled ? 'disabled' : ''}`"
+          @click="redo"
+        />
+      </el-tooltip>
     </div>
     <div class="middle">
       <span>表单宽度:</span>
@@ -31,13 +36,23 @@
       />
     </div>
     <div class="right">
-      <svg-icon icon-class="op-delete" @click="clearFormWidget" />
+      <el-tooltip effect="light" content="清空表单组件" placement="bottom">
+        <svg-icon icon-class="op-delete" @click="clearFormWidget"
+      /></el-tooltip>
       <i class="divider"></i>
 
-      <svg-icon icon-class="op-preview" @click="showPreviewDialog" />
-      <svg-icon icon-class="op-import" @click="showImportDialog" />
-      <svg-icon icon-class="op-export" @click="showExportDialog" />
-      <svg-icon icon-class="op-code" @click="showCodeDialog" />
+      <el-tooltip effect="light" content="预览表单" placement="bottom">
+        <svg-icon icon-class="op-preview" @click="showPreviewDialog"
+      /></el-tooltip>
+      <el-tooltip effect="light" content="导入JSON" placement="bottom">
+        <svg-icon icon-class="op-import" @click="showImportDialog"
+      /></el-tooltip>
+      <el-tooltip effect="light" content="导出JSON" placement="bottom">
+        <svg-icon icon-class="op-export" @click="showExportDialog"
+      /></el-tooltip>
+      <el-tooltip effect="light" content="导出代码" placement="bottom">
+        <svg-icon icon-class="op-code" @click="showCodeDialog"
+      /></el-tooltip>
       <i class="divider"></i>
 
       <el-select v-model="settingSize" @change="notifySettingSizeChange">
