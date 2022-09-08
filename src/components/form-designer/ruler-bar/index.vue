@@ -67,6 +67,7 @@ function generateRulerDatas() {
           : (displaySizes[index - 1] - size) / 2,
     }
   })
+
   // left值累加
   rulerDatas.value = rulerDatas.value.map((item, index) => {
     if (index > 0) {

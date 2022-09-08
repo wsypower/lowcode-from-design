@@ -3,8 +3,16 @@
     <div class="left">
       <img src="../../../assets/lowcode-logo.png" class="logo" />
       <i class="divider"></i>
-      <svg-icon icon-class="op-undo" class-name="undo disabled" />
-      <svg-icon icon-class="op-redo" class-name="redo" />
+      <svg-icon
+        icon-class="op-undo"
+        :class-name="`undo ${undoDisabled ? 'disabled' : ''}`"
+        @click="undo"
+      />
+      <svg-icon
+        icon-class="op-redo"
+        :class-name="`redo ${redoDisabled ? 'disabled' : ''}`"
+        @click="redo"
+      />
     </div>
     <div class="middle">
       <span>表单宽度:</span>
@@ -27,9 +35,9 @@
       <i class="divider"></i>
 
       <svg-icon icon-class="op-preview" @click="showPreviewDialog" />
-      <svg-icon icon-class="op-import" @click="importJson" />
-      <svg-icon icon-class="op-export" @click="exportJson" />
-      <svg-icon icon-class="op-code" @click="exportCode" />
+      <svg-icon icon-class="op-import" @click="showImportDialog" />
+      <svg-icon icon-class="op-export" @click="showExportDialog" />
+      <svg-icon icon-class="op-code" @click="showCodeDialog" />
       <i class="divider"></i>
 
       <el-select v-model="settingSize" @change="notifySettingSizeChange">
@@ -42,78 +50,47 @@
       </el-select>
     </div>
 
-    <div
-      v-if="previewDialogVisible"
-      class=""
-      v-drag="['.drag-dialog.el-dialog', '.drag-dialog .el-dialog__header']"
-    >
-      <el-dialog
-        :title="i18nt('designer.toolbar.preview')"
-        v-model="previewDialogVisible"
-        :show-close="true"
-        :close-on-click-modal="false"
-        :close-on-press-escape="false"
-        center
-        :destroy-on-close="true"
-        :append-to-body="true"
-        custom-class="drag-dialog small-padding-dialog"
-        width="75%"
-      >
-        <div>
-          <div class="form-render-wrapper">
-            <VFormRender
-              ref="previewFormRef"
-              :form-json="previewFormJson"
-              :form-data="previewFormData"
-              :option-data="previewOptionData"
-              :global-dsv="props.globalDsv"
-              :preview-state="true"
-            >
-            </VFormRender>
-          </div>
-        </div>
-        <template #footer>
-          <div class="dialog-footer">
-            <el-button type="primary" @click="getFormData">{{
-              i18nt('designer.hint.getFormData')
-            }}</el-button>
-            <el-button type="primary" @click="resetForm">{{
-              i18nt('designer.hint.resetForm')
-            }}</el-button>
-            <el-button type="primary" @click="setFormDisabled">{{
-              i18nt('designer.hint.disableForm')
-            }}</el-button>
-            <el-button type="primary" @click="setFormEnabled">{{
-              i18nt('designer.hint.enableForm')
-            }}</el-button>
-            <el-button type="primary" plain @click="switchReadMode">{{
-              i18nt('designer.hint.switchReadMode')
-            }}</el-button>
-            <el-button @click="previewDialogVisible = false">{{
-              i18nt('designer.hint.closePreview')
-            }}</el-button>
-            <el-button v-if="false" @click="testSetFormJson"
-              >setFormJson</el-button
-            >
-            <el-button v-if="false" @click="testSubFormHide"
-              >Test SFH</el-button
-            >
-            <el-button v-if="false" @click="testSetFormData"
-              >Test SFD</el-button
-            >
-          </div>
-        </template>
-      </el-dialog>
-    </div>
+    <preview-dialog
+      :visible="previewDialogVisible"
+      :designer="designer"
+      :globalDsv="globalDsv"
+      @close="hidePreviewDialog"
+    />
+
+    <import-dialog
+      :visible="importDialogVisible"
+      :designer="designer"
+      :globalDsv="globalDsv"
+      @close="hideImportDialog"
+    />
+
+    <export-dialog
+      :visible="exportDialogVisible"
+      :designer="designer"
+      :globalDsv="globalDsv"
+      @close="hideExportDialog"
+    />
+
+    <code-dialog
+      :visible="codeDialogVisible"
+      :designer="designer"
+      :globalDsv="globalDsv"
+      @close="hideCodeDialog"
+    />
   </el-header>
 </template>
 
 <script setup>
-import useI18n from '@/hooks/useI18n'
 import usePreview from '@/hooks/usePreview'
+import useImport from '@/hooks/useImport'
+import useExport from '@/hooks/useExport'
+import useCode from '@/hooks/useCode'
 import SvgIcon from '@/components/svg-icon/index'
-
-const { i18nt } = useI18n()
+import PreviewDialog from './components/preview-dialog'
+import ImportDialog from './components/import-dialog'
+import ExportDialog from './components/export-dialog'
+import CodeDialog from './components/code-dialog'
+import { computed } from 'vue'
 
 const emit = defineEmits(['sizeChange'])
 const props = defineProps({
@@ -127,21 +104,41 @@ const props = defineProps({
   },
 })
 
-const {
-  previewDialogVisible,
-  previewFormRef,
-  previewOptionData,
-  previewFormData,
-  previewFormJson,
-  clearFormWidget,
-  getFormData,
-  showPreviewDialog,
-} = usePreview(props.designer)
-
 const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 const settingSizes = ref(['default', 'large', 'small'])
 
 const formSize = ref(props.designer.formWidth)
+
+const { previewDialogVisible, showPreviewDialog, hidePreviewDialog } =
+  usePreview()
+const { importDialogVisible, showImportDialog, hideImportDialog } = useImport(
+  props.designer
+)
+const { exportDialogVisible, showExportDialog, hideExportDialog } = useExport(
+  props.designer
+)
+const { codeDialogVisible, showCodeDialog, hideCodeDialog } = useCode(
+  props.designer
+)
+
+const undoDisabled = computed(() =>
+  props.designer && props.designer.undoEnabled
+    ? !props.designer.undoEnabled()
+    : false
+)
+const redoDisabled = computed(() =>
+  props.designer && props.designer.redoEnabled
+    ? !props.designer.redoEnabled()
+    : false
+)
+
+function undo() {
+  props.designer.undoHistoryStep()
+}
+
+function redo() {
+  props.designer.redoHistoryStep()
+}
 
 function notifySettingSizeChange(size) {
   emit('sizeChange', size)
@@ -154,6 +151,10 @@ function onFormSizeChange(formSize) {
   } else {
     props.designer.changeFormCustomize(true)
   }
+}
+
+function clearFormWidget() {
+  props.designer && props.designer.clearDesigner()
 }
 </script>
 
