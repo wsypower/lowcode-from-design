@@ -2,10 +2,10 @@
 
 
 # 介绍
-<ImagesVue :img-src="'../public/images/index.png'"></ImagesVue>
+<ImagesVue :img-src="'../public/images/index.png'" :tipsText="'(点击图片可放大查看)'"></ImagesVue>
 
 LowCode是基于Vue 3.x的低代码表单，支持Element PlusUI库，定位为前端开发人员提供快速搭建表单、实现表单交互和数据收集的功能。
 
 LowCode由表单设计器和表单渲染器两部分构成，表单设计器通过拖拽组件方式生成JSON格式的表单对象，表单渲染器负责将表单JSON渲染为Vue组件。
 
-LowCode提供了丰富的组件属性设置、交互事件和API方法，立即体验点此进入：[LowCode在线表单设计器](https://www.baidu.com)
+LowCode提供了丰富的组件属性设置、交互事件和API方法，立即体验点此进入：[LowCode在线表单设计器](http://120.92.142.115:81/vform3/)

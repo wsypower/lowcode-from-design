@@ -51,10 +51,20 @@ function getSidebar() {
       {
           text: '应用示例',
           items:[
-              { text: '示例一', link: '/demo/demo1.md' },
-              { text: '示例二', link: '/demo/demo2.md' },
+              { text: '一个表单', link: '/examples/example1.md' },
+              { text: '交互事件', link: '/examples/example2.md' },
+              { text: '下拉组件选择联动', link: '/examples/example3.md' },
           ],
           collapsible: true,
       },
+      {
+        text: '使用手册',
+        items:[
+            { text: '表单及组件属性设置', link: '/userGuide/guide1.md' },
+            { text: '栅格布局使用', link: '/userGuide/guide2.md' },
+            { text: '设计器即成后端字段接口', link: '/userGuide/guide3.md' },
+        ],
+        collapsible: true,
+    },
   ]
 }

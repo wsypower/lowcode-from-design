@@ -1,7 +1,7 @@
 <template>
   <p></p>
   <img alt="alt" :src="props.imgSrc" data-fancybox="gallery" class="img" />
-  <div class="tips">{{props.tipsText}}</div>
+  <div class="tips" v-if="props.tipsText">{{props.tipsText}}</div>
 </template>
 
 <script setup>
@@ -12,7 +12,7 @@
     tipsText: {
       type: String,
       default: () => {
-        return '点击图片可放大查看'
+        return ''
       }
     }
   })
