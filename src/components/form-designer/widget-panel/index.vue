@@ -32,17 +32,13 @@
                     :title="ctn.displayName"
                     @dblclick="addContainerByDbClick(ctn)"
                   >
-                    <span
-                      ><svg-icon
-                        :icon-class="ctn.icon"
-                        class-name="widget-icon"
-                      />{{
-                        i18n2t(
-                          `designer.widgetLabel.${ctn.type}`,
-                          `extension.widgetLabel.${ctn.type}`
-                        )
-                      }}</span
-                    >
+                    <svg-icon :icon-class="ctn.icon" class-name="widget-icon" />
+                    <span>{{
+                      i18n2t(
+                        `designer.widgetLabel.${ctn.type}`,
+                        `extension.widgetLabel.${ctn.type}`
+                      )
+                    }}</span>
                   </li>
                 </template>
               </draggable>
@@ -68,17 +64,13 @@
                     :title="fld.displayName"
                     @dblclick="addFieldByDbClick(fld)"
                   >
-                    <span
-                      ><svg-icon
-                        :icon-class="fld.icon"
-                        class-name="widget-icon"
-                      />{{
-                        i18n2t(
-                          `designer.widgetLabel.${fld.type}`,
-                          `extension.widgetLabel.${fld.type}`
-                        )
-                      }}</span
-                    >
+                    <svg-icon :icon-class="fld.icon" class-name="widget-icon" />
+                    <span>{{
+                      i18n2t(
+                        `designer.widgetLabel.${fld.type}`,
+                        `extension.widgetLabel.${fld.type}`
+                      )
+                    }}</span>
                   </li>
                 </template>
               </draggable>
@@ -104,17 +96,13 @@
                     :title="fld.displayName"
                     @dblclick="addFieldByDbClick(fld)"
                   >
-                    <span
-                      ><svg-icon
-                        :icon-class="fld.icon"
-                        class-name="widget-icon"
-                      />{{
-                        i18n2t(
-                          `designer.widgetLabel.${fld.type}`,
-                          `extension.widgetLabel.${fld.type}`
-                        )
-                      }}</span
-                    >
+                    <svg-icon :icon-class="fld.icon" class-name="widget-icon" />
+                    <span>{{
+                      i18n2t(
+                        `designer.widgetLabel.${fld.type}`,
+                        `extension.widgetLabel.${fld.type}`
+                      )
+                    }}</span>
                   </li>
                 </template>
               </draggable>
@@ -140,17 +128,13 @@
                     :title="fld.displayName"
                     @dblclick="addFieldByDbClick(fld)"
                   >
-                    <span>
-                      <svg-icon
-                        :icon-class="fld.icon"
-                        class-name="widget-icon"
-                      />{{
-                        i18n2t(
-                          `designer.widgetLabel.${fld.type}`,
-                          `extension.widgetLabel.${fld.type}`
-                        )
-                      }}</span
-                    >
+                    <svg-icon :icon-class="fld.icon" class-name="widget-icon" />
+                    <span>{{
+                      i18n2t(
+                        `designer.widgetLabel.${fld.type}`,
+                        `extension.widgetLabel.${fld.type}`
+                      )
+                    }}</span>
                   </li>
                 </template>
               </draggable>
@@ -443,6 +427,8 @@ ul {
 
     .container-widget-item,
     .field-widget-item {
+      display: flex;
+      align-items: center;
       padding-left: 32px;
       height: 32px;
       line-height: 32px;
