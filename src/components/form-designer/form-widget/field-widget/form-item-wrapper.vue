@@ -381,6 +381,7 @@ export default {
 
 .static-content-item {
   min-height: 20px;
+  margin-bottom: 18px;
   display: flex; /* 垂直居中 */
   align-items: center; /* 垂直居中 */
 
