@@ -5,6 +5,7 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :append-to-body="true"
+    :destroy-on-close="true"
     center
     width="75%"
     @close="notifyClose"
@@ -13,17 +14,16 @@
       <div class="form-render-wrapper">
         <VFormRender
           ref="previewFormRef"
-          :form-json="previewFormJson"
-          :form-data="previewFormData"
-          :option-data="previewOptionData"
-          :global-dsv="props.globalDsv"
           :preview-state="true"
+          :form-json="previewFormJson"
+          :global-dsv="props.globalDsv"
         >
         </VFormRender>
       </div>
     </div>
     <template #footer>
       <div class="dialog-footer">
+        <el-button type="primary" @click="resetForm">重置表单</el-button>
         <el-button @click="notifyClose">关闭</el-button>
       </div>
     </template>
@@ -49,8 +49,17 @@ const props = defineProps({
   },
 })
 
-const { previewFormRef, previewOptionData, previewFormData, previewFormJson } =
+const { previewFormRef, previewFormJson, generateFormJson, resetForm } =
   usePreview(props.designer)
+
+watch(
+  () => props.visible,
+  (val) => {
+    if (val) {
+      generateFormJson()
+    }
+  }
+)
 
 function notifyClose() {
   emit('close')
