@@ -27,7 +27,8 @@ export const containers = [
       offset: 0,
       push: 0,
       pull: 0,
-      responsive: false, //是否开启响应式布局
+      // 由于去掉了H5 和 Pad的布局切换，responsive的设置也不再需要了，故隐藏掉
+      // responsive: false, //是否开启响应式布局
       md: 12,
       sm: 12,
       xs: 12,
