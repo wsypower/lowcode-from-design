@@ -1,7 +1,7 @@
 <template>
   <el-header class="top-header">
     <div class="left">
-      <img src="../../../assets/lowcode-logo.png" class="logo" />
+      <svg-icon icon-class="logo" class-name="logo" />
       <i class="divider"></i>
 
       <el-tooltip effect="light" content="撤销" placement="bottom">
@@ -200,6 +200,10 @@ function clearFormWidget() {
   :deep(.el-input-number .el-icon) {
     position: relative;
     top: 3px;
+  }
+
+  .logo {
+    width: 102px;
   }
 
   .left,

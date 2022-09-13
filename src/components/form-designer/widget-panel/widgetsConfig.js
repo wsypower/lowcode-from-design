@@ -721,7 +721,7 @@ export const basicFields = [
 
   {
     type: 'time',
-    icon: 'time-field',
+    icon: 'widget-time',
     formItemFlag: true,
     options: {
       name: '',
@@ -761,7 +761,7 @@ export const basicFields = [
 
   {
     type: 'time-range',
-    icon: 'time-range-field',
+    icon: 'widget-time-range',
     formItemFlag: true,
     options: {
       name: '',
@@ -802,7 +802,7 @@ export const basicFields = [
 
   {
     type: 'date',
-    icon: 'date-field',
+    icon: 'widget-date',
     formItemFlag: true,
     options: {
       name: '',
@@ -844,7 +844,7 @@ export const basicFields = [
 
   {
     type: 'date-range',
-    icon: 'date-range-field',
+    icon: 'widget-date-range',
     formItemFlag: true,
     options: {
       name: '',
@@ -919,7 +919,7 @@ export const basicFields = [
 
   {
     type: 'slider',
-    icon: 'slider-field',
+    icon: 'widget-slider',
     formItemFlag: true,
     options: {
       name: '',
@@ -957,7 +957,7 @@ export const basicFields = [
 
   {
     type: 'static-text',
-    icon: 'static-text',
+    icon: 'widget-static-text',
     formItemFlag: false,
     options: {
       name: '',
@@ -974,7 +974,7 @@ export const basicFields = [
 
   {
     type: 'html-text',
-    icon: 'html-text',
+    icon: 'widget-html-text',
     formItemFlag: false,
     options: {
       name: '',
@@ -991,7 +991,7 @@ export const basicFields = [
 
   {
     type: 'button',
-    icon: 'button',
+    icon: 'widget-button',
     formItemFlag: false,
     options: {
       name: '',
@@ -1038,7 +1038,7 @@ export const basicFields = [
 export const advancedFields = [
   {
     type: 'picture-upload',
-    icon: 'picture-upload-field',
+    icon: 'widget-img-upload',
     formItemFlag: true,
     options: {
       name: '',
@@ -1082,7 +1082,7 @@ export const advancedFields = [
 
   {
     type: 'file-upload',
-    icon: 'file-upload-field',
+    icon: 'widget-file-upload',
     formItemFlag: true,
     options: {
       name: '',
@@ -1126,7 +1126,7 @@ export const advancedFields = [
 
   {
     type: 'rich-editor',
-    icon: 'rich-editor-field',
+    icon: 'widget-rich-editor',
     formItemFlag: true,
     options: {
       name: '',
@@ -1160,7 +1160,7 @@ export const advancedFields = [
 
   {
     type: 'cascader',
-    icon: 'cascader-field',
+    icon: 'widget-cascader',
     formItemFlag: true,
     options: {
       name: '',

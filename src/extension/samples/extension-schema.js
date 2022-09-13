@@ -17,7 +17,7 @@ export const cardSchema = {
 
 export const alertSchema = {
   type: 'alert',
-  icon: 'alert',
+  icon: 'widget-alert',
   formItemFlag: false,
   options: {
     name: '',
