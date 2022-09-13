@@ -11,9 +11,10 @@ module.exports = {
     '@vuepress/medium-zoom',          // 图片预览插件
     '@vuepress/nprogress',        //页面顶部进度条
   ],
+  lastUpdated: true, // 获取每个文件最后一次 git 提交的 UNIX 时间戳(ms)，同时它将以合适的日期格式显示在每一页的底部
   // 主题配置
   themeConfig: {
-    lastUpdated: true, // 获取每个文件最后一次 git 提交的 UNIX 时间戳(ms)，同时它将以合适的日期格式显示在每一页的底部
+    // lastUpdatedText:'最后更新',
     smoothScroll: true, // 启动页面丝滑滚动
     logo: '/favicon.ico',
     sidebar: {
@@ -51,7 +52,7 @@ function getSidebar() {
       {
           text: '应用示例',
           items:[
-              { text: '一个表单', link: '/examples/example1.md' },
+              { text: '一个简单的表单', link: '/examples/example1.md' },
               { text: '交互事件', link: '/examples/example2.md' },
               { text: '下拉组件选择联动', link: '/examples/example3.md' },
           ],

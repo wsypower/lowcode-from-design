@@ -1,6 +1,7 @@
 import DefaultTheme from "vitepress/theme"
 import "element-plus/dist/index.css"
 import ImagesVue from '../../components/Images.vue'
+import './styles/index.css'
 
 export default {
   ...DefaultTheme,

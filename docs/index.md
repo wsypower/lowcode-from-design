@@ -1,8 +1,7 @@
+# 介绍
 >表单引擎是为快速实施项目研发的轻量级表单设计工具。采用表单引擎工具可在不开发和新增加代码的情况下设计出新表单样式，同比程序开发可省掉程序员差不多70%的开发工作量，并且后期维护相对简单。
 
-
-# 介绍
-<ImagesVue :img-src="'../public/images/index.png'" :tipsText="'(点击图片可放大查看)'"></ImagesVue>
+<ImagesVue :img-src="'/images/index.png'" :tipsText="'(点击图片可放大查看)'"></ImagesVue>
 
 LowCode是基于Vue 3.x的低代码表单，支持Element PlusUI库，定位为前端开发人员提供快速搭建表单、实现表单交互和数据收集的功能。
 
