@@ -1,11 +1,15 @@
 # 一个简单的表单
+
 ## 效果演示
+
 一个简单的表单：
 <ImagesVue :img-src="'/images/example1/example1.png'" :tipsText="'(点击图片可放大查看，以下所有图片同)'" />
 
 ## 在线体验
+
 表单 JSON 如下，复制 JSON，在表单设计器（[点此进入](http://120.92.142.115:81/vform3/)）中选择‘导入 JSON’即可看到效果
 ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
+
 ```JSON
 {
   "widgetList": [
@@ -47,7 +51,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "minLength": null,
@@ -129,7 +133,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "onCreated": "",
@@ -199,7 +203,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "min": -100000000000,
@@ -285,7 +289,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "onCreated": "",
@@ -360,7 +364,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "minLength": null,
@@ -441,30 +445,36 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
 ```
 
 ## 如何生成
+
 #### 1. 选择容器
->从左侧组件库中选中栅格组件拖拽至中间后放开即可，此时右侧的组件设置tab即为对拖拽选中组件（栅格组件）的属性设置
-<ImagesVue :img-src="'/images/example1/step1.png'" />
-<br />
+
+> 从左侧组件库中选中栅格组件拖拽至中间后放开即可，此时右侧的组件设置 tab 即为对拖拽选中组件（栅格组件）的属性设置
+> <ImagesVue :img-src="'/images/example1/step1.png'" />
+> <br />
 
 #### 2. 拖拽设置表单项
+
 （1）姓名
->字段组件的唯一名称属性为提交给后端的字段名，同一表单中唯一名称不可重复。标签属性为左侧label名。勾选必填字段属性则提交表单时会自动校验是否有值。
-<ImagesVue :img-src="'/images/example1/step2.png'" />
+
+> 字段组件的唯一名称属性为提交给后端的字段名，同一表单中唯一名称不可重复。标签属性为左侧 label 名。勾选必填字段属性则提交表单时会自动校验是否有值。
+> <ImagesVue :img-src="'/images/example1/step2.png'" />
 
 （2）性别
->单选项的选项设置可直接在右侧属性设置，并选好默认选中项（也可以不选）
-<ImagesVue :img-src="'/images/example1/step3.png'" />
+
+> 单选项的选项设置可直接在右侧属性设置，并选好默认选中项（也可以不选）
+> <ImagesVue :img-src="'/images/example1/step3.png'" />
 
 （3）年龄
 <ImagesVue :img-src="'/images/example1/step4.png'" />
 （4）教育程度
 <ImagesVue :img-src="'/images/example1/step5.png'" />
 （5）其他
->重新拖拽个栅格组件并选中右边栅格列，点击删除按钮
-<ImagesVue :img-src="'/images/example1/step6.png'" />
 
->栅格宽度设置为24，视为占满一行
-<ImagesVue :img-src="'/images/example1/step7.png'" />
+> 重新拖拽个栅格组件并选中右边栅格列，点击删除按钮
+> <ImagesVue :img-src="'/images/example1/step6.png'" />
+
+> 栅格宽度设置为 24，视为占满一行
+> <ImagesVue :img-src="'/images/example1/step7.png'" />
 
 <ImagesVue :img-src="'/images/example1/step8.png'" />
 点击右上方预览按钮即可预览表单

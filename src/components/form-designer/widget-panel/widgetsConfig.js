@@ -476,7 +476,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       minLength: null,
@@ -523,7 +523,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       minLength: null,
@@ -562,7 +562,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       min: -100000000000,
@@ -613,7 +613,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -657,7 +657,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -706,7 +706,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -747,7 +747,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -788,7 +788,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -830,7 +830,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -873,7 +873,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -902,7 +902,7 @@ export const basicFields = [
       hidden: false,
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       switchWidth: 40,
@@ -939,7 +939,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       min: 0,
@@ -1066,7 +1066,7 @@ export const advancedFields = [
       //headers: [],
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -1110,7 +1110,7 @@ export const advancedFields = [
       //headers: [],
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -1146,7 +1146,7 @@ export const advancedFields = [
       customRuleHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       minLength: null,
@@ -1199,7 +1199,7 @@ export const advancedFields = [
       customRuleHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------

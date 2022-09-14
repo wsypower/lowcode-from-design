@@ -598,14 +598,14 @@ export function buildFieldWidget(widget, formConfig) {
   let customLabelDom = `<template #label><span class="custom-label">${
     wop.labelIconPosition === 'front'
       ? !!wop.labelTooltip
-        ? `<el-tooltip content="${wop.labelTooltip}" effect="light"><i class="${wop.labelIconClass}"></i></el-tooltip>${wop.label}`
-        : `<i class="${wop.labelIconClass}"></i>${wop.label}`
+        ? `<el-tooltip content="${wop.labelTooltip}" effect="light"><i class="${wop.labelIcon}"></i></el-tooltip>${wop.label}`
+        : `<i class="${wop.labelIcon}"></i>${wop.label}`
       : !!wop.labelTooltip
-      ? `${wop.label}<el-tooltip content="${wop.labelTooltip}" effect="light"><i class="${wop.labelIconClass}"></i></el-tooltip>`
-      : `${wop.label}<i class="${wop.labelIconClass}"></i>`
+      ? `${wop.label}<el-tooltip content="${wop.labelTooltip}" effect="light"><i class="${wop.labelIcon}"></i></el-tooltip>`
+      : `${wop.label}<i class="${wop.labelIcon}"></i>`
   }
 </span></template>`
-  !wop.labelIconClass && (customLabelDom = '')
+  !wop.labelIcon && (customLabelDom = '')
 
   const fwDom = elTemplates[widget.type]
     ? elTemplates[widget.type](widget, formConfig)

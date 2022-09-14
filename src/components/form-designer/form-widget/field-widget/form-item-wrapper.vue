@@ -31,18 +31,19 @@
       @click.stop="selectField(field)"
     >
       <template #label>
-        <span v-if="!!field.options.labelIconClass" class="custom-label">
+        <span v-if="!!field.options.labelIcon" class="custom-label">
           <template v-if="field.options.labelIconPosition === 'front'">
             <template v-if="!!field.options.labelTooltip">
               <el-tooltip :content="field.options.labelTooltip" effect="light">
-                <svg-icon
-                  :icon-class="field.options.labelIconClass" /></el-tooltip
+                <el-icon class="front">
+                  <component :is="field.options.labelIcon" />
+                </el-icon> </el-tooltip
               >{{ label }}</template
             >
             <template v-else>
-              <svg-icon :icon-class="field.options.labelIconClass" />{{
-                label
-              }}</template
+              <el-icon class="front">
+                <component :is="field.options.labelIcon" /></el-icon
+              >{{ label }}</template
             >
           </template>
           <template v-else-if="field.options.labelIconPosition === 'rear'">
@@ -52,12 +53,15 @@
                 :content="field.options.labelTooltip"
                 effect="light"
               >
-                <svg-icon
-                  :icon-class="field.options.labelIconClass" /></el-tooltip
+                <el-icon class="rear">
+                  <component
+                    :is="field.options.labelIcon" /></el-icon></el-tooltip
             ></template>
             <template v-else>
-              {{ label }}<svg-icon :icon-class="field.options.labelIconClass"
-            /></template>
+              {{ label }}
+              <el-icon class="rear"
+                ><component :is="field.options.labelIcon" /></el-icon
+            ></template>
           </template>
         </span>
       </template>
@@ -408,5 +412,18 @@ export default {
 :deep(.label-right-align) .el-form-item__label {
   text-align: right;
   justify-content: flex-end !important;
+}
+
+.custom-label {
+  display: inline-flex;
+  align-items: center;
+
+  :deep(.el-icon .front) {
+    margin-right: 0.3em;
+  }
+
+  :deep(.el-icon .rear) {
+    margin-left: 0.3em;
+  }
 }
 </style>
