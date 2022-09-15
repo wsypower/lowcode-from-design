@@ -2,21 +2,27 @@ import Clipboard from 'clipboard'
 import axios from 'axios'
 
 export function isNull(value) {
-  return (value === null) || (value === undefined);
+  return value === null || value === undefined
 }
 
 export function isNotNull(value) {
-  return (value !== null) && (value !== undefined);
+  return value !== null && value !== undefined
 }
 
 export function isEmptyStr(str) {
   //return (str === undefined) || (!str) || (!/[^\s]/.test(str));
-  return (str === undefined) || (!str && (str !== 0) && (str !== '0')) || (!/[^\s]/.test(str));
+  return (
+    str === undefined ||
+    (!str && str !== 0 && str !== '0') ||
+    !/[^\s]/.test(str)
+  )
 }
 
-export const generateId = function() {
-  return Math.floor(Math.random() * 100000 + Math.random() * 20000 + Math.random() * 5000);
-};
+export const generateId = function () {
+  return Math.floor(
+    Math.random() * 100000 + Math.random() * 20000 + Math.random() * 5000
+  )
+}
 
 export const deepClone = function (origin) {
   if (origin === undefined) {
@@ -26,14 +32,15 @@ export const deepClone = function (origin) {
   return JSON.parse(JSON.stringify(origin))
 }
 
-export const overwriteObj = function(obj1, obj2) {  /* 浅拷贝对象属性，obj2覆盖obj1 */
+export const overwriteObj = function (obj1, obj2) {
+  /* 浅拷贝对象属性，obj2覆盖obj1 */
   // for (let prop in obj2) {
   //   if (obj2.hasOwnProperty(prop)) {
   //     obj1[prop] = obj2[prop]
   //   }
   // }
 
-  Object.keys(obj2).forEach(prop => {
+  Object.keys(obj2).forEach((prop) => {
     obj1[prop] = obj2[prop]
   })
 }
@@ -50,55 +57,64 @@ export const addWindowResizeHandler = function (handler) {
   }
 }
 
-const createStyleSheet = function() {
-  let head = document.head || document.getElementsByTagName('head')[0];
-  let style = document.createElement('style');
-  style.type = 'text/css';
-  head.appendChild(style);
-  return style.sheet;
+const createStyleSheet = function () {
+  let head = document.head || document.getElementsByTagName('head')[0]
+  let style = document.createElement('style')
+  style.type = 'text/css'
+  head.appendChild(style)
+  return style.sheet
 }
 
 export const insertCustomCssToHead = function (cssCode, formId = '') {
   let head = document.getElementsByTagName('head')[0]
   let oldStyle = document.getElementById('vform-custom-css')
   if (!!oldStyle) {
-    head.removeChild(oldStyle)  //先清除后插入！！
+    head.removeChild(oldStyle) //先清除后插入！！
   }
   if (!!formId) {
     oldStyle = document.getElementById('vform-custom-css' + '-' + formId)
-    !!oldStyle && head.removeChild(oldStyle)  //先清除后插入！！
+    !!oldStyle && head.removeChild(oldStyle) //先清除后插入！！
   }
 
   let newStyle = document.createElement('style')
   newStyle.type = 'text/css'
   newStyle.rel = 'stylesheet'
-  newStyle.id = !!formId ? 'vform-custom-css' + '-' + formId : 'vform-custom-css'
+  newStyle.id = !!formId
+    ? 'vform-custom-css' + '-' + formId
+    : 'vform-custom-css'
   try {
     newStyle.appendChild(document.createTextNode(cssCode))
-  } catch(ex) {
+  } catch (ex) {
     newStyle.styleSheet.cssText = cssCode
   }
 
   head.appendChild(newStyle)
 }
 
-export const insertGlobalFunctionsToHtml = function (functionsCode, formId = '') {
+export const insertGlobalFunctionsToHtml = function (
+  functionsCode,
+  formId = ''
+) {
   let bodyEle = document.getElementsByTagName('body')[0]
   let oldScriptEle = document.getElementById('v_form_global_functions')
-  !!oldScriptEle && bodyEle.removeChild(oldScriptEle)  //先清除后插入！！
+  !!oldScriptEle && bodyEle.removeChild(oldScriptEle) //先清除后插入！！
   if (!!formId) {
-    oldScriptEle = document.getElementById('v_form_global_functions' + '-' + formId)
-    !!oldScriptEle && bodyEle.removeChild(oldScriptEle)  //先清除后插入！！
+    oldScriptEle = document.getElementById(
+      'v_form_global_functions' + '-' + formId
+    )
+    !!oldScriptEle && bodyEle.removeChild(oldScriptEle) //先清除后插入！！
   }
 
   let newScriptEle = document.createElement('script')
-  newScriptEle.id = !!formId ? 'v_form_global_functions' + '-' + formId : 'v_form_global_functions'
+  newScriptEle.id = !!formId
+    ? 'v_form_global_functions' + '-' + formId
+    : 'v_form_global_functions'
   newScriptEle.type = 'text/javascript'
   newScriptEle.innerHTML = functionsCode
   bodyEle.appendChild(newScriptEle)
 }
 
-export const optionExists = function(optionsObj, optionName) {
+export const optionExists = function (optionsObj, optionName) {
   if (!optionsObj) {
     return false
   }
@@ -106,7 +122,8 @@ export const optionExists = function(optionsObj, optionName) {
   return Object.keys(optionsObj).indexOf(optionName) > -1
 }
 
-export const loadRemoteScript = function(srcPath, callback) {  /*加载远程js，加载成功后执行回调函数*/
+export const loadRemoteScript = function (srcPath, callback) {
+  /*加载远程js，加载成功后执行回调函数*/
   let sid = encodeURIComponent(srcPath)
   let oldScriptEle = document.getElementById(sid)
 
@@ -116,8 +133,14 @@ export const loadRemoteScript = function(srcPath, callback) {  /*加载远程js�
     s.id = sid
     document.body.appendChild(s)
 
-    s.onload = s.onreadystatechange = function (_, isAbort) { /* 借鉴自ace.js */
-      if (isAbort || !s.readyState || s.readyState === "loaded" || s.readyState === "complete") {
+    s.onload = s.onreadystatechange = function (_, isAbort) {
+      /* 借鉴自ace.js */
+      if (
+        isAbort ||
+        !s.readyState ||
+        s.readyState === 'loaded' ||
+        s.readyState === 'complete'
+      ) {
         s = s.onload = s.onreadystatechange = null
         if (!isAbort) {
           callback()
@@ -128,89 +151,92 @@ export const loadRemoteScript = function(srcPath, callback) {  /*加载远程js�
 }
 
 export function traverseFieldWidgets(widgetList, handler, parent = null) {
-  widgetList.map(w => {
+  widgetList.map((w) => {
     if (w.formItemFlag) {
       handler(w, parent)
     } else if (w.type === 'grid') {
-      w.cols.map(col => {
+      w.cols.map((col) => {
         traverseFieldWidgets(col.widgetList, handler, w)
       })
     } else if (w.type === 'table') {
-      w.rows.map(row => {
-        row.cols.map(cell => {
+      w.rows.map((row) => {
+        row.cols.map((cell) => {
           traverseFieldWidgets(cell.widgetList, handler, w)
         })
       })
     } else if (w.type === 'tab') {
-      w.tabs.map(tab => {
+      w.tabs.map((tab) => {
         traverseFieldWidgets(tab.widgetList, handler, w)
       })
     } else if (w.type === 'sub-form' || w.type === 'grid-sub-form') {
       traverseFieldWidgets(w.widgetList, handler, w)
-    } else if (w.category === 'container') {  //自定义容器
+    } else if (w.category === 'container') {
+      //自定义容器
       traverseFieldWidgets(w.widgetList, handler, w)
     }
   })
 }
 
 export function traverseContainerWidgets(widgetList, handler) {
-  widgetList.map(w => {
+  widgetList.map((w) => {
     if (w.category === 'container') {
       handler(w)
     }
 
     if (w.type === 'grid') {
-      w.cols.map(col => {
+      w.cols.map((col) => {
         traverseContainerWidgets(col.widgetList, handler)
       })
     } else if (w.type === 'table') {
-      w.rows.map(row => {
-        row.cols.map(cell => {
+      w.rows.map((row) => {
+        row.cols.map((cell) => {
           traverseContainerWidgets(cell.widgetList, handler)
         })
       })
     } else if (w.type === 'tab') {
-      w.tabs.map(tab => {
+      w.tabs.map((tab) => {
         traverseContainerWidgets(tab.widgetList, handler)
       })
     } else if (w.type === 'sub-form' || w.type === 'grid-sub-form') {
       traverseContainerWidgets(w.widgetList, handler)
-    } else if (w.category === 'container') {  //自定义容器
+    } else if (w.category === 'container') {
+      //自定义容器
       traverseContainerWidgets(w.widgetList, handler)
     }
   })
 }
 
 export function traverseAllWidgets(widgetList, handler) {
-  widgetList.map(w => {
+  widgetList.map((w) => {
     handler(w)
 
     if (w.type === 'grid') {
-      w.cols.map(col => {
+      w.cols.map((col) => {
         handler(col)
         traverseAllWidgets(col.widgetList, handler)
       })
     } else if (w.type === 'table') {
-      w.rows.map(row => {
-        row.cols.map(cell => {
+      w.rows.map((row) => {
+        row.cols.map((cell) => {
           handler(cell)
           traverseAllWidgets(cell.widgetList, handler)
         })
       })
     } else if (w.type === 'tab') {
-      w.tabs.map(tab => {
+      w.tabs.map((tab) => {
         traverseAllWidgets(tab.widgetList, handler)
       })
     } else if (w.type === 'sub-form' || w.type === 'grid-sub-form') {
       traverseAllWidgets(w.widgetList, handler)
-    } else if (w.category === 'container') {  //自定义容器
+    } else if (w.category === 'container') {
+      //自定义容器
       traverseAllWidgets(w.widgetList, handler)
     }
   })
 }
 
 function handleWidgetForTraverse(widget, handler) {
-  if (!!widget.category && (widget.category === 'container')) {
+  if (!!widget.category && widget.category === 'container') {
     traverseFieldWidgetsOfContainer(widget, handler)
   } else if (widget.formItemFlag) {
     handler(widget)
@@ -224,31 +250,32 @@ function handleWidgetForTraverse(widget, handler) {
  */
 export function traverseFieldWidgetsOfContainer(con, handler) {
   if (con.type === 'grid') {
-    con.cols.forEach(col => {
-      col.widgetList.forEach(cw => {
+    con.cols.forEach((col) => {
+      col.widgetList.forEach((cw) => {
         handleWidgetForTraverse(cw, handler)
       })
     })
   } else if (con.type === 'table') {
-    con.rows.forEach(row => {
-      row.cols.forEach(cell => {
-        cell.widgetList.forEach(cw => {
+    con.rows.forEach((row) => {
+      row.cols.forEach((cell) => {
+        cell.widgetList.forEach((cw) => {
           handleWidgetForTraverse(cw, handler)
         })
       })
     })
   } else if (con.type === 'tab') {
-    con.tabs.forEach(tab => {
-      tab.widgetList.forEach(cw => {
+    con.tabs.forEach((tab) => {
+      tab.widgetList.forEach((cw) => {
         handleWidgetForTraverse(cw, handler)
       })
     })
   } else if (con.type === 'sub-form' || con.type === 'grid-sub-form') {
-    con.widgetList.forEach(cw => {
+    con.widgetList.forEach((cw) => {
       handleWidgetForTraverse(cw, handler)
     })
-  } else if (con.category === 'container') {  //自定义容器
-    con.widgetList.forEach(cw => {
+  } else if (con.category === 'container') {
+    //自定义容器
+    con.widgetList.forEach((cw) => {
       handleWidgetForTraverse(cw, handler)
     })
   }
@@ -265,7 +292,7 @@ export function getAllFieldWidgets(widgetList) {
     result.push({
       type: w.type,
       name: w.options.name,
-      field: w
+      field: w,
     })
   }
   traverseFieldWidgets(widgetList, handlerFn)
@@ -284,7 +311,7 @@ export function getAllContainerWidgets(widgetList) {
     result.push({
       type: w.type,
       name: w.options.name,
-      container: w
+      container: w,
     })
   }
   traverseContainerWidgets(widgetList, handlerFn)
@@ -328,9 +355,15 @@ export function getContainerWidgetById(widgetList, containerId) {
   return foundContainer
 }
 
-export function copyToClipboard(content, clickEvent, $message, successMsg, errorMsg) {
+export function copyToClipboard(
+  content,
+  clickEvent,
+  $message,
+  successMsg,
+  errorMsg
+) {
   const clipboard = new Clipboard(clickEvent.target, {
-    text: () => content
+    text: () => content,
   })
 
   clipboard.on('success', () => {
@@ -347,16 +380,16 @@ export function copyToClipboard(content, clickEvent, $message, successMsg, error
 }
 
 export function getQueryParam(variable) {
-  let query = window.location.search.substring(1);
-  let vars = query.split("&")
-  for (let i=0; i<vars.length; i++) {
-    let pair = vars[i].split("=")
-    if(pair[0] == variable) {
+  let query = window.location.search.substring(1)
+  let vars = query.split('&')
+  for (let i = 0; i < vars.length; i++) {
+    let pair = vars[i].split('=')
+    if (pair[0] == variable) {
       return pair[1]
     }
   }
 
-  return undefined;
+  return undefined
 }
 
 export function getDefaultFormConfig() {
@@ -366,14 +399,14 @@ export function getDefaultFormConfig() {
     rulesName: 'rules',
     labelWidth: 80,
     labelPosition: 'left',
-    size: '',
+    size: 'default',
     labelAlign: 'label-left-align',
     cssCode: '',
     customClass: '',
-    functions: '',  //全局函数
+    functions: '', //全局函数
     layoutType: 'PC',
     jsonVersion: 3,
-    dataSources: [],  //数据源集合
+    dataSources: [], //数据源集合
 
     onFormCreated: '',
     onFormMounted: '',
@@ -384,7 +417,7 @@ export function getDefaultFormConfig() {
 export function buildDefaultFormJson() {
   return {
     widgetList: [],
-    formConfig: deepClone( getDefaultFormConfig() )
+    formConfig: deepClone(getDefaultFormConfig()),
   }
 }
 
@@ -406,16 +439,17 @@ export function cloneFormConfigWithoutEventHandler(formConfig) {
  * @returns {[]}
  */
 export function translateOptionItems(rawData, widgetType, labelKey, valueKey) {
-  if (widgetType === 'cascader') { // 级联选择不转译
+  if (widgetType === 'cascader') {
+    // 级联选择不转译
     return deepClone(rawData)
   }
 
   let result = []
-  if (!!rawData && (rawData.length > 0)) {
-    rawData.forEach(ri => {
+  if (!!rawData && rawData.length > 0) {
+    rawData.forEach((ri) => {
       result.push({
         label: ri[labelKey],
-        value: ri[valueKey]
+        value: ri[valueKey],
       })
     })
   }
@@ -432,19 +466,19 @@ export function translateOptionItems(rawData, widgetType, labelKey, valueKey) {
  */
 export function assembleAxiosConfig(arrayObj, DSV, VFR) {
   let result = {}
-  if (!arrayObj || (arrayObj.length <= 0)) {
+  if (!arrayObj || arrayObj.length <= 0) {
     return result
   }
 
-  arrayObj.map(ai => {
+  arrayObj.map((ai) => {
     if (ai.type === 'String') {
       result[ai.name] = String(ai.value)
     } else if (ai.type === 'Number') {
       result[ai.name] = Number(ai.value)
     } else if (ai.type === 'Boolean') {
-      if ((ai.value.toLowerCase() === 'false') || (ai.value === '0')) {
+      if (ai.value.toLowerCase() === 'false' || ai.value === '0') {
         result[ai.name] = false
-      } else if ((ai.value.toLowerCase() === 'true') || (ai.value === '1')) {
+      } else if (ai.value.toLowerCase() === 'true' || ai.value === '1') {
         result[ai.name] = true
       } else {
         result[ai.name] = null
@@ -476,21 +510,46 @@ function buildRequestConfig(dataSource, DSV, VFR, isSandbox) {
   config.params = assembleAxiosConfig(dataSource.params, DSV, VFR)
   config.data = assembleAxiosConfig(dataSource.data, DSV, VFR)
 
-  let chFn = new Function('config', 'isSandbox', 'DSV', 'VFR', dataSource.configHandlerCode)
+  let chFn = new Function(
+    'config',
+    'isSandbox',
+    'DSV',
+    'VFR',
+    dataSource.configHandlerCode
+  )
   return chFn.call(null, config, isSandbox, DSV, VFR)
 }
 
-export async function runDataSourceRequest(dataSource, DSV, VFR, isSandbox, $message) {
+export async function runDataSourceRequest(
+  dataSource,
+  DSV,
+  VFR,
+  isSandbox,
+  $message
+) {
   try {
     let requestConfig = buildRequestConfig(dataSource, DSV, VFR, isSandbox)
     //console.log('test------', requestConfig)
     let result = await axios.request(requestConfig)
     //let result = await axios.create().request(requestConfig)
 
-    let dhFn = new Function('result', 'isSandbox', 'DSV', 'VFR', dataSource.dataHandlerCode)
+    let dhFn = new Function(
+      'result',
+      'isSandbox',
+      'DSV',
+      'VFR',
+      dataSource.dataHandlerCode
+    )
     return dhFn.call(null, result, isSandbox, DSV, VFR)
   } catch (err) {
-    let ehFn = new Function('error', 'isSandbox', 'DSV', '$message', 'VFR', dataSource.errorHandlerCode)
+    let ehFn = new Function(
+      'error',
+      'isSandbox',
+      'DSV',
+      '$message',
+      'VFR',
+      dataSource.errorHandlerCode
+    )
     ehFn.call(null, err, isSandbox, DSV, $message, VFR)
     console.error(err)
   }
@@ -499,7 +558,7 @@ export async function runDataSourceRequest(dataSource, DSV, VFR, isSandbox, $mes
 export function getDSByName(formConfig, dsName) {
   let resultDS = null
   if (!!dsName && !!formConfig.dataSources) {
-    formConfig.dataSources.forEach(ds => {
+    formConfig.dataSources.forEach((ds) => {
       if (ds.uniqueName === dsName) {
         resultDS = ds
       }
