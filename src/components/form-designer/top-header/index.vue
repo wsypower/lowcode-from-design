@@ -248,6 +248,15 @@ function clearFormWidget() {
       line-height: 26px;
     }
 
+    :deep(.el-input-number__increase .el-icon) {
+      position: relative;
+      top: -1px;
+    }
+    :deep(.el-input-number__decrease .el-icon) {
+      position: relative;
+      top: 2px;
+    }
+
     .icon-multi-wrap {
       width: 25px;
       display: flex;
