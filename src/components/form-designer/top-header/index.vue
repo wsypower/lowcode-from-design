@@ -105,7 +105,6 @@ import PreviewDialog from './components/preview-dialog'
 import ImportDialog from './components/import-dialog'
 import ExportDialog from './components/export-dialog'
 import CodeDialog from './components/code-dialog'
-import { computed } from 'vue'
 
 const emit = defineEmits(['sizeChange'])
 const props = defineProps({
@@ -145,6 +144,13 @@ const redoDisabled = computed(() =>
   props.designer && props.designer.redoEnabled
     ? !props.designer.redoEnabled()
     : false
+)
+
+watch(
+  () => props.designer.formWidth,
+  (val) => {
+    formSize.value = val
+  }
 )
 
 function undo() {
