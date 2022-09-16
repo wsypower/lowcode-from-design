@@ -63,7 +63,7 @@
           <el-form-item :label="i18nt('designer.setting.formCss')">
             <el-button
               type="info"
-              icon="el-icon-edit"
+              icon="Edit"
               plain
               round
               @click="editFormCss"
@@ -91,7 +91,7 @@
           <el-form-item :label="i18nt('designer.setting.globalFunctions')">
             <el-button
               type="info"
-              icon="el-icon-edit"
+              icon="Edit"
               plain
               round
               @click="editGlobalFunctions"
@@ -122,7 +122,7 @@
           <el-form-item label="onFormCreated" label-width="150px">
             <el-button
               type="info"
-              icon="el-icon-edit"
+              icon="Edit"
               plain
               round
               @click="editFormEventHandler('onFormCreated')"
@@ -133,7 +133,7 @@
           <el-form-item label="onFormMounted" label-width="150px">
             <el-button
               type="info"
-              icon="el-icon-edit"
+              icon="Edit"
               plain
               round
               @click="editFormEventHandler('onFormMounted')"
@@ -145,7 +145,7 @@
           <el-form-item label="onFormDataChange" label-width="150px">
             <el-button
               type="info"
-              icon="el-icon-edit"
+              icon="Edit"
               plain
               round
               @click="editFormEventHandler('onFormDataChange')"
@@ -156,7 +156,7 @@
           <!-- -->
           <!--
           <el-form-item label="onFormValidate">
-            <el-button type="info" icon="el-icon-edit" plain round @click="editFormEventHandler('onFormValidate')">
+            <el-button type="info" icon="Edit" plain round @click="editFormEventHandler('onFormValidate')">
               {{i18nt('designer.setting.addEventHandler')}}</el-button>
           </el-form-item>
           -->

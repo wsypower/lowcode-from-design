@@ -303,7 +303,7 @@
                 size="small"
                 plain
                 round
-                icon="el-icon-edit"
+                icon="Edit"
               ></el-button>
             </template>
           </el-table-column>
@@ -319,14 +319,14 @@
                 size="small"
                 circle
                 @click="addCol"
-                icon="el-icon-plus"
+                icon="Plus"
               ></el-button>
               <el-button
                 :title="i18nt('designer.setting.deleteTableColumn')"
                 size="small"
                 circle
                 @click="handleDelete(scope.$index, scope.row)"
-                icon="el-icon-minus"
+                icon="Minus"
               ></el-button>
             </template>
           </el-table-column>
@@ -501,7 +501,7 @@
                 </el-col>
                 <el-col :span="1">
                   <el-button
-                    icon="el-icon-delete"
+                    icon="Delete"
                     plain
                     circle
                     @click="deleteOperationButton(bIdx)"
@@ -515,7 +515,7 @@
               <el-button
                 type="primary"
                 size="default"
-                icon="el-icon-plus"
+                icon="Plus"
                 plain
                 round
                 @click="addOperationButton"

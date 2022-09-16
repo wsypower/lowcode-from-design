@@ -15,7 +15,6 @@ export default function usePreview(designer) {
       widgetList: deepClone(designer.widgetList),
       formConfig: deepClone(designer.formConfig),
     }
-    console.log(designer.widgetList, previewFormJson.value)
   }
 
   function showPreviewDialog() {
