@@ -220,7 +220,7 @@ function clearFormWidget() {
   }
 
   .left {
-    width: 280px;
+    width: 420px;
 
     .logo {
       margin-right: 16px;
@@ -277,7 +277,7 @@ function clearFormWidget() {
   }
 
   .right {
-    width: 500px;
+    width: 420px;
     justify-content: flex-end;
 
     .svg-icon {
