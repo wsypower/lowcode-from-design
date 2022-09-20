@@ -98,7 +98,7 @@
               >{{ i18nt('designer.setting.addEventHandler') }}</el-button
             >
           </el-form-item>
-          <el-form-item label-width="0">
+          <!-- <el-form-item label-width="0">
             <el-divider class="custom-divider">{{
               i18nt('designer.setting.formSFCSetting')
             }}</el-divider>
@@ -111,7 +111,7 @@
           </el-form-item>
           <el-form-item :label="i18nt('designer.setting.formRulesName')">
             <el-input type="text" v-model="formConfig.rulesName"></el-input>
-          </el-form-item>
+          </el-form-item> -->
         </el-collapse-item>
 
         <el-collapse-item
