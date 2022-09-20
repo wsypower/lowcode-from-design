@@ -1,12 +1,16 @@
 # 交互事件
+
 ## 效果演示
+
 点击喝酒或者喝饮料，下方对应出现不同的选择列表
 <ImagesVue :img-src="'/images/example2/example2-1.png'" />
 <ImagesVue :img-src="'/images/example2/example2-2.png'" />
 
 ## 在线体验
+
 表单 JSON 如下，复制 JSON，在表单设计器（[点此进入](http://120.92.142.115:81/vform3/)）中选择‘导入 JSON’即可看到效果
 ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
+
 ```JSON
 {
   "widgetList": [
@@ -51,7 +55,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "onCreated": "",
@@ -111,7 +115,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": [],
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "onCreated": "",
@@ -172,7 +176,7 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
                 "validation": "",
                 "validationHint": "",
                 "customClass": "",
-                "labelIconClass": null,
+                "labelIcon": null,
                 "labelIconPosition": "rear",
                 "labelTooltip": null,
                 "onCreated": "",
@@ -225,9 +229,12 @@ ps：鼠标移至代码块中，右上角出现小图标，点击即可复制
 ```
 
 ## 如何生成
+
 ### 1. 完成静态表单
+
 <ImagesVue :img-src="'/images/example2/step1.png'" />
 
 ### 2. 编写交互代码
-在单选项组件的事件属性中选择onChange事件，编写处理代码
+
+在单选项组件的事件属性中选择 onChange 事件，编写处理代码
 <ImagesVue :img-src="'/images/example2/step2.png'" />

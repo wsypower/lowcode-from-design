@@ -13,7 +13,10 @@
       :validate-on-rule-change="false"
     >
       <template v-if="designer.widgetList.length === 0">
-        <div class="no-widget-hint">{{ i18nt('designer.noWidgetHint') }}</div>
+        <div class="empty-content">
+          <img src="./empty.png" alt="" />
+          <p>请从左侧列表中选择一个组件，<br />然后用鼠标拖动放置于此处。</p>
+        </div>
       </template>
 
       <div class="form-widget-canvas" :style="{ minHeight: canvasMinHeight }">
@@ -244,25 +247,32 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
 
+  .empty-content {
+    position: relative;
+    margin-top: 150px;
+
+    img {
+      display: block;
+      width: 300px;
+      height: 234px;
+      margin: 0 auto;
+    }
+
+    p {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: rgba(#303030, $alpha: 0.5);
+      text-align: center;
+    }
+  }
+
   .el-form.full-height-width {
     height: 100%;
     padding: 3px;
     background: #fff;
-
-    .no-widget-hint {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 18px;
-      color: #999999;
-    }
 
     .form-widget-canvas {
       //min-height: calc(100vh - 56px - 68px + 48px);

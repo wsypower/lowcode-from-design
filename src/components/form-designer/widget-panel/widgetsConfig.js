@@ -27,7 +27,8 @@ export const containers = [
       offset: 0,
       push: 0,
       pull: 0,
-      responsive: false, //是否开启响应式布局
+      // 由于去掉了H5 和 Pad的布局切换，responsive的设置也不再需要了，故隐藏掉
+      // responsive: false, //是否开启响应式布局
       md: 12,
       sm: 12,
       xs: 12,
@@ -475,7 +476,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       minLength: null,
@@ -522,7 +523,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       minLength: null,
@@ -561,7 +562,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       min: -100000000000,
@@ -612,7 +613,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -656,7 +657,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -705,7 +706,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -721,7 +722,7 @@ export const basicFields = [
 
   {
     type: 'time',
-    icon: 'time-field',
+    icon: 'widget-time',
     formItemFlag: true,
     options: {
       name: '',
@@ -746,7 +747,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -761,7 +762,7 @@ export const basicFields = [
 
   {
     type: 'time-range',
-    icon: 'time-range-field',
+    icon: 'widget-time-range',
     formItemFlag: true,
     options: {
       name: '',
@@ -787,7 +788,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -802,7 +803,7 @@ export const basicFields = [
 
   {
     type: 'date',
-    icon: 'date-field',
+    icon: 'widget-date',
     formItemFlag: true,
     options: {
       name: '',
@@ -829,7 +830,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -844,7 +845,7 @@ export const basicFields = [
 
   {
     type: 'date-range',
-    icon: 'date-range-field',
+    icon: 'widget-date-range',
     formItemFlag: true,
     options: {
       name: '',
@@ -872,7 +873,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -895,13 +896,14 @@ export const basicFields = [
       labelAlign: '',
       defaultValue: null,
       columnWidth: '200px',
+      size: '',
       labelWidth: null,
       labelHidden: false,
       disabled: false,
       hidden: false,
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       switchWidth: 40,
@@ -919,7 +921,7 @@ export const basicFields = [
 
   {
     type: 'slider',
-    icon: 'slider-field',
+    icon: 'widget-slider',
     formItemFlag: true,
     options: {
       name: '',
@@ -938,7 +940,7 @@ export const basicFields = [
       validationHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       min: 0,
@@ -957,7 +959,7 @@ export const basicFields = [
 
   {
     type: 'static-text',
-    icon: 'static-text',
+    icon: 'widget-static-text',
     formItemFlag: false,
     options: {
       name: '',
@@ -974,7 +976,7 @@ export const basicFields = [
 
   {
     type: 'html-text',
-    icon: 'html-text',
+    icon: 'widget-html-text',
     formItemFlag: false,
     options: {
       name: '',
@@ -991,7 +993,7 @@ export const basicFields = [
 
   {
     type: 'button',
-    icon: 'button',
+    icon: 'widget-button',
     formItemFlag: false,
     options: {
       name: '',
@@ -1038,7 +1040,7 @@ export const basicFields = [
 export const advancedFields = [
   {
     type: 'picture-upload',
-    icon: 'picture-upload-field',
+    icon: 'widget-img-upload',
     formItemFlag: true,
     options: {
       name: '',
@@ -1065,7 +1067,7 @@ export const advancedFields = [
       //headers: [],
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -1082,7 +1084,7 @@ export const advancedFields = [
 
   {
     type: 'file-upload',
-    icon: 'file-upload-field',
+    icon: 'widget-file-upload',
     formItemFlag: true,
     options: {
       name: '',
@@ -1109,7 +1111,7 @@ export const advancedFields = [
       //headers: [],
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------
@@ -1126,7 +1128,7 @@ export const advancedFields = [
 
   {
     type: 'rich-editor',
-    icon: 'rich-editor-field',
+    icon: 'widget-rich-editor',
     formItemFlag: true,
     options: {
       name: '',
@@ -1145,7 +1147,7 @@ export const advancedFields = [
       customRuleHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       minLength: null,
@@ -1160,7 +1162,7 @@ export const advancedFields = [
 
   {
     type: 'cascader',
-    icon: 'cascader-field',
+    icon: 'widget-cascader',
     formItemFlag: true,
     options: {
       name: '',
@@ -1198,7 +1200,7 @@ export const advancedFields = [
       customRuleHint: '',
       //-------------------
       customClass: '', //自定义css类名
-      labelIconClass: null,
+      labelIcon: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
       //-------------------

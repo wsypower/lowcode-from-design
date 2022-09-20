@@ -1,7 +1,7 @@
 <template>
   <el-header class="top-header">
     <div class="left">
-      <img src="../../../assets/lowcode-logo.png" class="logo" />
+      <svg-icon icon-class="logo" class-name="logo" />
       <i class="divider"></i>
 
       <el-tooltip effect="light" content="撤销" placement="bottom">
@@ -105,7 +105,6 @@ import PreviewDialog from './components/preview-dialog'
 import ImportDialog from './components/import-dialog'
 import ExportDialog from './components/export-dialog'
 import CodeDialog from './components/code-dialog'
-import { computed } from 'vue'
 
 const emit = defineEmits(['sizeChange'])
 const props = defineProps({
@@ -145,6 +144,13 @@ const redoDisabled = computed(() =>
   props.designer && props.designer.redoEnabled
     ? !props.designer.redoEnabled()
     : false
+)
+
+watch(
+  () => props.designer.formWidth,
+  (val) => {
+    formSize.value = val
+  }
 )
 
 function undo() {
@@ -202,6 +208,10 @@ function clearFormWidget() {
     top: 3px;
   }
 
+  .logo {
+    width: 102px;
+  }
+
   .left,
   .right,
   .middle {
@@ -210,7 +220,7 @@ function clearFormWidget() {
   }
 
   .left {
-    width: 280px;
+    width: 420px;
 
     .logo {
       margin-right: 16px;
@@ -244,6 +254,15 @@ function clearFormWidget() {
       line-height: 26px;
     }
 
+    :deep(.el-input-number__increase .el-icon) {
+      position: relative;
+      top: -1px;
+    }
+    :deep(.el-input-number__decrease .el-icon) {
+      position: relative;
+      top: 2px;
+    }
+
     .icon-multi-wrap {
       width: 25px;
       display: flex;
@@ -258,7 +277,7 @@ function clearFormWidget() {
   }
 
   .right {
-    width: 500px;
+    width: 420px;
     justify-content: flex-end;
 
     .svg-icon {

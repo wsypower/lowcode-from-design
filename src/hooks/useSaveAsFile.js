@@ -1,7 +1,7 @@
 import { ElMessageBox } from 'element-plus'
 import { saveAs } from 'file-saver'
 
-export default function useMsg() {
+export default function useSaveAsFile() {
   function saveAsFile(filename, fileContent) {
     return ElMessageBox.prompt('保存为文件', '文件名：', {
       closeOnClickModal: false,
