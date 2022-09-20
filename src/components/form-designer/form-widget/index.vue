@@ -247,29 +247,8 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
 
-  .empty-content {
-    position: relative;
-    margin-top: 150px;
-
-    img {
-      display: block;
-      width: 300px;
-      height: 234px;
-      margin: 0 auto;
-    }
-
-    p {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 12px;
-      color: rgba(#303030, $alpha: 0.5);
-      text-align: center;
-    }
-  }
-
   .el-form.full-height-width {
+    position: relative;
     height: 100%;
     padding: 3px;
     background: #fff;
@@ -277,6 +256,30 @@ export default {
     .form-widget-canvas {
       //min-height: calc(100vh - 56px - 68px + 48px);
       padding: 3px;
+    }
+
+    .empty-content {
+      position: absolute;
+      width: 100%;
+      top: 150px;
+      left: 0;
+
+      img {
+        display: block;
+        width: 300px;
+        height: 234px;
+        margin: 0 auto;
+      }
+
+      p {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: rgba(#303030, $alpha: 0.5);
+        text-align: center;
+      }
     }
   }
 
