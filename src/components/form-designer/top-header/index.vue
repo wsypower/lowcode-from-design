@@ -54,15 +54,16 @@
         <svg-icon icon-class="op-code" @click="showCodeDialog"
       /></el-tooltip>
       <i class="divider"></i>
-
-      <el-select v-model="settingSize" @change="notifySettingSizeChange">
+      
+      <!-- 调整设置面板组件尺寸 -->
+      <!-- <el-select v-model="settingSize" @change="notifySettingSizeChange">
         <el-option
           v-for="size in settingSizes"
           :key="size"
           :label="size"
           :value="size"
         />
-      </el-select>
+      </el-select> -->
     </div>
 
     <preview-dialog
