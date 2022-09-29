@@ -15,7 +15,7 @@ import VFormRender from '@/components/form-render/index'
 
 import { addDirective } from '@/utils/directive'
 import { installI18n } from '@/utils/i18n'
-import { loadExtension } from '@/extension/extension-loader'
+// import { loadExtension } from '@/extension/extension-loader'
 
 if (typeof window !== 'undefined') {
   window.axios = axios
@@ -32,6 +32,6 @@ installI18n(vfApp)
 vfApp.use(ContainerWidgets)
 vfApp.use(ContainerItems)
 vfApp.component('VFormRender', VFormRender)
-loadExtension(vfApp)
+// loadExtension(vfApp)
 
 vfApp.mount('#app')
