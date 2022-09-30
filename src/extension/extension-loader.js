@@ -29,8 +29,8 @@ export const loadExtension = function (app) {
    */
   addContainerWidgetSchema(cardSchema) //加载组件Json Schema
   /* -------------------------------------------------- */
-  //   app.component(CardWidget.name, CardWidget)  //注册设计期的容器组件
-  //   app.component(CardItem.name, CardItem)  //注册运行期的容器组件
+  app.component(CardWidget.name, CardWidget) //注册设计期的容器组件
+  app.component(CardItem.name, CardItem) //注册运行期的容器组件
   /* -------------------------------------------------- */
   PERegister.registerCPEditor(
     app,
