@@ -7,7 +7,7 @@ $--color-primary: #0052d9;
 }
 
 .primary-color {
-  color: $--color-primary;
+  color: var(--el-color-primary);
 }
 
 .background-opacity {
@@ -20,8 +20,8 @@ $--color-primary: #0052d9;
     font-size: 0;
     height: 3px;
     box-sizing: border-box;
-    background: $--color-primary;
-    border: 2px solid $--color-primary;
+    background: var(--el-color-primary);
+    border: 2px solid var(--el-color-primary);
     outline-width: 0;
     padding: 0;
     overflow: hidden;

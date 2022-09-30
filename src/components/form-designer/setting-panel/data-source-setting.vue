@@ -1,65 +1,46 @@
 <template>
-  <div class="ds-list">
+  <div class="ds-container">
+    <div class="create-btn-wrap">
+      <span class="btn" @click="addDataSource">
+        <svg-icon icon-class="op-add" class-name="icon-add"></svg-icon>新增
+      </span>
+    </div>
+
     <template
       v-if="!!formConfig.dataSources && formConfig.dataSources.length > 0"
     >
-      <el-descriptions
-        v-for="(ds, dsIdx) in formConfig.dataSources"
-        :column="1"
-        :size="designer.settingSize"
-        border
-      >
-        <template #title>
-          <span :title="ds.description">{{ ds.uniqueName }}</span>
-        </template>
-        <template #extra>
-          <el-tooltip content="编辑" effect="light" placement="bottom">
-            <el-button
-              type="primary"
-              icon="Edit"
-              plain
-              circle
-              :size="designer.settingSize"
-              @click="editDataSource(dsIdx)"
-            ></el-button>
-          </el-tooltip>
-
-          <el-tooltip content="删除" effect="light" placement="top">
-            <el-button
-              type="danger"
-              icon="Delete"
-              plian
-              circle
-              :size="designer.settingSize"
-              @click="deleteDataSource(dsIdx)"
-            ></el-button>
-          </el-tooltip>
-        </template>
-        <el-descriptions-item>
-          <template #label>
-            <div :title="ds.requestURL">
-              <el-icon><Platform /></el-icon>
-            </div>
-          </template>
-          {{ ds.requestURL }}
-        </el-descriptions-item>
-
-        <!--
-      <el-descriptions-item label="">{{ds.description}}</el-descriptions-item>
-      -->
-      </el-descriptions>
+      <ul class="ds-list">
+        <li
+          v-for="(ds, dsIdx) in formConfig.dataSources"
+          :key="dsIdx"
+          class="ds-item"
+        >
+          <div class="main-info">
+            <span>{{ ds.uniqueName }}</span>
+            <span>
+              <el-tooltip content="删除" effect="light" placement="bottom">
+                <svg-icon
+                  icon-class="op-delete"
+                  @click="deleteDataSource(dsIdx)"
+                ></svg-icon
+              ></el-tooltip>
+              <el-tooltip content="编辑" effect="light" placement="bottom">
+                <svg-icon
+                  icon-class="op-edit"
+                  @click="editDataSource(dsIdx)"
+                ></svg-icon
+              ></el-tooltip>
+            </span>
+          </div>
+          <div class="url">{{ ds.requestURL }}</div>
+        </li>
+      </ul>
     </template>
     <template v-else>
-      <el-empty
-        :description="i18nt('designer.setting.noDataSource')"
-      ></el-empty>
+      <div class="empty-tip">
+        <p>暂无数据源~</p>
+      </div>
     </template>
-
-    <div class="ds-button-wrapper">
-      <el-button type="primary" icon="Plus" plain round @click="addDataSource">
-        {{ i18nt('designer.setting.addDataSource') }}</el-button
-      >
-    </div>
   </div>
 
   <el-drawer
@@ -516,6 +497,7 @@
 </template>
 
 <script>
+import SvgIcon from '@/components/svg-icon/index'
 import i18n from '@/utils/i18n'
 import CodeEditor from '@/components/code-editor/index'
 import { deepClone, generateId, runDataSourceRequest } from '@/utils/util'
@@ -526,6 +508,7 @@ export default {
   mixins: [i18n],
   inject: ['getGlobalDsv'],
   components: {
+    SvgIcon,
     Platform,
     CodeEditor,
   },
@@ -781,48 +764,82 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/*:deep(.ds-setting-drawer) { !* 必须加上:deep，否则不生效 *!*/
-/*  right: 320px !important;*/
-/*}*/
+.empty-tip {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-.ds-list {
-  padding: 10px;
-  :deep(.el-descriptions) {
-    // width: 284px;
-    overflow-x: hidden;
-    margin-bottom: 15px;
-    padding: 8px;
-    background: #f5f7fa;
-    .el-descriptions__label {
-      width: 30px;
-    }
-  }
-
-  :deep(.el-descriptions__title) {
-    font-weight: normal;
-  }
-
-  :deep(.el-button--default .el-icon) {
-    width: 16px;
-    height: 16px;
-  }
-  :deep(.el-button--default .icon) {
-    width: 16px;
-    height: 16px;
-  }
-  :deep(.el-button--large .el-icon) {
-    width: 18px;
-    height: 18px;
-  }
-  :deep(.el-button--large .icon) {
-    width: 18px;
-    height: 18px;
+  p {
+    font-size: 13px;
+    margin: 0;
+    color: rgba(48, 48, 48, 0.5);
   }
 }
 
-.ds-button-wrapper {
-  text-align: center;
-  margin-top: 12px;
+.create-btn-wrap {
+  margin: 12px 12px 8px 16px;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border: 1px solid rgba($color: #303030, $alpha: 0.5);
+    border-radius: 20px;
+    font-size: 12px;
+    color: rgba($color: #303030, $alpha: 1);
+    cursor: pointer;
+
+    &:hover {
+      background: #d8d8d8;
+    }
+
+    .icon-add {
+      width: 14px;
+      height: 14px;
+      margin: 0 3px 0 0;
+    }
+  }
+}
+
+.ds-list {
+  color: #303030;
+  list-style: none;
+  padding: 0;
+
+  .ds-item {
+    margin-top: 4px;
+    padding: 2px 12px 8px 16px;
+
+    .main-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 18px;
+      font-size: 13px;
+
+      .svg-icon {
+        width: 18px;
+        height: 18px;
+        margin-left: 11px;
+        padding: 6px;
+        border-radius: 50%;
+        cursor: pointer;
+        outline: none;
+
+        &:hover {
+          background: #d8d8d8;
+        }
+      }
+    }
+
+    .url {
+      font-size: 12px;
+      line-height: 14px;
+      color: rgba(48, 48, 48, 0.5);
+    }
+  }
 }
 
 .ds-form {

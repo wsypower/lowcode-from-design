@@ -11,9 +11,10 @@
           :style="{ height: scrollerHeight }"
         >
           <template v-if="!designer.selectedWidget">
-            <el-empty
-              :description="i18nt('designer.hint.noSelectedWidgetHint')"
-            ></el-empty>
+            <div class="empty-tip">
+              <svg-icon icon-class="empty" class-name="icon-empty"></svg-icon>
+              <p>暂无选中的组件~</p>
+            </div>
           </template>
 
           <template v-else>
@@ -212,6 +213,7 @@
 </template>
 
 <script>
+import SvgIcon from '@/components/svg-icon/index'
 import CodeEditor from '@/components/code-editor/index'
 import PropertyEditors from './property-editor/index'
 import FormSetting from './form-setting'
@@ -230,6 +232,7 @@ export default {
   componentName: 'SettingPanel',
   mixins: [i18n, emitter],
   components: {
+    SvgIcon,
     CodeEditor,
     FormSetting,
     DataSourceSetting,
@@ -445,6 +448,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.empty-tip {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .icon-empty {
+    margin-bottom: 14px;
+    width: 62px;
+    height: 62px;
+  }
+
+  p {
+    font-size: 13px;
+    margin: 0;
+    color: rgba(48, 48, 48, 0.5);
+  }
+}
+
 .panel-container {
   // padding: 0 8px;
   :deep(.el-tabs--border-card) {

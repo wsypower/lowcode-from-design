@@ -37,7 +37,10 @@
     </div>
     <div class="right">
       <el-tooltip effect="light" content="清空表单组件" placement="bottom">
-        <svg-icon icon-class="op-delete" @click="clearFormWidget"
+        <svg-icon
+          icon-class="op-delete"
+          class-name="delete-icon"
+          @click="clearFormWidget"
       /></el-tooltip>
       <i class="divider"></i>
 
@@ -53,9 +56,15 @@
       <el-tooltip effect="light" content="导出代码" placement="bottom">
         <svg-icon icon-class="op-code" @click="showCodeDialog"
       /></el-tooltip>
-      <i class="divider"></i>
-      
+      <el-tooltip effect="light" content="上传数据" placement="bottom">
+        <svg-icon
+          icon-class="op-upload"
+          class-name="upload-icon"
+          @click="uploadJson"
+      /></el-tooltip>
+
       <!-- 调整设置面板组件尺寸 -->
+      <!-- <i class="divider"></i> -->
       <!-- <el-select v-model="settingSize" @change="notifySettingSizeChange">
         <el-option
           v-for="size in settingSizes"
@@ -126,12 +135,19 @@ const formSize = ref(props.designer.formWidth)
 
 const { previewDialogVisible, showPreviewDialog, hidePreviewDialog } =
   usePreview()
+
 const { importDialogVisible, showImportDialog, hideImportDialog } = useImport(
   props.designer
 )
-const { exportDialogVisible, showExportDialog, hideExportDialog } = useExport(
-  props.designer
-)
+
+const {
+  exportDialogVisible,
+  jsonRawContent,
+  showExportDialog,
+  hideExportDialog,
+  generateJson,
+} = useExport(props.designer)
+
 const { codeDialogVisible, showCodeDialog, hideCodeDialog } = useCode(
   props.designer
 )
@@ -177,6 +193,12 @@ function onFormSizeChange(formSize) {
 
 function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
+}
+
+function uploadJson() {
+  generateJson()
+  console.log(jsonRawContent.value)
+  console.log('数据上传成功！')
 }
 </script>
 
@@ -289,6 +311,12 @@ function clearFormWidget() {
       &:nth-of-type(2) {
         margin-left: 0;
       }
+    }
+    .delete-icon {
+      color: #e34d59;
+    }
+    .upload-icon {
+      color: var(--el-color-primary);
     }
 
     :deep(.el-select) {
