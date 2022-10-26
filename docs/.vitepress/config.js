@@ -63,7 +63,10 @@ function getSidebar() {
         items:[
             { text: '表单及组件属性设置', link: '/userGuide/guide1.md' },
             { text: '栅格布局使用', link: '/userGuide/guide2.md' },
-            { text: '设计器即成后端字段接口', link: '/userGuide/guide3.md' },
+            { text: '数据流转', link: '/userGuide/guide3.md' },
+            { text: '表单状态控制', link: '/userGuide/guide4.md' },
+            { text: '选择项设置与加载', link: '/userGuide/guide5.md' },
+            { text: '数据源管理', link: '/userGuide/guide8.md' },
         ],
         collapsible: true,
     },

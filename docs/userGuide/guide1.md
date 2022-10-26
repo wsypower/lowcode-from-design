@@ -10,5 +10,7 @@
 组件基本属性：
 >注意：组件的同名属性优先级高于表单属性，比如字段标签对齐方式、组件大小、标签宽度。
 <ImagesVue :img-src="'/images/guide1/guide1-2.png'" />
+组件高级属性，默认为收起状态，一般是一些不常用的属性：
 <ImagesVue :img-src="'/images/guide1/guide1-3.png'" />
+组件事件属性：
 <ImagesVue :img-src="'/images/guide1/guide1-4.png'" />
