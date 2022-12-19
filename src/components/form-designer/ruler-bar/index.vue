@@ -22,6 +22,8 @@ const props = defineProps({
 
 const rulerWrapRef = ref(null)
 const rulerWrapWidth = ref(0)
+// 中间表单区的左右留白，也是rulerbar的左右留白, 单位px
+const rulerWrapPadding = 50
 const rulerDatas = ref([])
 
 onMounted(() => {
@@ -38,10 +40,10 @@ function generateRulerDatas() {
     return []
   }
 
-  rulerWrapWidth.value = rulerWrapRef.value.offsetWidth
-
   const widthList = props.designer.commonScreenWidths
   let startIndex = -1
+
+  rulerWrapWidth.value = rulerWrapRef.value.offsetWidth - rulerWrapPadding * 2
 
   for (let i = 0, len = widthList.length; i < len; i++) {
     const width = widthList[i]
@@ -58,22 +60,19 @@ function generateRulerDatas() {
   const displaySizes = widthList.slice(startIndex)
   props.designer.changeFormWidthList(displaySizes)
 
+  let prevLeft = 0
   rulerDatas.value = displaySizes.map((size, index) => {
+    const left =
+      index === 0
+        ? (rulerWrapWidth.value - size) / 2 + rulerWrapPadding
+        : (displaySizes[index - 1] - size) / 2 + prevLeft
+
+    prevLeft = left
+
     return {
       width: size,
-      left:
-        index === 0
-          ? (rulerWrapWidth.value - size) / 2
-          : (displaySizes[index - 1] - size) / 2,
+      left,
     }
-  })
-
-  // left值累加
-  rulerDatas.value = rulerDatas.value.map((item, index) => {
-    if (index > 0) {
-      item.left += rulerDatas.value[index - 1].left
-    }
-    return item
   })
 }
 </script>

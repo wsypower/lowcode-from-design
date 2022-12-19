@@ -12,6 +12,7 @@
 
           <el-collapse v-model="activeNames" class="widget-collapse">
             <el-collapse-item
+              v-if="containers.length"
               name="1"
               :title="i18nt('designer.containerTitle')"
             >
@@ -45,6 +46,7 @@
             </el-collapse-item>
 
             <el-collapse-item
+              v-if="basicFields.length"
               name="2"
               :title="i18nt('designer.basicFieldTitle')"
             >
@@ -77,6 +79,7 @@
             </el-collapse-item>
 
             <el-collapse-item
+              v-if="advancedFields.length"
               name="3"
               :title="i18nt('designer.advancedFieldTitle')"
             >
@@ -109,6 +112,7 @@
             </el-collapse-item>
 
             <el-collapse-item
+              v-if="customFields.length"
               name="4"
               :title="i18nt('designer.customFieldTitle')"
             >

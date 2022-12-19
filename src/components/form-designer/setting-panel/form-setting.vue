@@ -487,6 +487,16 @@ export default {
     margin-bottom: 10px;
   }
 
+  :deep(.el-form-item__content .el-radio-button__inner) {
+    font-size: 12px !important;
+  }
+  :deep(.el-form-item__content .el-radio-button__inner) {
+    font-size: 12px !important;
+  }
+  :deep(.el-form-item__content .el-radio-button__inner) {
+    font-size: 12px !important;
+  }
+
   .radio-group-custom {
     :deep(.el-radio-button__inner) {
       padding-left: 12px;
