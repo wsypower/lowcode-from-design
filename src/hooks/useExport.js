@@ -22,6 +22,7 @@ export default function useExport(designer) {
     let formConfig = designer.formConfig
     jsonContent.value = JSON.stringify({ widgetList, formConfig }, null, '  ')
     jsonRawContent.value = JSON.stringify({ widgetList, formConfig })
+    return jsonContent.value
   }
 
   function copyJsonToClipboard(e) {

@@ -160,7 +160,6 @@ import {
 } from './widgetsConfig'
 import { addWindowResizeHandler, generateId } from '@/utils/util'
 import i18n from '@/utils/i18n'
-import axios from 'axios'
 
 export default {
   name: 'FieldPanel',

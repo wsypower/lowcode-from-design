@@ -36,6 +36,14 @@
       />
     </div>
     <div class="right">
+      <v-form-render
+        v-if="designermounted"
+        :form-json="formJson"
+        ref="renderRef"
+        style="position: absolute; top: -200%; left：200%;"
+      >
+      </v-form-render>
+
       <el-tooltip effect="light" content="清空表单组件" placement="bottom">
         <svg-icon
           icon-class="op-delete"
@@ -106,6 +114,8 @@
 </template>
 
 <script setup>
+import { onMounted, watch } from 'vue'
+import axios from 'axios'
 import usePreview from '@/hooks/usePreview'
 import useImport from '@/hooks/useImport'
 import useExport from '@/hooks/useExport'
@@ -142,7 +152,6 @@ const { importDialogVisible, showImportDialog, hideImportDialog } = useImport(
 
 const {
   exportDialogVisible,
-  jsonRawContent,
   showExportDialog,
   hideExportDialog,
   generateJson,
@@ -195,11 +204,51 @@ function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
 }
 
-function uploadJson() {
-  generateJson()
-  console.log(jsonRawContent.value)
-  console.log('数据上传成功！')
+/* ======================上传功能start ====================== */
+// 页面是否已渲染完成，
+// 待页面渲染完后再去加载vrender，否则render会获取不到designer.widgetList
+const designermounted = ref(false)
+const renderRef = ref(null)
+const formJson = ref({})
+
+onMounted(() => {
+  genFormJson()
+  designermounted.value = true
+})
+
+function genFormJson() {
+  formJson.value = {
+    widgetList: props.designer.widgetList,
+    formConfig: props.designer.formConfig,
+  }
 }
+
+watch(() => props.designer.widgetList, genFormJson, {
+  deep: true,
+})
+
+async function uploadJson() {
+  if (!renderRef.value) {
+    return
+  }
+
+  const { widgetList, formConfig } = props.designer
+  const uploadData = {
+    formJson: {
+      widgetList,
+      formConfig,
+    },
+    formWidgets: await renderRef.value.getFieldWidgets(),
+  }
+
+  // 发送请求
+  axios
+    .post('http://172.16.24.185:5000/lowcode/save', uploadData)
+    .then((res) => {
+      console.log('res', res.data)
+    })
+}
+/* ======================上传功能end ====================== */
 </script>
 
 <style lang="scss" scoped>
