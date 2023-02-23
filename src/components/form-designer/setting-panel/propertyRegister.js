@@ -56,6 +56,10 @@ const COMMON_PROPERTIES = {
   contentHeight: 'contentHeight-editor',
   customClass: 'customClass-editor',
 
+  // for casecader dynamic load
+  lazy: 'lazy-editor',
+  lazyLoad: 'lazyLoad-editor',
+
   //容器
   showBlankRow: 'showBlankRow-editor',
   showRowNumber: 'showRowNumber-editor',

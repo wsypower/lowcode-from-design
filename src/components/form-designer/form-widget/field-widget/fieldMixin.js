@@ -125,7 +125,7 @@ export default {
         return
       }
 
-      if (!!this.subFormItemFlag && !this.designState) {
+      if (this.subFormItemFlag && !this.designState) {
         //SubForm子表单组件需要特殊处理！！
         let subFormData = this.formModel[this.subFormName]
         if (
@@ -266,7 +266,7 @@ export default {
 
     unregisterFromRefList() {
       //销毁组件时注销组件ref
-      if (this.refList !== null && !!this.field.options.name) {
+      if (this.refList !== null && this.field.options.name) {
         let oldRefName = this.field.options.name
         if (this.subFormItemFlag && !this.designState) {
           //处理子表单元素（且非设计状态）
@@ -478,15 +478,15 @@ export default {
       ])
     },
 
-    syncUpdateFormModel(value) {
-      if (!!this.designState) {
+    updateFormModel(value) {
+      if (this.designState) {
         return
       }
 
-      if (!!this.subFormItemFlag) {
+      if (this.subFormItemFlag) {
         let subFormData = this.formModel[this.subFormName] || [{}]
         let subFormDataRow = subFormData[this.subFormRowIndex]
-        if (!!subFormDataRow) {
+        if (subFormDataRow) {
           // 重置表单后subFormDataRow为undefined，应跳过！！
           subFormDataRow[this.field.options.name] = value
         }
@@ -496,7 +496,7 @@ export default {
     },
 
     handleChangeEvent(value) {
-      this.syncUpdateFormModel(value)
+      this.updateFormModel(value)
       this.emitFieldDataChange(value, this.oldFieldValue)
 
       //number组件一般不会触发focus事件，故此处需要手工赋值oldFieldValue！！
@@ -524,7 +524,7 @@ export default {
     },
 
     handleInputCustomEvent(value) {
-      this.syncUpdateFormModel(value)
+      this.updateFormModel(value)
 
       /* 主动触发表单的单个字段校验，用于清除字段可能存在的校验错误提示 */
       this.dispatch('VFormRender', 'fieldValidation', [this.getPropName()])
@@ -632,7 +632,7 @@ export default {
         this.fieldModel = newValue
         this.initFileList()
 
-        this.syncUpdateFormModel(newValue)
+        this.updateFormModel(newValue)
         this.emitFieldDataChange(newValue, oldValue)
       }
     },

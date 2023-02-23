@@ -250,7 +250,7 @@ export default {
         this.fieldModel = deepClone(fileList)
       }
 
-      this.syncUpdateFormModel(this.fieldModel)
+      this.updateFormModel(this.fieldModel)
       this.emitFieldDataChange(this.fieldModel, oldValue)
     },
 
@@ -297,7 +297,7 @@ export default {
         this.fieldModel.splice(foundFileIdx, 1)
       }
 
-      this.syncUpdateFormModel(this.fieldModel)
+      this.updateFormModel(this.fieldModel)
       this.emitFieldDataChange(this.fieldModel, oldValue)
     },
 

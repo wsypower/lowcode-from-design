@@ -132,7 +132,7 @@ export default {
   methods: {
     handleRichEditorChangeEvent() {
       this.valueChangedFlag = true
-      this.syncUpdateFormModel(this.fieldModel)
+      this.updateFormModel(this.fieldModel)
     },
 
     handleRichEditorFocusEvent() {

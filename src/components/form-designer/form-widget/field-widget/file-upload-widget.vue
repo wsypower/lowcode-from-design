@@ -11,55 +11,46 @@
     :sub-form-col-index="subFormColIndex"
     :sub-form-row-id="subFormRowId"
   >
-    <!-- el-upload增加:name="field.options.name"后，会导致又拍云上传失败！故删除之！！ -->
     <el-upload
       ref="fieldEditor"
       :disabled="field.options.disabled || isReadMode"
+      v-model:file-list="fileList"
+      :data="uploadData"
       :style="styleVariables"
-      class="dynamicPseudoAfter"
+      :class="[
+        'dynamicPseudoAfter',
+        { hideUploadDiv: uploadBtnHidden || isReadMode },
+      ]"
       :action="realUploadURL"
       :headers="uploadHeaders"
-      :data="uploadData"
       :with-credentials="field.options.withCredentials"
-      :multiple="field.options.multipleSelect"
-      :file-list="fileList"
-      :show-file-list="
-        field.options.showFileList && fileList && fileList.length
-      "
-      :class="{ hideUploadDiv: uploadBtnHidden || isReadMode }"
       :limit="field.options.limit"
-      :on-exceed="handleFileExceed"
-      :before-upload="beforeFileUpload"
-      :on-success="handleFileUpload"
-      :on-error="handleUploadError"
+      :multiple="field.options.multipleSelect"
+      :on-exceed="onFileExceed"
+      :before-upload="onBeforeUpload"
+      :on-success="onUploadSuccess"
+      :on-error="onUploadError"
     >
-      <template #tip>
-        <div class="el-upload__tip" v-if="!!field.options.uploadTip">
-          {{ field.options.uploadTip }}
-        </div>
-      </template>
       <template #default>
         <svg-icon icon-class="el-plus" /><i
           class="el-icon-plus avatar-uploader-icon"
         ></i>
+      </template>
+      <template #tip>
+        <div class="el-upload__tip" v-if="field.options.uploadTip">
+          {{ field.options.uploadTip }}
+        </div>
       </template>
       <template #file="{ file }">
         <div class="upload-file-list">
           <span class="upload-file-name" :title="file.name">{{
             file.name
           }}</span>
-          <a :href="file.url" download="" target="_blank">
-            <span
-              class="el-icon-download file-action"
-              :title="i18nt('render.hint.downloadFile')"
-            >
-              <svg-icon icon-class="el-download" /> </span
-          ></a>
           <span
             class="file-action"
             :title="i18nt('render.hint.removeFile')"
             v-if="!field.options.disabled && !isReadMode"
-            @click="removeUploadFile(file.name, file.url, file.uid)"
+            @click="onFileRemove(file.name, file.url, file.uid)"
             ><svg-icon icon-class="el-delete"
           /></span>
         </div>
@@ -119,11 +110,7 @@ export default {
 
       uploadHeaders: {},
       uploadData: {
-        key: '', //七牛云上传文件名
-        //token: '',  //七牛云上传token
-
-        //policy: '',  //又拍云上传policy
-        //authorization: '',  //又拍云上传签名
+        key: '',
       },
       fileList: [], //上传文件列表
       uploadBtnHidden: false,
@@ -134,10 +121,13 @@ export default {
     }
   },
   computed: {
+    uploadBtnHidden() {
+      return this.fileList.length >= this.field.options.limit
+    },
     realUploadURL() {
       let uploadURL = this.field.options.uploadURL
       if (
-        !!uploadURL &&
+        uploadURL &&
         (uploadURL.indexOf('DSV.') > -1 || uploadURL.indexOf('DSV[') > -1)
       ) {
         let DSV = this.getGlobalDsv()
@@ -171,7 +161,7 @@ export default {
   },
 
   methods: {
-    handleFileExceed() {
+    onFileExceed() {
       let uploadLimit = this.field.options.limit
       this.$message.warning(
         this.i18nt('render.hint.uploadExceed').replace(
@@ -181,10 +171,10 @@ export default {
       )
     },
 
-    beforeFileUpload(file) {
+    onBeforeUpload(file) {
       let fileTypeCheckResult = false
       let extFileName = file.name.substring(file.name.lastIndexOf('.') + 1)
-      if (!!this.field.options && !!this.field.options.fileTypes) {
+      if (this.field.options && this.field.options.fileTypes) {
         let uploadFileTypes = this.field.options.fileTypes
         if (uploadFileTypes.length > 0) {
           fileTypeCheckResult = uploadFileTypes.some((ft) => {
@@ -201,7 +191,7 @@ export default {
 
       let fileSizeCheckResult = false
       let uploadFileMaxSize = 5 //5MB
-      if (!!this.field.options && !!this.field.options.fileMaxSize) {
+      if (this.field.options && this.field.options.fileMaxSize) {
         uploadFileMaxSize = this.field.options.fileMaxSize
       }
       fileSizeCheckResult = file.size / 1024 / 1024 <= uploadFileMaxSize
@@ -213,39 +203,47 @@ export default {
       }
 
       this.uploadData.key = file.name
-      return this.handleOnBeforeUpload(file)
+      return this.execCustomBeforeUploadFn(file)
     },
 
-    handleOnBeforeUpload(file) {
-      if (!!this.field.options.onBeforeUpload) {
-        let bfFunc = new Function('file', this.field.options.onBeforeUpload)
-        let result = bfFunc.call(this, file)
+    execCustomBeforeUploadFn(file) {
+      if (this.field.options.onBeforeUpload) {
+        let fn = new Function('file', this.field.options.onBeforeUpload)
+        let result = fn.call(this, file)
         if (typeof result === 'boolean') {
           return result
-        } else {
-          return true
         }
       }
-
       return true
     },
 
-    updateFieldModelAndEmitDataChangeForUpload(
-      fileList,
-      customResult,
-      defaultResult
-    ) {
+    onUploadSuccess(res, file, fileList) {
+      if (file.status === 'success') {
+        let customResult = null
+        if (this.field.options.onUploadSuccess) {
+          const fn = new Function(
+            'result',
+            'file',
+            'fileList',
+            this.field.options.onUploadSuccess
+          )
+          customResult = fn.call(this, res, file, fileList)
+        }
+
+        this.fileList = deepClone(fileList)
+        this.syncFileAdd(fileList, customResult, res)
+      }
+    },
+
+    syncFileAdd(fileList, customResult, defaultResult) {
       let oldValue = deepClone(this.fieldModel)
-      if (!!customResult && !!customResult.name && !!customResult.url) {
+
+      if (customResult && customResult.name && customResult.url) {
         this.fieldModel.push({
           name: customResult.name,
           url: customResult.url,
         })
-      } else if (
-        !!defaultResult &&
-        !!defaultResult.name &&
-        !!defaultResult.url
-      ) {
+      } else if (defaultResult && defaultResult.name && defaultResult.url) {
         this.fieldModel.push({
           name: defaultResult.name,
           url: defaultResult.url,
@@ -254,58 +252,17 @@ export default {
         this.fieldModel = deepClone(fileList)
       }
 
-      this.syncUpdateFormModel(this.fieldModel)
+      this.updateFormModel(this.fieldModel)
       this.emitFieldDataChange(this.fieldModel, oldValue)
     },
 
-    handleFileUpload(res, file, fileList) {
-      if (file.status === 'success') {
-        let customResult = null
-        if (!!this.field.options.onUploadSuccess) {
-          let mountFunc = new Function(
-            'result',
-            'file',
-            'fileList',
-            this.field.options.onUploadSuccess
-          )
-          customResult = mountFunc.call(this, res, file, fileList)
-        }
-
-        this.updateFieldModelAndEmitDataChangeForUpload(
-          fileList,
-          customResult,
-          res
-        )
-        this.fileList = deepClone(fileList)
-        this.uploadBtnHidden = fileList.length >= this.field.options.limit
-      }
-    },
-
-    // handleFileRemove(file, fileList) {
-    //   this.fileList = deepClone(fileList)  //this.fileList = fileList
-    //   this.updateUploadFieldModelAndEmitDataChange(fileList)
-    //   this.uploadBtnHidden = fileList.length >= this.field.options.limit
-    //
-    //   if (!!this.field.options.onFileRemove) {
-    //     let customFn = new Function('file', 'fileList', this.field.options.onFileRemove)
-    //     customFn.call(this, file, fileList)
-    //   }
-    // },
-
-    updateFieldModelAndEmitDataChangeForRemove(deletedFileIdx, fileList) {
-      let oldValue = deepClone(this.fieldModel)
-      this.fieldModel.splice(deletedFileIdx, 1)
-      this.syncUpdateFormModel(this.fieldModel)
-      this.emitFieldDataChange(this.fieldModel, oldValue)
-    },
-
-    removeUploadFile(fileName, fileUrl, fileUid) {
+    onFileRemove(fileName, fileUrl, fileUid) {
       let foundIdx = -1
       let foundFile = null
       this.fileList.forEach((file, idx) => {
         if (
           file.name === fileName &&
-          (file.url === fileUrl || (!!fileUid && file.uid === fileUid))
+          (file.url === fileUrl || (fileUid && file.uid === fileUid))
         ) {
           foundIdx = idx
           foundFile = file
@@ -314,29 +271,36 @@ export default {
 
       if (foundIdx >= 0) {
         this.fileList.splice(foundIdx, 1)
-        this.updateFieldModelAndEmitDataChangeForRemove(foundIdx, this.fileList)
-        this.uploadBtnHidden = this.fileList.length >= this.field.options.limit
+        this.syncFileRemove(foundIdx, this.fileList)
 
-        if (!!this.field.options.onFileRemove) {
-          let customFn = new Function(
+        if (this.field.options.onFileRemove) {
+          const fn = new Function(
             'file',
             'fileList',
             this.field.options.onFileRemove
           )
-          customFn.call(this, foundFile, this.fileList)
+          fn.call(this, foundFile, this.fileList)
         }
       }
     },
 
-    handleUploadError(err, file, fileList) {
-      if (!!this.field.options.onUploadError) {
-        let customFn = new Function(
+    syncFileRemove(deletedFileIdx, fileList) {
+      let oldValue = deepClone(this.fieldModel)
+
+      this.fieldModel.splice(deletedFileIdx, 1)
+      this.updateFormModel(this.fieldModel)
+      this.emitFieldDataChange(this.fieldModel, oldValue)
+    },
+
+    onUploadError(err, file, fileList) {
+      if (this.field.options.onUploadError) {
+        const fn = new Function(
           'error',
           'file',
           'fileList',
           this.field.options.onUploadError
         )
-        customFn.call(this, err, file, fileList)
+        fn.call(this, err, file, fileList)
       } else {
         this.$message({
           message: this.i18nt('render.hint.uploadError') + err,
@@ -364,19 +328,17 @@ export default {
   }
 }
 
+/* 隐藏最后的图片上传按钮 */
 .hideUploadDiv {
   :deep(div.el-upload--picture-card) {
-    /* 隐藏最后的图片上传按钮 */
     display: none;
   }
 
   :deep(div.el-upload--text) {
-    /* 隐藏最后的文件上传按钮 */
     display: none;
   }
 
   :deep(div.el-upload__tip) {
-    /* 隐藏最后的文件上传按钮 */
     display: none;
   }
 }

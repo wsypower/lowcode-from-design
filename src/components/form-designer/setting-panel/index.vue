@@ -5,6 +5,7 @@
       :active-name="activeTab"
       style="height: 100%; width: 100%; overflow: hidden"
     >
+      <!-- 组件设置 -->
       <el-tab-pane :label="i18nt('designer.hint.widgetSetting')" name="1">
         <el-scrollbar
           class="setting-scrollbar"
@@ -18,6 +19,7 @@
           </template>
 
           <template v-else>
+            <!-- 容器组件 -->
             <el-form
               v-if="!designer.selectedWidget.category"
               :model="optionModel"
@@ -36,7 +38,9 @@
                   v-if="showCollapse(commonProps)"
                   :title="i18nt('designer.setting.commonSetting')"
                 >
+                  <!-- 遍历属性集 -->
                   <template v-for="(editorName, propName) in commonProps">
+                    <!-- v-if: 仅显示当前组件的options中配置过的属性 -->
                     <component
                       v-if="hasPropEditor(propName, editorName)"
                       :is="getPropEditor(propName, editorName)"
@@ -81,6 +85,7 @@
               </el-collapse>
             </el-form>
 
+            <!-- 表单组件 -->
             <el-form
               v-else
               :model="optionModel"
@@ -94,6 +99,7 @@
                 v-model="widgetActiveCollapseNames"
                 class="setting-collapse"
               >
+                <!-- 常见属性 -->
                 <el-collapse-item
                   name="1"
                   v-if="showCollapse(commonProps)"
@@ -110,6 +116,7 @@
                   </template>
                 </el-collapse-item>
 
+                <!-- 高级属性 -->
                 <el-collapse-item
                   name="2"
                   v-if="showCollapse(advProps)"
@@ -126,6 +133,7 @@
                   </template>
                 </el-collapse-item>
 
+                <!-- 事件属性 -->
                 <el-collapse-item
                   name="3"
                   v-if="showEventCollapse() && showCollapse(eventProps)"
@@ -147,6 +155,7 @@
         </el-scrollbar>
       </el-tab-pane>
 
+      <!-- 表单设置 -->
       <el-tab-pane
         v-if="!!designer"
         :label="i18nt('designer.hint.formSetting')"
@@ -163,6 +172,7 @@
         </el-scrollbar>
       </el-tab-pane>
 
+      <!-- 数据源 -->
       <el-tab-pane :label="i18nt('designer.setting.dataSource')" name="3">
         <el-scrollbar
           class="ds-setting-scrollbar"
@@ -174,6 +184,7 @@
       </el-tab-pane>
     </el-tabs>
 
+    <!-- 编辑事件函数弹窗 -->
     <div
       v-if="showWidgetEventDialogFlag"
       class=""
@@ -364,10 +375,13 @@ export default {
         }
       }
 
+      //去掉组件名称前缀-，如果有的话！！
       let originalPropName = propName.replace(
         this.selectedWidget.type + '-',
         ''
-      ) //去掉组件名称前缀-，如果有的话！！
+      )
+
+      // 看看该组件的option中是否配置了该属性，若是，则返回true
       return this.designer.hasConfig(this.selectedWidget, originalPropName)
     },
 

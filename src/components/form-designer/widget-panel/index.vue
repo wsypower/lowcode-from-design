@@ -207,14 +207,6 @@ export default {
       return this.getBannedWidgets().indexOf(wName) > -1
     },
 
-    showFormTemplates() {
-      if (this.designerConfig['formTemplates'] === undefined) {
-        return true
-      }
-
-      return !!this.designerConfig['formTemplates']
-    },
-
     loadWidgets() {
       this.containers = CONS.map((con) => {
         return {
@@ -298,44 +290,6 @@ export default {
 
     addFieldByDbClick(widget) {
       this.designer.addFieldByDbClick(widget)
-    },
-
-    loadFormTemplate(jsonUrl) {
-      this.$confirm(
-        this.i18nt('designer.hint.loadFormTemplateHint'),
-        this.i18nt('render.hint.prompt'),
-        {
-          confirmButtonText: this.i18nt('render.hint.confirm'),
-          cancelButtonText: this.i18nt('render.hint.cancel'),
-        }
-      )
-        .then(() => {
-          axios
-            .get(jsonUrl)
-            .then((res) => {
-              let modifiedFlag = false
-              if (typeof res.data === 'string') {
-                modifiedFlag = this.designer.loadFormJson(JSON.parse(res.data))
-              } else if (res.data.constructor === Object) {
-                modifiedFlag = this.designer.loadFormJson(res.data)
-              }
-              if (modifiedFlag) {
-                this.designer.emitHistoryChange()
-              }
-
-              this.$message.success(
-                this.i18nt('designer.hint.loadFormTemplateSuccess')
-              )
-            })
-            .catch((error) => {
-              this.$message.error(
-                this.i18nt('designer.hint.loadFormTemplateFailed') + ':' + error
-              )
-            })
-        })
-        .catch((error) => {
-          console.error(error)
-        })
     },
   },
 }

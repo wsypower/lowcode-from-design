@@ -1,6 +1,6 @@
 <template>
   <el-config-provider :locale="elLocale">
-    <VFormDesigner :designer-config="designerConfig" :global-dsv="globalDsv" />
+    <VFormDesigner :global-dsv="globalDsv" />
   </el-config-provider>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   },
   data() {
     return {
+      // 页面中间表单区的json 及 该表单的数据
       formJson: {
         widgetList: [],
         formConfig: {
@@ -25,12 +26,12 @@ export default {
           rulesName: 'rules',
           labelWidth: 80,
           labelPosition: 'left',
-          size: '',
           labelAlign: 'label-left-align',
+          layoutType: 'PC',
+          size: '',
           cssCode: '',
           customClass: '',
           functions: '',
-          layoutType: 'PC',
           onFormCreated: '',
           onFormMounted: '',
           onFormDataChange: '',
@@ -38,11 +39,9 @@ export default {
         },
       },
       formData: {},
-      optionData: {},
 
-      designerConfig: {
-        //logoHeader: false,
-      },
+      // 设置数据
+      optionData: {},
 
       //全局数据源变量
       globalDsv: {
@@ -59,20 +58,6 @@ export default {
     elLocale() {
       let curLocale = localStorage.getItem('v_form_locale') || 'zh-CN'
       return this.elLocaleMap[curLocale]
-    },
-  },
-  methods: {
-    submitForm() {
-      this.$refs.vFormRef
-        .getFormData()
-        .then((formData) => {
-          // Form Validation OK
-          alert(JSON.stringify(formData))
-        })
-        .catch((error) => {
-          // Form Validation failed
-          this.$message.error(error)
-        })
     },
   },
 }

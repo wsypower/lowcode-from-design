@@ -42,7 +42,7 @@
         </el-main>
       </el-container>
 
-      <el-aside style="max-width: 330px;">
+      <el-aside style="max-width: 330px">
         <setting-panel
           :designer="designer"
           :selected-widget="designer.selectedWidget"
@@ -70,7 +70,7 @@ import {
   getAllFieldWidgets,
   traverseAllWidgets,
 } from '@/utils/util'
-import { MOCK_CASE_URL, VARIANT_FORM_VERSION } from '@/utils/config'
+import { MOCK_CASE_URL } from '@/utils/config'
 import i18n, { changeLocale } from '@/utils/i18n'
 import axios from 'axios'
 import SvgIcon from '@/components/svg-icon/index'
@@ -105,23 +105,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          externalLink: true, //是否显示GitHub、文档等外部链接
-          formTemplates: true, //是否显示表单模板
           eventCollapse: true, //是否显示组件事件属性折叠面板
           widgetNameReadonly: false, //禁止修改组件名称
-
-          clearDesignerButton: true, //是否显示清空设计器按钮
-          previewFormButton: true, //是否显示预览表单按钮
-          importJsonButton: true, //是否显示导入JSON按钮
-          exportJsonButton: true, //是否显示导出JSON器按钮
-          exportCodeButton: true, //是否显示导出代码按钮
-          generateSFCButton: true, //是否显示生成SFC按钮
-
-          toolbarMaxWidth: 420, //设计器工具按钮栏最大宽度（单位像素）
-          toolbarMinWidth: 300, //设计器工具按钮栏最小宽度（单位像素）
-
-          productName: 'LowCode', //自定义表单设计器名称，对应“VForm Pro”（仅Pro）
-          productTitle: '', //自定义表单设计器标题，对应“表单设计器”（仅Pro）
 
           presetCssCode: '', //设计器预设CSS样式代码
           languageName: 'zh-CN', //界面语言，默认显示中文
@@ -139,7 +124,6 @@ export default {
   },
   data() {
     return {
-      // vFormVersion: VARIANT_FORM_VERSION,
       curLangName: '',
       curLocale: '',
 
