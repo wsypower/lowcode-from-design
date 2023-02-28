@@ -56,11 +56,11 @@
 </template>
 
 <script>
-import TopHeader from './top-header/index'
-import WidgetPanel from './widget-panel/index'
-import SettingPanel from './setting-panel/index'
-import RulerBar from './ruler-bar/index'
-import VFormWidget from './form-widget/index'
+import TopHeader from './top-header/index.vue'
+import WidgetPanel from './widget-panel/index.vue'
+import SettingPanel from './setting-panel/index.vue'
+import RulerBar from './ruler-bar/index.vue'
+import VFormWidget from './form-widget/index.vue'
 import { createDesigner } from '@/components/form-designer/designer'
 import {
   addWindowResizeHandler,

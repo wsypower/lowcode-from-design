@@ -1,5 +1,5 @@
 <template>
-  <el-header class="top-header">
+  <el-header class="top-headers">
     <div class="left">
       <svg-icon icon-class="logo" class-name="logo" />
       <i class="divider"></i>
@@ -120,11 +120,11 @@ import usePreview from '@/hooks/usePreview'
 import useImport from '@/hooks/useImport'
 import useExport from '@/hooks/useExport'
 import useCode from '@/hooks/useCode'
-import SvgIcon from '@/components/svg-icon/index'
-import PreviewDialog from './components/preview-dialog'
-import ImportDialog from './components/import-dialog'
-import ExportDialog from './components/export-dialog'
-import CodeDialog from './components/code-dialog'
+import SvgIcon from '@/components/svg-icon/index.vue'
+import PreviewDialog from './components/preview-dialog.vue'
+import ImportDialog from './components/import-dialog.vue'
+import ExportDialog from './components/export-dialog.vue'
+import CodeDialog from './components/code-dialog.vue'
 
 const emit = defineEmits(['sizeChange'])
 const props = defineProps({
