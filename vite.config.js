@@ -1,7 +1,14 @@
+/*
+ * @Description: 
+ * @Author: wsy
+ * @Date: 2023-02-28 10:33:35
+ * @LastEditTime: 2023-02-28 18:17:16
+ * @LastEditors: wsy
+ */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import viteSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import autoImport from 'unplugin-auto-import/vite'
 import { resolve } from 'path'
 import commonjs from '@rollup/plugin-commonjs'
@@ -23,7 +30,7 @@ export default defineConfig({
     //   'element-plus': 'ElementPlus',
     // }),
 
-    viteSvgIcons({
+    createSvgIconsPlugin({
       // Specify the icon folder to be cached
       iconDirs: [resolve(process.cwd(), 'src/icons/svg')],
       // Specify symbolId format
