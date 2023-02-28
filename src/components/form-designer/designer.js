@@ -42,32 +42,217 @@ export function createDesigner(vueInstance) {
       steps: [],
     },
 
-    // 表单宽度
-    commonScreenWidths: [1920, 1680, 1440, 1366, 1280, 1024, 800],
-    // 表单区宽度是否自定义
-    isFormWidthCustomize: false,
-    // 表单区宽度
-    formWidth: 1024,
-    // 表单区宽度选择列表
-    formWidthList: [],
     // 设置区表单组件尺寸
     settingSize: localStorage.getItem('v_form_settingSize') || 'default',
 
-    changeFormCustomize(val) {
+    // pc端屏幕常见分辨率
+    commonScreenWidths: [1920, 1680, 1440, 1366, 1280, 1024, 800],
+    // PC端表单区宽度选择列表
+    screenWidthList: [],
+    // PC端表单区宽度是否自定义
+    isFormWidthCustomize: false,
+    // PC端表单区宽度
+    pcFormWidth: 1024,
+    // PC端表单区高度
+    pcFormHeight: 'auto',
+
+    // H5端手机尺寸列表
+    phoneSizeList: [
+      {
+        name: 'iPhone SE',
+        width: 640 / 2,
+        height: 1136 / 2,
+      },
+
+      {
+        name: 'iPhone 5',
+        width: 640 / 2,
+        height: 1136 / 2,
+      },
+
+      {
+        name: 'iPhone 6',
+        width: 750 / 2,
+        height: 1334 / 2,
+      },
+
+      {
+        name: 'iPhone 6 Plus',
+        width: 1080 / 3,
+        height: 1920 / 3,
+      },
+
+      {
+        name: 'iPhone 7',
+        width: 750 / 2,
+        height: 1334 / 2,
+      },
+
+      {
+        name: 'iPhone 7  Plus',
+        width: 1080 / 3,
+        height: 1920 / 3,
+      },
+
+      {
+        name: 'iPhone 8',
+        width: 750 / 2,
+        height: 1334 / 2,
+      },
+
+      {
+        name: 'iPhone 8  Plus',
+        width: 1080 / 3,
+        height: 1920 / 3,
+      },
+
+      {
+        name: 'iPhone X',
+        width: 1125 / 3,
+        height: 2436 / 3,
+      },
+
+      {
+        name: 'iPhone XS',
+        width: 1125 / 3,
+        height: 2436 / 3,
+      },
+
+      {
+        name: 'iPhone XS Max',
+        width: 1242 / 3,
+        height: 2688 / 3,
+      },
+
+      {
+        name: 'iPhone XR',
+        width: 828 / 2,
+        height: 1792 / 2,
+      },
+
+      {
+        name: 'iPhone 11',
+        width: 828 / 2,
+        height: 1792 / 2,
+      },
+
+      {
+        name: 'iPhone 11 Pro',
+        width: 1125 / 3,
+        height: 2436 / 3,
+      },
+
+      {
+        name: 'iPhone 11 Pro Max',
+        width: 1242 / 3,
+        height: 2688 / 3,
+      },
+
+      {
+        name: 'iPhone 12',
+        width: 1170 / 3,
+        height: 2532 / 3,
+      },
+
+      {
+        name: 'iPhone 12 Mini',
+        width: 1080 / 3,
+        height: 2340 / 3,
+      },
+
+      {
+        name: 'iPhone 12 Pro',
+        width: 1170 / 3,
+        height: 2532 / 3,
+      },
+
+      {
+        name: 'iPhone 12 Pro Max',
+        width: 1284 / 3,
+        height: 2778 / 3,
+      },
+
+      {
+        name: 'Huawei Mate 20 Pro',
+        width: 1440 / 3,
+        height: 3120 / 3,
+      },
+
+      {
+        name: 'Huawei Mate 30 Pro',
+        width: 1176 / 3,
+        height: 2400 / 3,
+      },
+
+      {
+        name: 'Huawei P30 Pro',
+        width: 1080 / 3,
+        height: 2340 / 3,
+      },
+
+      {
+        name: 'Huawei P40 Pro+',
+        width: 1200 / 3,
+        height: 2640 / 3,
+      },
+
+      {
+        name: 'Galaxy Note 10 +',
+        width: 1440 / 3,
+        height: 3040 / 3,
+      },
+
+      {
+        name: 'Galaxy S10 5G',
+        width: 1440 / 3,
+        height: 3040 / 3,
+      },
+
+      {
+        name: 'Galaxy S20  Ultra',
+        width: 1440 / 3,
+        height: 3200 / 3,
+      },
+    ],
+    h5CurrentPhone: {
+      name: 'iPhone X',
+      width: 1125 / 3,
+      height: 2436 / 3,
+    },
+
+    // 当前表单布局方式
+    isPCLayout: true,
+    isH5Layout: false,
+
+    setPCLayout() {
+      this.isPCLayout = true
+      this.isH5Layout = false
+    },
+
+    setH5Layout() {
+      this.isPCLayout = false
+      this.isH5Layout = true
+    },
+
+    setFormCustomize4PC(val) {
       this.isFormWidthCustomize = val
     },
 
-    changeformWidth(width) {
-      this.formWidth = width
+    changeFormWidth4PC(width) {
+      this.pcFormWidth = width
     },
 
-    changeFormWidthList(sizeArr) {
-      this.formWidthList = ['自定义'].concat(sizeArr)
+    changeFormWidthList4PC(sizeArr) {
+      this.screenWidthList = ['自定义'].concat(sizeArr)
 
-      // 如果当前 formWidth 的宽度大于最大可显示宽度
-      if (this.formWidth > sizeArr[0]) {
-        this.formWidth = sizeArr[0]
+      // 如果当前 pcFormWidth 的宽度大于最大可显示宽度
+      if (this.pcFormWidth > sizeArr[0]) {
+        this.pcFormWidth = sizeArr[0]
       }
+    },
+
+    selectPhone(index) {
+      this.h5CurrentPhone = this.phoneSizeList[index]
     },
 
     changeSettingSize(size) {
@@ -78,14 +263,6 @@ export function createDesigner(vueInstance) {
     initDesigner(resetFormJson) {
       this.widgetList = []
       this.formConfig = deepClone(defaultFormConfig)
-
-      //输出版本信息和语雀链接
-      console.info(
-        `%cVariantForm %cVer${VARIANT_FORM_VERSION} %chttps://www.yuque.com/visualdev/vform3`,
-        'color:#409EFF;font-size: 22px;font-weight:bolder',
-        'color:#999;font-size: 12px',
-        'color:#333'
-      )
 
       if (!resetFormJson) {
         this.initHistoryData()

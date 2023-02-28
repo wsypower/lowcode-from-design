@@ -5,7 +5,7 @@
       :key="index"
       :style="{ width: `${ruler.width}px`, left: `${ruler.left}px` }"
       class="ruler"
-      @click="designer.changeformWidth(ruler.width)"
+      @click="onSizeChange(ruler.width)"
     >
       {{ ruler.width }}px
     </div>
@@ -58,7 +58,7 @@ function generateRulerDatas() {
   }
 
   const displaySizes = widthList.slice(startIndex)
-  props.designer.changeFormWidthList(displaySizes)
+  props.designer.changeFormWidthList4PC(displaySizes)
 
   let prevLeft = 0
   rulerDatas.value = displaySizes.map((size, index) => {
@@ -74,6 +74,11 @@ function generateRulerDatas() {
       left,
     }
   })
+}
+
+function onSizeChange(width) {
+  props.designer.setFormCustomize4PC(false)
+  props.designer.changeFormWidth4PC(width)
 }
 </script>
 

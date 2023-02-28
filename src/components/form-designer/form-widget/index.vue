@@ -2,7 +2,8 @@
   <div
     class="form-widget-container"
     :style="{
-      width: `${designer.formWidth}px`,
+      width: formWidth,
+      height: formHeight,
     }"
   >
     <el-form
@@ -19,7 +20,7 @@
         </div>
       </template>
 
-      <div class="form-widget-canvas" :style="{ minHeight: canvasMinHeight }">
+      <div :style="{ minHeight: canvasMinHeight }">
         <draggable
           :list="designer.widgetList"
           item-key="id"
@@ -114,6 +115,20 @@ export default {
     }
   },
   computed: {
+    formWidth() {
+      if (this.designer.isPCLayout) {
+        return this.designer.pcFormWidth + 'px'
+      }
+      return this.designer.h5CurrentPhone.width + 'px'
+    },
+
+    formHeight() {
+      if (this.designer.isPCLayout) {
+        return 'auto'
+      }
+      return this.designer.h5CurrentPhone.height + 'px'
+    },
+
     labelPosition() {
       if (
         !!this.designer.formConfig &&
@@ -145,21 +160,7 @@ export default {
       return 'calc(100vh - 56px - 68px)'
     },
   },
-  watch: {
-    'designer.widgetList': {
-      deep: true,
-      handler(val) {
-        //
-      },
-    },
 
-    'designer.formConfig': {
-      deep: true,
-      handler(val) {
-        //
-      },
-    },
-  },
   created() {
     this.designer.initDesigner(!!this.getDesignerConfig().resetFormJson)
     this.designer.loadPresetCssCode(this.getDesignerConfig().presetCssCode)
@@ -239,7 +240,6 @@ export default {
 
 .form-widget-container {
   box-sizing: border-box;
-  min-width: 800px;
   margin: 32px auto;
   padding: 24px;
   background: #fff;
@@ -252,11 +252,6 @@ export default {
     height: 100%;
     padding: 3px;
     background: #fff;
-
-    .form-widget-canvas {
-      //min-height: calc(100vh - 56px - 68px + 48px);
-      padding: 3px;
-    }
 
     .empty-content {
       position: absolute;

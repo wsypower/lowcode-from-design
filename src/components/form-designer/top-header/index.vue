@@ -1,5 +1,5 @@
 <template>
-  <el-header class="top-headers">
+  <el-header class="top-header">
     <div class="left">
       <svg-icon icon-class="logo" class-name="logo" />
       <i class="divider"></i>
@@ -20,20 +20,54 @@
       </el-tooltip>
     </div>
     <div class="middle">
-      <span>表单宽度:</span>
-      <el-select v-model="formSize" @change="onFormSizeChange" can-edit>
-        <el-option
-          v-for="(size, index) in designer.formWidthList"
-          :key="size"
-          :label="index !== 0 ? `${size}px` : size"
-          :value="size"
+      <el-tooltip effect="light" content="PC端" placement="bottom">
+        <svg-icon
+          icon-class="op-pc"
+          :class-name="designer.isPCLayout ? 'active' : ''"
+          @click="designer.setPCLayout()"
+      /></el-tooltip>
+
+      <el-tooltip effect="light" content="移动端" placement="bottom">
+        <svg-icon
+          icon-class="op-mobile"
+          :class-name="designer.isH5Layout ? 'active' : ''"
+          @click="designer.setH5Layout()"
         />
-      </el-select>
-      <el-input-number
-        v-model="designer.formWidth"
-        :disabled="!designer.isFormWidthCustomize"
-        controls-position="right"
-      />
+      </el-tooltip>
+
+      <template v-if="designer.isPCLayout">
+        <el-select
+          v-model="designer.pcFormWidth"
+          @change="onPCSizeChange"
+          can-edit
+        >
+          <el-option
+            v-for="(size, index) in designer.screenWidthList"
+            :key="size"
+            :label="index !== 0 ? `${size}px` : size"
+            :value="size"
+          />
+        </el-select>
+        <el-input-number
+          v-model="designer.pcFormWidth"
+          v-if="designer.isFormWidthCustomize"
+          controls-position="right"
+        />
+      </template>
+      <template v-else>
+        <el-select
+          :model-value="designer.h5CurrentPhone.name"
+          @change="onPhoneChange"
+          can-edit
+        >
+          <el-option
+            v-for="(phone, index) in designer.phoneSizeList"
+            :key="phone.name"
+            :label="phone.name"
+            :value="index"
+          />
+        </el-select>
+      </template>
     </div>
     <div class="right">
       <v-form-render
@@ -64,11 +98,19 @@
       <el-tooltip effect="light" content="导出代码" placement="bottom">
         <svg-icon icon-class="op-code" @click="showCodeDialog"
       /></el-tooltip>
-      <el-tooltip effect="light" content="上传数据" placement="bottom">
+
+      <i class="divider" style="margin-right: 0"></i>
+      <el-tooltip effect="light" content="保存模板" placement="bottom">
+        <svg-icon
+          icon-class="op-save"
+          class-name="upload-icon"
+          @click="saveTemplate"
+      /></el-tooltip>
+      <el-tooltip effect="light" content="发布模板" placement="bottom">
         <svg-icon
           icon-class="op-upload"
           class-name="upload-icon"
-          @click="uploadJson"
+          @click="publishTemplate"
       /></el-tooltip>
 
       <!-- 调整设置面板组件尺寸 -->
@@ -141,7 +183,7 @@ const props = defineProps({
 const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 const settingSizes = ref(['default', 'large', 'small'])
 
-const formSize = ref(props.designer.formWidth)
+const formSize = ref(props.designer.pcFormWidth)
 
 const { previewDialogVisible, showPreviewDialog, hidePreviewDialog } =
   usePreview()
@@ -172,12 +214,12 @@ const redoDisabled = computed(() =>
     : false
 )
 
-watch(
-  () => props.designer.formWidth,
-  (val) => {
-    formSize.value = val
-  }
-)
+// watch(
+//   () => props.designer.pcFormWidth,
+//   (val) => {
+//     formSize.value = val
+//   }
+// )
 
 function undo() {
   props.designer.undoHistoryStep()
@@ -187,28 +229,59 @@ function redo() {
   props.designer.redoHistoryStep()
 }
 
-function notifySettingSizeChange(size) {
-  emit('sizeChange', size)
-}
-
-function onFormSizeChange(formSize) {
+/*************************** 中间部分 START *************************/
+function onPCSizeChange(formSize) {
   if (typeof formSize === 'number') {
-    props.designer.changeFormCustomize(false)
-    props.designer.changeformWidth(formSize)
+    props.designer.setFormCustomize4PC(false)
+    props.designer.changeFormWidth4PC(formSize)
   } else {
-    props.designer.changeFormCustomize(true)
+    props.designer.setFormCustomize4PC(true)
   }
 }
+function onPhoneChange(phoneIndex) {
+  props.designer.selectPhone(phoneIndex)
+}
+
+// function notifySettingSizeChange(size) {
+//   emit('sizeChange', size)
+// }
+
+/*************************** 中间部分 END *************************/
 
 function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
 }
 
+// 表单模板id，保存后由后端返回，更新及上传时要携带
+const templateId = ref(null)
+
+/* ====================== 加载功能 start ====================== */
+onMounted(() => {
+  const query = window.location.search.substr(1)
+  if (query) {
+    templateId.value = query.substr(3)
+    loadTemplate()
+  }
+})
+
+function loadTemplate() {
+  axios
+    .get(
+      `http://172.16.33.237:10240/lowcode-form/design/viewMeta?id=${templateId.value}`
+    )
+    .then((res) => {
+      props.designer.loadFormJson(JSON.parse(res.data.data))
+    })
+}
+/* ====================== 加载功能 end ====================== */
+
 /* ======================上传功能start ====================== */
 // 页面是否已渲染完成，
 // 待页面渲染完后再去加载vrender，否则render会获取不到designer.widgetList
 const designermounted = ref(false)
+// render form ref, 其getFormData()方法貌似有bug，当表单模板实时更新时，该方法得到的数据不是实时的，是上一次的
 const renderRef = ref(null)
+// 表单json
 const formJson = ref({})
 
 onMounted(() => {
@@ -227,28 +300,39 @@ watch(() => props.designer.widgetList, genFormJson, {
   deep: true,
 })
 
-async function uploadJson() {
+async function saveTemplate() {
   if (!renderRef.value) {
     return
   }
 
   const { widgetList, formConfig } = props.designer
-  const uploadData = {
+  const templateData = {
     formJson: {
       widgetList,
       formConfig,
     },
+    // 表单项，用formFields更合适
     formWidgets: await renderRef.value.getFieldWidgets(),
+  }
+  if (templateId.value) {
+    templateData.id = templateId.value
   }
 
   // 发送请求
   axios
-    .post('http://172.16.24.185:5000/lowcode/save', uploadData)
+    .post('http://172.16.33.237:10240/lowcode-form/design/draft', templateData)
     .then((res) => {
-      console.log('res', res.data)
+      console.log('响应', res.data)
+      templateId.value = res.data.data
     })
 }
 /* ======================上传功能end ====================== */
+
+/* ====================== 发布功能 start ====================== */
+function publishTemplate() {
+  console.log('publish')
+}
+/* ====================== 上传功能 end ====================== */
 </script>
 
 <style lang="scss" scoped>
@@ -334,17 +418,15 @@ async function uploadJson() {
       position: relative;
       top: 2px;
     }
-
-    .icon-multi-wrap {
-      width: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .svg-icon {
-        width: 18px;
-        height: 18px;
-      }
+    :deep(.svg-icon) {
+      width: 1.4em;
+      height: 1.4em;
+      outline: none;
+      cursor: pointer;
+    }
+    :deep(.svg-icon.active) {
+      color: var(--el-color-primary);
+      cursor: default;
     }
   }
 
