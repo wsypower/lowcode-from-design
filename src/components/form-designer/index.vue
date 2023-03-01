@@ -26,7 +26,10 @@
         <el-header class="responsive-bar-wrap">
           <ruler-bar :designer="designer" />
         </el-header>
-        <el-main class="form-widget-main">
+        <el-main
+          class="form-widget-main"
+          :style="designer.isH5Layout ? 'overflow: auto' : ''"
+        >
           <v-form-widget
             :designer="designer"
             :form-config="designer.formConfig"
