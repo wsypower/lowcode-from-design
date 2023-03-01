@@ -27,18 +27,13 @@
           <ruler-bar :designer="designer" />
         </el-header>
         <el-main class="form-widget-main">
-          <el-scrollbar
-            class="container-scroll-bar"
-            :style="{ height: scrollerHeight }"
+          <v-form-widget
+            :designer="designer"
+            :form-config="designer.formConfig"
+            :global-dsv="globalDsv"
+            ref="formRef"
           >
-            <v-form-widget
-              :designer="designer"
-              :form-config="designer.formConfig"
-              :global-dsv="globalDsv"
-              ref="formRef"
-            >
-            </v-form-widget>
-          </el-scrollbar>
+          </v-form-widget>
         </el-main>
       </el-container>
 
@@ -135,8 +130,6 @@ export default {
       chatUrl: 'https://www.vform666.com/chat-group.html',
       subScribeUrl: 'https://www.vform666.com/subscribe.html',
 
-      scrollerHeight: 0,
-
       designer: createDesigner(this),
 
       fieldList: [],
@@ -155,14 +148,6 @@ export default {
   },
   mounted() {
     this.initLocale()
-
-    let logoHeaderHeight = 48
-    this.scrollerHeight = window.innerHeight - logoHeaderHeight - 40 + 'px'
-    addWindowResizeHandler(() => {
-      this.$nextTick(() => {
-        this.scrollerHeight = window.innerHeight - logoHeaderHeight - 40 + 'px'
-      })
-    })
 
     this.loadCase()
     this.loadFieldListFromServer()
@@ -377,8 +362,6 @@ export default {
     addDataSource(dsObj) {
       this.designer.formConfig.dataSources.push(dsObj)
     },
-
-    //TODO: 增加更多方法！！
   },
 }
 </script>
@@ -404,23 +387,29 @@ export default {
   border-left: 1px solid rgb(204, 204, 204);
   border-right: 1px solid rgb(204, 204, 204);
 }
-
-.responsive-bar-wrap {
-  padding: 0;
-  height: 19px;
-  border-bottom: 1px solid #ccc;
-  background-color: #d8d8d8;
-}
-
 .el-aside.side-panel {
   width: 260px;
   overflow-y: hidden;
 }
 
-.el-main.form-widget-main {
+.responsive-bar-wrap {
   padding: 0;
+  box-sizing: border-box;
+  height: 20px;
+  flex: none;
+  border-bottom: 1px solid #ccc;
+  background-color: #d8d8d8;
+}
+
+.el-main.form-widget-main {
+  padding: 32px 0;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
+  // 不可设height: 100%;!! 此元素是flex布局中的元素, 其上面是固定高度的元素,下面是它, 想要它占据父元素剩余高度,且高度不变(不被子元素撑开高度),
+  // 应设置 flex: auto; height: 0; 此二者的效果与 flex: 1不同, flex: 1 会被子元素撑开高度
+  // height: 100%;
+  flex: auto;
+  height: 0;
 }
 
 .container-scroll-bar {

@@ -7,9 +7,9 @@
     }"
   >
     <el-form
-      class="full-height-width widget-form"
+      class="widget-form"
       :label-position="labelPosition"
-      :class="[customClass, layoutType + '-layout']"
+      :class="[customClass]"
       :size="size"
       :validate-on-rule-change="false"
     >
@@ -20,7 +20,7 @@
         </div>
       </template>
 
-      <div :style="{ minHeight: canvasMinHeight }">
+      <div class="widget-form-inner">
         <draggable
           :list="designer.widgetList"
           item-key="id"
@@ -124,7 +124,7 @@ export default {
 
     formHeight() {
       if (this.designer.isPCLayout) {
-        return 'auto'
+        return this.designer.pcFormHeight
       }
       return this.designer.h5CurrentPhone.height + 'px'
     },
@@ -150,14 +150,6 @@ export default {
 
     customClass() {
       return this.designer.formConfig.customClass || ''
-    },
-
-    layoutType() {
-      return this.designer.getLayoutType()
-    },
-
-    canvasMinHeight() {
-      return 'calc(100vh - 56px - 68px)'
     },
   },
 
@@ -240,18 +232,21 @@ export default {
 
 .form-widget-container {
   box-sizing: border-box;
-  margin: 32px auto;
-  padding: 24px;
+  margin: 0 auto;
+  height: 100%;
   background: #fff;
   border-radius: 3px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 
-  .el-form.full-height-width {
+  * {
+    box-sizing: border-box;
+  }
+
+  .el-form.widget-form {
     position: relative;
+    padding: 24px;
     height: 100%;
-    padding: 3px;
-    background: #fff;
+    overflow: auto;
 
     .empty-content {
       position: absolute;
@@ -278,23 +273,8 @@ export default {
     }
   }
 
-  .el-form.PC-layout {
-    //
-  }
-
-  .el-form.Pad-layout {
-    margin: 0 auto;
-    max-width: 960px;
-    border-radius: 15px;
-    box-shadow: 0 0 1px 10px #495060;
-  }
-
-  .el-form.H5-layout {
-    margin: 0 auto;
-    width: 420px;
-    border-radius: 15px;
-    //border-width: 10px;
-    box-shadow: 0 0 1px 10px #495060;
+  .widget-form-inner {
+    min-height: 100%;
   }
 
   .el-form.widget-form :deep(.el-row) {

@@ -340,6 +340,7 @@ function publishTemplate() {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
   height: 48px;
   min-width: 800px;
   background: #f0f0f0;

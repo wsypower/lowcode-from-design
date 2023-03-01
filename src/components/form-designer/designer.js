@@ -54,7 +54,7 @@ export function createDesigner(vueInstance) {
     // PC端表单区宽度
     pcFormWidth: 1024,
     // PC端表单区高度
-    pcFormHeight: 'auto',
+    pcFormHeight: '100%',
 
     // H5端手机尺寸列表
     phoneSizeList: [
