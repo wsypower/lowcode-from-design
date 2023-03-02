@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: wsy
+ * @Date: 2023-03-01 18:30:37
+ * @LastEditTime: 2023-03-02 09:39:54
+ * @LastEditors: wsy
+ */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'

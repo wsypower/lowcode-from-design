@@ -2,13 +2,13 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-02-28 10:33:35
- * @LastEditTime: 2023-02-28 18:17:16
+ * @LastEditTime: 2023-03-02 09:42:22
  * @LastEditors: wsy
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import viteSvgIcons from 'vite-plugin-svg-icons'
 import autoImport from 'unplugin-auto-import/vite'
 import { resolve } from 'path'
 import commonjs from '@rollup/plugin-commonjs'
@@ -22,15 +22,7 @@ export default defineConfig({
 
     //添加jsx/tsx支持
     vueJsx({}),
-
-    /* 开启externalGlobals后，
-       报错：TypeError: Cannot read properties of null (reading 'nodeType')，不知何故？？ */
-    // externalGlobals({
-    //   vue: "Vue",
-    //   'element-plus': 'ElementPlus',
-    // }),
-
-    createSvgIconsPlugin({
+    viteSvgIcons({
       // Specify the icon folder to be cached
       iconDirs: [resolve(process.cwd(), 'src/icons/svg')],
       // Specify symbolId format
@@ -64,30 +56,19 @@ export default defineConfig({
   },
 
   build: {
-    //minify: false,
+    outDir: 'lowcode',
     commonjsOptions: {
       exclude: [
         'lib/vuedraggable/dist/vuedraggable.umd.js,', //引号前的逗号不能删，不知何故？？
-        //'vue/dist/*.js'
+        'dayjs'
       ],
       include: [],
-      //requireReturnsDefault: true
     },
     rollupOptions: {
       // 指定生产打包入口文件为index.htm
       input: {
         main: resolve(__dirname, 'index.html'),
       },
-
-      // // 确保外部化处理那些你不想打包进库的依赖
-      // external: ['vue', 'element-plus'],
-      // output: {
-      //   // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-      //   globals: {
-      //     vue: 'Vue', //报错：Failed to resolve module specifier "vue". Relative references must start with either
-      //     'element-plus': 'ElementPlus',
-      //   }
-      // }
     },
   },
 })
