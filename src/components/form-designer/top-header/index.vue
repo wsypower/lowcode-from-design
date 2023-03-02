@@ -37,7 +37,9 @@
 
       <template v-if="designer.isPCLayout">
         <el-select
-          v-model="designer.pcFormWidth"
+          :model-value="
+            designer.isFormWidthCustomize ? '自定义' : designer.pcFormWidth
+          "
           @change="onPCSizeChange"
           can-edit
         >
@@ -100,16 +102,32 @@
       /></el-tooltip>
 
       <i class="divider" style="margin-right: 0"></i>
-      <el-tooltip effect="light" content="保存模板" placement="bottom">
+      <el-tooltip
+        effect="light"
+        :content="`${isPublished ? '模板发布后不可修改' : '保存模板'}`"
+        placement="bottom"
+      >
         <svg-icon
           icon-class="op-save"
-          class-name="upload-icon"
+          :class-name="`upload-icon ${isPublished ? 'disabled' : ''}`"
           @click="saveTemplate"
       /></el-tooltip>
-      <el-tooltip effect="light" content="发布模板" placement="bottom">
+      <el-tooltip
+        effect="light"
+        :content="`${
+          templateId
+            ? isPublished
+              ? '模板已发布'
+              : '发布模板'
+            : '请先保存模板'
+        }`"
+        placement="bottom"
+      >
         <svg-icon
           icon-class="op-upload"
-          class-name="upload-icon"
+          :class-name="`upload-icon ${
+            !templateId || isPublished ? 'disabled' : ''
+          }`"
           @click="publishTemplate"
       /></el-tooltip>
 
@@ -157,16 +175,19 @@
 
 <script setup>
 import { onMounted, watch } from 'vue'
-import axios from 'axios'
+import axios from '@/api/request'
 import usePreview from '@/hooks/usePreview'
 import useImport from '@/hooks/useImport'
 import useExport from '@/hooks/useExport'
 import useCode from '@/hooks/useCode'
+import useMsg from '@/hooks/useMsg'
 import SvgIcon from '@/components/svg-icon/index.vue'
 import PreviewDialog from './components/preview-dialog.vue'
 import ImportDialog from './components/import-dialog.vue'
 import ExportDialog from './components/export-dialog.vue'
 import CodeDialog from './components/code-dialog.vue'
+
+const { showMsg, showConfirm } = useMsg()
 
 const emit = defineEmits(['sizeChange'])
 const props = defineProps({
@@ -214,13 +235,6 @@ const redoDisabled = computed(() =>
     : false
 )
 
-// watch(
-//   () => props.designer.pcFormWidth,
-//   (val) => {
-//     formSize.value = val
-//   }
-// )
-
 function undo() {
   props.designer.undoHistoryStep()
 }
@@ -229,7 +243,6 @@ function redo() {
   props.designer.redoHistoryStep()
 }
 
-/*************************** 中间部分 START *************************/
 function onPCSizeChange(formSize) {
   if (typeof formSize === 'number') {
     props.designer.setFormCustomize4PC(false)
@@ -246,16 +259,14 @@ function onPhoneChange(phoneIndex) {
 //   emit('sizeChange', size)
 // }
 
-/*************************** 中间部分 END *************************/
-
 function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
 }
 
 // 表单模板id，保存后由后端返回，更新及上传时要携带
 const templateId = ref(null)
+const isPublished = ref(false)
 
-/* ====================== 加载功能 start ====================== */
 onMounted(() => {
   const query = window.location.search.substr(1)
   if (query) {
@@ -265,17 +276,11 @@ onMounted(() => {
 })
 
 function loadTemplate() {
-  axios
-    .get(
-      `http://172.16.33.237:10240/lowcode-form/design/viewMeta?id=${templateId.value}`
-    )
-    .then((res) => {
-      props.designer.loadFormJson(JSON.parse(res.data.data))
-    })
+  axios.get(`/viewMeta?id=${templateId.value}`).then((res) => {
+    props.designer.loadFormJson(JSON.parse(res.data))
+  })
 }
-/* ====================== 加载功能 end ====================== */
 
-/* ======================上传功能start ====================== */
 // 页面是否已渲染完成，
 // 待页面渲染完后再去加载vrender，否则render会获取不到designer.widgetList
 const designermounted = ref(false)
@@ -301,7 +306,7 @@ watch(() => props.designer.widgetList, genFormJson, {
 })
 
 async function saveTemplate() {
-  if (!renderRef.value) {
+  if (!renderRef.value || isPublished.value) {
     return
   }
 
@@ -319,20 +324,39 @@ async function saveTemplate() {
   }
 
   // 发送请求
-  axios
-    .post('http://172.16.33.237:10240/lowcode-form/design/draft', templateData)
-    .then((res) => {
-      console.log('响应', res.data)
-      templateId.value = res.data.data
-    })
+  axios.post('/draft', templateData).then((res) => {
+    templateId.value = res.data
+    showMsg('模板保存成功~')
+  })
 }
-/* ======================上传功能end ====================== */
 
-/* ====================== 发布功能 start ====================== */
 function publishTemplate() {
-  console.log('publish')
+  if (isPublished.value || !templateId.value) {
+    return
+  }
+
+  showConfirm({
+    title: '提示',
+    msg: '模板发布后不可再更改，是否确认发布？',
+  }).then(() => {
+    axios.get(`/publish?id=${templateId.value}`).then(() => {
+      isPublished.value = true
+      openRender()
+    })
+  })
 }
-/* ====================== 上传功能 end ====================== */
+
+// 打开渲染器，查看表单效果
+function openRender() {
+  showConfirm({
+    title: '提示',
+    msg: '模板发布成功，是否前往渲染页面查看？',
+    confirmButtonText: '立即查看',
+    type: 'success',
+  }).then(() => {
+    window.open(`${import.meta.env.VITE_RENDER_URL}?id=${templateId.value}`)
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -353,16 +377,33 @@ function publishTemplate() {
   :deep(.el-input-number) {
     width: 100px;
     height: 28px;
+    outline: none;
   }
   :deep(.el-input-number.is-controls-right .el-input-number__decrease) {
-    height: 14px;
+    bottom: 0;
+    top: auto;
+    height: 12px;
+    font-size: 12px;
+    line-height: 1;
   }
   :deep(.el-input-number.is-controls-right .el-input-number__increase) {
-    height: 14px;
+    top: 4px;
+    bottom: auto;
+    height: 12px;
+    font-size: 12px;
+    line-height: 1;
   }
   :deep(.el-input-number .el-icon) {
     position: relative;
     top: 3px;
+  }
+
+  .svg-icon {
+    outline: none;
+    &.disabled {
+      color: rgba(48, 48, 48, 0.3) !important;
+      cursor: default !important;
+    }
   }
 
   .logo {
@@ -392,7 +433,7 @@ function publishTemplate() {
       color: rgba(48, 48, 48, 1);
 
       &.disabled {
-        color: rgba(48, 48, 48, 0.3);
+        color: rgba(48, 48, 48, 0.3) !important;
       }
     }
     .undo {

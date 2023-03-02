@@ -264,9 +264,10 @@ export function createDesigner(vueInstance) {
       this.widgetList = []
       this.formConfig = deepClone(defaultFormConfig)
 
-      if (!resetFormJson) {
-        this.initHistoryData()
-      }
+      // 取消从localStorage中加载数据
+      // if (!resetFormJson) {
+      //   this.initHistoryData()
+      // }
     },
 
     clearDesigner(skipHistoryChange) {
