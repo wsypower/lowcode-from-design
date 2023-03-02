@@ -407,7 +407,7 @@ function publishTemplate() {
 
     :deep(.el-select) {
       margin: 0 16px 0 8px;
-      width: 100px;
+      width: 180px;
       line-height: 26px;
     }
 
