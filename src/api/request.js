@@ -24,10 +24,10 @@ service.interceptors.response.use(
       return res
     }
     // failed
-    Promise.reject(res.msg)
+    return Promise.reject(res.msg)
   },
   (error) => {
-    Promise.reject(error)
+    return Promise.reject(error)
   }
 )
 

@@ -276,9 +276,15 @@ onMounted(() => {
 })
 
 function loadTemplate() {
-  axios.get(`/viewMeta?id=${templateId.value}`).then((res) => {
-    props.designer.loadFormJson(JSON.parse(res.data))
-  })
+  axios
+    .get(`/viewMeta?id=${templateId.value}`)
+    .then((res) => {
+      // 有可能url中给的id并没有匹配到模板，只有匹配到时才解析并赋值
+      if (res && res.data) {
+        props.designer.loadFormJson(JSON.parse(res.data))
+      }
+    })
+    .catch((e) => {})
 }
 
 // 页面是否已渲染完成，
@@ -348,14 +354,7 @@ function publishTemplate() {
 
 // 打开渲染器，查看表单效果
 function openRender() {
-  showConfirm({
-    title: '提示',
-    msg: '模板发布成功，是否前往渲染页面查看？',
-    confirmButtonText: '立即查看',
-    type: 'success',
-  }).then(() => {
-    window.open(`${import.meta.env.VITE_RENDER_URL}?id=${templateId.value}`)
-  })
+  window.open(`${import.meta.env.VITE_RENDER_URL}?id=${templateId.value}`)
 }
 </script>
 
