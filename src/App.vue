@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :locale="elLocale">
+  <el-config-provider :locale="elLocaleMap['zh-CN']">
     <VFormDesigner :global-dsv="globalDsv" />
   </el-config-provider>
 </template>
@@ -54,12 +54,12 @@ export default {
       },
     }
   },
-  computed: {
-    elLocale() {
-      let curLocale = localStorage.getItem('v_form_locale') || 'zh-CN'
-      return this.elLocaleMap[curLocale]
-    },
-  },
+  // computed: {
+  //   elLocale() {
+  //     let curLocale = localStorage.getItem('v_form_locale') || 'zh-CN'
+  //     return this.elLocaleMap[curLocale]
+  //   },
+  // },
 }
 </script>
 

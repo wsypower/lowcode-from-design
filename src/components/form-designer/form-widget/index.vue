@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="form-widget-container"
-    :style="{
-      width: formWidth,
-      height: formHeight,
-    }"
-  >
+  <div class="form-widget-container" :style="formWidgetStyle">
     <el-form
       class="widget-form"
       :label-position="labelPosition"
@@ -115,18 +109,17 @@ export default {
     }
   },
   computed: {
-    formWidth() {
+    formWidgetStyle() {
       if (this.designer.isPCLayout) {
-        return this.designer.pcFormWidth + 'px'
+        return {
+          width: this.designer.pcFormWidth + 'px',
+        }
       }
-      return this.designer.h5CurrentPhone.width + 'px'
-    },
-
-    formHeight() {
-      if (this.designer.isPCLayout) {
-        return this.designer.pcFormHeight
+      // H5
+      return {
+        width: this.designer.h5CurrentPhone.width + 'px',
+        height: this.designer.h5CurrentPhone.height + 'px',
       }
-      return this.designer.h5CurrentPhone.height + 'px'
     },
 
     labelPosition() {
@@ -237,6 +230,7 @@ export default {
   background: #fff;
   border-radius: 3px;
   overflow: hidden;
+  height: calc(100vh - 48px - 20px - 64px);
 
   * {
     box-sizing: border-box;
@@ -278,7 +272,10 @@ export default {
     // 设置min-height: 100%虽然高度上显示正确，但会出现【容器中子元素未撑满高度时就出现滚动条的bug】
     // 设置固定值就不会出现这个问题。因此计算固定值
     // 最后的1px是calc计算的结果和父元素的实际高度有零点几的像素差值，所以多减1px来使其高度小于父元素的高度，避免滚动条
-    min-height: calc(100vh - 48px - 20px - 64px - 48px - 1px);
+    // min-height: calc(100vh - 48px - 20px - 64px - 48px - 1px);
+    // 取消calc, 此方案在H5布局下初始渲染时（即便表单为空）会出现滚动条
+    // 改为设置其容器 widget-form-container的高度为calc，也能修复滚动条的问题，同时H5布局下也正常
+    min-height: 100%;
   }
 
   .el-form.widget-form :deep(.el-row) {

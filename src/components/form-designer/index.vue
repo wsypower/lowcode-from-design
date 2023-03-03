@@ -40,7 +40,7 @@
         </el-main>
       </el-container>
 
-      <el-aside style="max-width: 330px">
+      <el-aside style="max-width: 330px; display: flex; flex-direction: column">
         <setting-panel
           :designer="designer"
           :selected-widget="designer.selectedWidget"
