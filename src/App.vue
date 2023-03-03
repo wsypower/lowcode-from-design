@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :locale="elLocaleMap['zh-CN']">
+  <el-config-provider :locale="zhCNLang">
     <VFormDesigner :global-dsv="globalDsv" />
   </el-config-provider>
 </template>
@@ -8,7 +8,7 @@
 import VFormDesigner from './components/form-designer/index.vue'
 
 import zhCNLang from 'element-plus/lib/locale/lang/zh-cn'
-import enUSLang from 'element-plus/lib/locale/lang/en'
+// import enUSLang from 'element-plus/lib/locale/lang/en'
 
 export default {
   name: 'App',
@@ -48,10 +48,10 @@ export default {
         testApiHost: 'http://www.test.com/api',
       },
 
-      elLocaleMap: {
-        'zh-CN': zhCNLang,
-        'en-US': enUSLang,
-      },
+      // elLocaleMap: {
+      //   'zh-CN': zhCNLang,
+      //   'en-US': enUSLang,
+      // },
     }
   },
   // computed: {
