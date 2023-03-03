@@ -48,6 +48,8 @@ export default {
         testApiHost: 'http://www.test.com/api',
       },
 
+      zhCNLang,
+
       // elLocaleMap: {
       //   'zh-CN': zhCNLang,
       //   'en-US': enUSLang,
