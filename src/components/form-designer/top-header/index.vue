@@ -345,7 +345,7 @@ function publishTemplate() {
     title: '提示',
     msg: '模板发布后不可再更改，是否确认发布？',
   }).then(() => {
-    axios.get(`/publish?id=${templateId.value}`).then(() => {
+    axios.post(`/publish?id=${templateId.value}`).then(() => {
       isPublished.value = true
       openRender()
     })
@@ -354,7 +354,7 @@ function publishTemplate() {
 
 // 打开渲染器，查看表单效果
 function openRender() {
-  window.open(`${import.meta.env.VITE_RENDER_URL}?id=${templateId.value}`)
+  window.open(`${import.meta.env.VITE_RENDER_URL}?formId=${templateId.value}`)
 }
 </script>
 
