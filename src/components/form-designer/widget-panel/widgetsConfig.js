@@ -823,7 +823,7 @@ export const basicFields = [
       clearable: true,
       editable: false,
       format: 'YYYY-MM-DD', //日期显示格式
-      valueFormat: 'YYYY-MM-DD', //日期对象格式
+      valueFormat: 'x', //日期对象格式
       required: false,
       requiredHint: '',
       validation: '',
@@ -866,7 +866,7 @@ export const basicFields = [
       clearable: true,
       editable: false,
       format: 'YYYY-MM-DD', //日期显示格式
-      valueFormat: 'YYYY-MM-DD', //日期对象格式
+      valueFormat: 'x', // 值要时间戳格式
       required: false,
       requiredHint: '',
       validation: '',
