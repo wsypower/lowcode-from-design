@@ -104,12 +104,20 @@
       <i class="divider" style="margin-right: 0"></i>
       <el-tooltip
         effect="light"
-        :content="`${isPublished ? '模板发布后不可修改' : '保存模板'}`"
+        :content="`${
+          hasWidget
+            ? isPublished
+              ? '模板发布后不可修改'
+              : '保存模板'
+            : '请先创建模板'
+        }`"
         placement="bottom"
       >
         <svg-icon
           icon-class="op-save"
-          :class-name="`upload-icon ${isPublished ? 'disabled' : ''}`"
+          :class-name="`upload-icon ${
+            !hasWidget || isPublished ? 'disabled' : ''
+          }`"
           @click="saveTemplate"
       /></el-tooltip>
       <el-tooltip
@@ -123,7 +131,11 @@
         }`"
         placement="bottom"
       >
+        <el-icon v-if="isPublishing" class="loading-icon is-loading">
+          <Loading />
+        </el-icon>
         <svg-icon
+          v-else
           icon-class="op-upload"
           :class-name="`upload-icon ${
             !templateId || isPublished ? 'disabled' : ''
@@ -234,6 +246,7 @@ const redoDisabled = computed(() =>
     ? !props.designer.redoEnabled()
     : false
 )
+const hasWidget = computed(() => props.designer.widgetList.length > 0)
 
 function undo() {
   props.designer.undoHistoryStep()
@@ -265,6 +278,7 @@ function clearFormWidget() {
 
 // 表单模板id，保存后由后端返回，更新及上传时要携带
 const templateId = ref(null)
+const isPublishing = ref(false)
 const isPublished = ref(false)
 
 onMounted(() => {
@@ -344,12 +358,18 @@ function publishTemplate() {
   showConfirm({
     title: '提示',
     msg: '模板发布后不可再更改，是否确认发布？',
-  }).then(() => {
-    axios.post(`/publish?id=${templateId.value}`).then(() => {
-      isPublished.value = true
-      openRender()
-    })
   })
+    .then(() => {
+      isPublishing.value = true
+      axios.post(`/publish?id=${templateId.value}`).then(() => {
+        isPublishing.value = false
+        isPublished.value = true
+        openRender()
+      })
+    })
+    .catch((err) => {
+      showMsg('异常')
+    })
 }
 
 // 打开渲染器，查看表单效果
@@ -436,7 +456,7 @@ function openRender() {
       }
     }
     .undo {
-      margin-right: 20px;
+      margin-right: 16px;
     }
   }
 
@@ -476,7 +496,7 @@ function openRender() {
     justify-content: flex-end;
 
     .svg-icon {
-      margin-left: 24px;
+      margin-left: 20px;
       cursor: pointer;
 
       &:first-of-type,
@@ -487,8 +507,18 @@ function openRender() {
     .delete-icon {
       color: #e34d59;
     }
-    .upload-icon {
+    .upload-icon,
+    .loading-icon {
       color: var(--el-color-primary);
+    }
+
+    .loading-icon {
+      margin-left: 20px;
+      margin-right: 0.35em;
+      svg {
+        width: 1.1em;
+        height: 1.1em;
+      }
     }
 
     :deep(.el-select) {
