@@ -520,6 +520,8 @@ function buildRequestConfig(dataSource, DSV, VFR, isSandbox) {
   return chFn.call(null, config, isSandbox, DSV, VFR)
 }
 
+// DSV,VFR,isSandbox 这几个参数仅仅是为了传递给dataSource的请求处理回调函数，以便该回调中可能需要使用。
+// 实际上回调中根本没这个需求，至少目前我想不出来
 export async function runDataSourceRequest(
   dataSource,
   DSV,
@@ -528,10 +530,9 @@ export async function runDataSourceRequest(
   $message
 ) {
   try {
+    // VFR: vformRef
     let requestConfig = buildRequestConfig(dataSource, DSV, VFR, isSandbox)
-    //console.log('test------', requestConfig)
     let result = await axios.request(requestConfig)
-    //let result = await axios.create().request(requestConfig)
 
     let dhFn = new Function(
       'result',
