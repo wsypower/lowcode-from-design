@@ -184,8 +184,8 @@ export default {
   },
   watch: {
     formJson: {
-      handler(newValue, oldValue) {
-        console.log('render form Json changed', newValue)
+      handler(newJson) {
+        this.formJsonObj = newJson
       },
       deep: true,
     },
@@ -228,9 +228,6 @@ export default {
         ? this.formConfig.customClass
         : ''
     },
-  },
-  watch: {
-    //
   },
   created() {
     this.buildFormModel(!this.formJsonObj ? null : this.formJsonObj.widgetList)
@@ -869,7 +866,6 @@ export default {
      * @returns {*[]}
      */
     getFieldWidgets() {
-      console.log(this.formJsonObj.widgetList)
       return getAllFieldWidgets(this.formJsonObj.widgetList)
     },
 
@@ -997,7 +993,6 @@ export default {
         widgetList: deepClone(dialogCon.widgetList),
         formConfig: cloneFormConfigWithoutEventHandler(this.formConfig),
       }
-      //console.log('test====', JSON.stringify(dFormJson))
 
       let dialogInstance = createVNode(DynamicDialog, {
         options: dialogCon.options,
@@ -1031,7 +1026,6 @@ export default {
         widgetList: deepClone(drawerCon.widgetList),
         formConfig: cloneFormConfigWithoutEventHandler(this.formConfig),
       }
-      //console.log('test====', JSON.stringify(dFormJson))
 
       let drawerInstance = createVNode(DynamicDrawer, {
         options: drawerCon.options,

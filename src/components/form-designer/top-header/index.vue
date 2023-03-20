@@ -167,7 +167,7 @@
       :designer="designer"
       :globalDsv="globalDsv"
       @close="hideImportDialog"
-      @import="updateRenderJson"
+      @import="genFormJson"
     />
 
     <export-dialog
@@ -310,17 +310,13 @@ const renderRef = ref(null)
 // 表单json
 const formJson = ref({})
 
-watch(formJson, (val) => {
-  console.log('form Json changed ', val)
+watch(() => props.designer.widgetList, genFormJson, {
+  deep: true,
 })
 
 onMounted(() => {
   genFormJson()
   designerMounted.value = true
-})
-
-watch(() => props.designer.widgetList, genFormJson, {
-  deep: true,
 })
 
 function genFormJson() {
@@ -330,21 +326,10 @@ function genFormJson() {
   }
 }
 
-function updateRenderJson(newJson) {
-  console.log('aaaaaaaaa', newJson)
-  formJson.value = newJson
-}
-
 async function saveTemplate() {
   if (!renderRef.value || isPublished.value) {
     return
   }
-  console.log('renderRef.value.formJson', renderRef.value.formJson)
-  console.log(
-    'renderRef.value.getFieldWidgets()',
-    renderRef.value.getFieldWidgets()
-  )
-
   const { widgetList, formConfig } = props.designer
   const templateData = {
     formJson: {
