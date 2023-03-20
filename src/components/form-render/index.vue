@@ -182,6 +182,14 @@ export default {
       childFormRef: null, //保存子级VFormRender组件的ref
     }
   },
+  watch: {
+    formJson: {
+      handler(newValue, oldValue) {
+        console.log('render form Json changed', newValue)
+      },
+      deep: true,
+    },
+  },
   computed: {
     formConfig() {
       return this.formJsonObj.formConfig
@@ -861,6 +869,7 @@ export default {
      * @returns {*[]}
      */
     getFieldWidgets() {
+      console.log(this.formJsonObj.widgetList)
       return getAllFieldWidgets(this.formJsonObj.widgetList)
     },
 

@@ -60,7 +60,12 @@ watch(
 
 function onImport() {
   importJson()
+  notifyImport()
   notifyClose()
+}
+
+function notifyImport() {
+  emit('import')
 }
 
 function notifyClose() {

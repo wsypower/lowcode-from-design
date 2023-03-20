@@ -73,7 +73,7 @@
     </div>
     <div class="right">
       <v-form-render
-        v-if="designermounted"
+        v-if="designerMounted"
         :form-json="formJson"
         ref="renderRef"
         style="position: absolute; top: -200%; left：200%;"
@@ -167,6 +167,7 @@
       :designer="designer"
       :globalDsv="globalDsv"
       @close="hideImportDialog"
+      @import="updateRenderJson"
     />
 
     <export-dialog
@@ -213,10 +214,10 @@ const props = defineProps({
   },
 })
 
-const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
-const settingSizes = ref(['default', 'large', 'small'])
+// const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
+// const settingSizes = ref(['default', 'large', 'small'])
 
-const formSize = ref(props.designer.pcFormWidth)
+// const formSize = ref(props.designer.pcFormWidth)
 
 const { previewDialogVisible, showPreviewDialog, hidePreviewDialog } =
   usePreview()
@@ -303,15 +304,23 @@ function loadTemplate() {
 
 // 页面是否已渲染完成，
 // 待页面渲染完后再去加载vrender，否则render会获取不到designer.widgetList
-const designermounted = ref(false)
+const designerMounted = ref(false)
 // render form ref, 其getFormData()方法貌似有bug，当表单模板实时更新时，该方法得到的数据不是实时的，是上一次的
 const renderRef = ref(null)
 // 表单json
 const formJson = ref({})
 
+watch(formJson, (val) => {
+  console.log('form Json changed ', val)
+})
+
 onMounted(() => {
   genFormJson()
-  designermounted.value = true
+  designerMounted.value = true
+})
+
+watch(() => props.designer.widgetList, genFormJson, {
+  deep: true,
 })
 
 function genFormJson() {
@@ -321,14 +330,20 @@ function genFormJson() {
   }
 }
 
-watch(() => props.designer.widgetList, genFormJson, {
-  deep: true,
-})
+function updateRenderJson(newJson) {
+  console.log('aaaaaaaaa', newJson)
+  formJson.value = newJson
+}
 
 async function saveTemplate() {
   if (!renderRef.value || isPublished.value) {
     return
   }
+  console.log('renderRef.value.formJson', renderRef.value.formJson)
+  console.log(
+    'renderRef.value.getFieldWidgets()',
+    renderRef.value.getFieldWidgets()
+  )
 
   const { widgetList, formConfig } = props.designer
   const templateData = {
