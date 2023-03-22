@@ -313,7 +313,9 @@ export default {
       deleteEntireRow: '删除整行',
 
       widgetName: '组件唯一名称',
-      formSize: '全局组件大小',
+      formName: '表单名称',
+      formDesc: '表单描述',
+      size: '全局组件大小',
       labelPosition: '标签位置',
       topPosition: '顶部',
       leftPosition: '左边',

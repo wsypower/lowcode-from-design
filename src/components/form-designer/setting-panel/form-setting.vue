@@ -13,7 +13,13 @@
           name="1"
           :title="i18nt('designer.setting.basicSetting')"
         >
-          <el-form-item :label="i18nt('designer.setting.formSize')">
+          <el-form-item :label="i18nt('designer.setting.formName')">
+            <el-input v-model="formConfig.formName" />
+          </el-form-item>
+          <el-form-item :label="i18nt('designer.setting.formDesc')">
+            <el-input v-model="formConfig.formDesc" />
+          </el-form-item>
+          <el-form-item :label="i18nt('designer.setting.size')">
             <el-select v-model="formConfig.size">
               <el-option
                 v-for="item in formSizes"

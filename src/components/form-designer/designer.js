@@ -260,11 +260,15 @@ export function createDesigner(vueInstance) {
       this.settingSize = size
     },
 
-    initDesigner(resetFormJson) {
+    initDesigner(formName, formDesc /* resetFormJson */) {
       this.widgetList = []
-      this.formConfig = deepClone(defaultFormConfig)
+      this.formConfig = {
+        ...deepClone(defaultFormConfig),
+        formName,
+        formDesc,
+      }
 
-      // 取消从localStorage中加载数据
+      // 取消从localStorage中加载数据, 从localStorage中加载数据会保持上一次的数据，而目前我们需要每次刷新页面时清空数据
       // if (!resetFormJson) {
       //   this.initHistoryData()
       // }

@@ -45,6 +45,16 @@ export const overwriteObj = function (obj1, obj2) {
   })
 }
 
+export function parseParam(paramName) {
+  const searchStr = decodeURIComponent(window.location.search)
+  const reg = new RegExp(`${paramName}=[^&$]+`)
+  const result = searchStr.match(reg)
+  if (result) {
+    return result[0].split('=')[1]
+  }
+  return ''
+}
+
 export const addWindowResizeHandler = function (handler) {
   let oldHandler = window.onresize
   if (typeof window.onresize != 'function') {
@@ -394,6 +404,8 @@ export function getQueryParam(variable) {
 
 export function getDefaultFormConfig() {
   return {
+    formName: '',
+    formDesc: '',
     modelName: 'formData',
     refName: 'vForm',
     rulesName: 'rules',

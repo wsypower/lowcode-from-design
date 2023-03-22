@@ -315,7 +315,9 @@ export default {
       deleteEntireRow: 'delete entire row',
 
       widgetName: 'Unique Name',
-      formSize: 'Size',
+      formName: 'Form Name',
+      formDesc: 'Form Description',
+      size: 'Component Size',
       labelPosition: 'Position Of Label',
       topPosition: 'Top',
       leftPosition: 'Left',

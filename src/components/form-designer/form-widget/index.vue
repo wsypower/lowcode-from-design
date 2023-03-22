@@ -64,6 +64,7 @@
 import '@/components/form-designer/form-widget/container-widget/index'
 import FieldComponents from '@/components/form-designer/form-widget/field-widget/index'
 import i18n from '@/utils/i18n'
+import { parseParam } from '@/utils/util'
 
 export default {
   name: 'VFormWidget',
@@ -147,7 +148,14 @@ export default {
   },
 
   created() {
-    this.designer.initDesigner(!!this.getDesignerConfig().resetFormJson)
+    const formName = parseParam('formName')
+    const formDesc = parseParam('formDesc')
+
+    this.designer.initDesigner(
+      formName,
+      formDesc,
+      !!this.getDesignerConfig().resetFormJson
+    )
     this.designer.loadPresetCssCode(this.getDesignerConfig().presetCssCode)
   },
   mounted() {

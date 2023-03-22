@@ -123,11 +123,7 @@
       <el-tooltip
         effect="light"
         :content="`${
-          templateId
-            ? isPublished
-              ? '模板已发布'
-              : '发布模板'
-            : '请先保存模板'
+          formId ? (isPublished ? '模板已发布' : '发布模板') : '请先保存模板'
         }`"
         placement="bottom"
       >
@@ -138,7 +134,7 @@
           v-else
           icon-class="op-upload"
           :class-name="`upload-icon ${
-            !templateId || isPublished ? 'disabled' : ''
+            !formId || isPublished ? 'disabled' : ''
           }`"
           @click="publishTemplate"
       /></el-tooltip>
@@ -199,6 +195,7 @@ import PreviewDialog from './components/preview-dialog.vue'
 import ImportDialog from './components/import-dialog.vue'
 import ExportDialog from './components/export-dialog.vue'
 import CodeDialog from './components/code-dialog.vue'
+import { parseParam } from '@/utils/util'
 
 const { showMsg, showConfirm } = useMsg()
 
@@ -278,21 +275,20 @@ function clearFormWidget() {
 }
 
 // 表单模板id，保存后由后端返回，更新及上传时要携带
-const templateId = ref(null)
+const formId = ref(null)
 const isPublishing = ref(false)
 const isPublished = ref(false)
 
 onMounted(() => {
-  const query = window.location.search.substr(1)
-  if (query) {
-    templateId.value = query.substr(3)
+  formId.value = parseParam('formId')
+  if (formId.value) {
     loadTemplate()
   }
 })
 
 function loadTemplate() {
   axios
-    .get(`/viewMeta?id=${templateId.value}`)
+    .get(`/viewMeta?id=${formId.value}`)
     .then((res) => {
       // 有可能url中给的id并没有匹配到模板，只有匹配到时才解析并赋值
       if (res && res.data) {
@@ -339,15 +335,15 @@ async function saveTemplate() {
     // 表单项，用formFields更合适
     formWidgets: await renderRef.value.getFieldWidgets(),
   }
-  if (templateId.value) {
-    templateData.id = templateId.value
+  if (formId.value) {
+    templateData.id = formId.value
   }
 
   // 发送请求
   axios
     .post('/draft', templateData)
     .then((res) => {
-      templateId.value = res.data
+      formId.value = res.data
       showMsg('模板保存成功~')
     })
     .catch((err) => {
@@ -356,7 +352,7 @@ async function saveTemplate() {
 }
 
 function publishTemplate() {
-  if (isPublished.value || !templateId.value) {
+  if (isPublished.value || !formId.value) {
     return
   }
 
@@ -367,7 +363,7 @@ function publishTemplate() {
     .then(() => {
       isPublishing.value = true
       axios
-        .post(`/publish?id=${templateId.value}`)
+        .post(`/publish?id=${formId.value}`)
         .then(() => {
           isPublishing.value = false
           isPublished.value = true
@@ -385,7 +381,7 @@ function publishTemplate() {
 
 // 打开渲染器，查看表单效果
 function openRender() {
-  window.open(`${import.meta.env.VITE_RENDER_URL}?formId=${templateId.value}`)
+  window.open(`${import.meta.env.VITE_RENDER_URL}?formId=${formId.value}`)
 }
 </script>
 
