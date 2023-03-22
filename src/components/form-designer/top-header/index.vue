@@ -344,10 +344,15 @@ async function saveTemplate() {
   }
 
   // 发送请求
-  axios.post('/draft', templateData).then((res) => {
-    templateId.value = res.data
-    showMsg('模板保存成功~')
-  })
+  axios
+    .post('/draft', templateData)
+    .then((res) => {
+      templateId.value = res.data
+      showMsg('模板保存成功~')
+    })
+    .catch((err) => {
+      showMsg(err, 'error')
+    })
 }
 
 function publishTemplate() {
@@ -361,14 +366,20 @@ function publishTemplate() {
   })
     .then(() => {
       isPublishing.value = true
-      axios.post(`/publish?id=${templateId.value}`).then(() => {
-        isPublishing.value = false
-        isPublished.value = true
-        openRender()
-      })
+      axios
+        .post(`/publish?id=${templateId.value}`)
+        .then(() => {
+          isPublishing.value = false
+          isPublished.value = true
+          openRender()
+        })
+        .catch((err) => {
+          isPublishing.value = false
+          showMsg(err, 'error')
+        })
     })
     .catch((err) => {
-      showMsg('异常')
+      showMsg(err, 'error')
     })
 }
 
