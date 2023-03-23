@@ -327,12 +327,15 @@ async function saveTemplate() {
     return
   }
   const { widgetList, formConfig } = props.designer
+  const { formName, formDesc } = formConfig
   const templateData = {
+    name: formName,
+    description: formDesc,
     formJson: {
       widgetList,
       formConfig,
     },
-    // 表单项，用formFields更合适
+    // 表单项的值与类型
     formWidgets: await renderRef.value.getFieldWidgets(),
   }
   if (formId.value) {
