@@ -166,16 +166,23 @@ export default {
         return
       }
 
+      const fieldName = this.field.options.name
       if (
-        this.formModel[this.field.options.name] === undefined &&
+        this.formModel[fieldName] === undefined &&
         this.field.options.defaultValue !== undefined
       ) {
         this.fieldModel = this.field.options.defaultValue
-      } else if (this.formModel[this.field.options.name] === undefined) {
+      } else if (this.formModel[fieldName] === undefined) {
         //如果formModel为空对象，则初始化字段值为null!!
-        this.formModel[this.field.options.name] = null
+        this.formModel[fieldName] = null
+        // fieldModel的默认值就是null, 此时无需再次赋值了
       } else {
-        this.fieldModel = this.formModel[this.field.options.name]
+        // 将数字类型的字符串转为数字类型，否则option会选不中
+        if (+this.formModel[fieldName] !== NaN) {
+          this.fieldModel = +this.formModel[fieldName]
+        } else {
+          this.fieldModel = this.formModel[fieldName]
+        }
       }
       this.oldFieldValue = deepClone(this.fieldModel)
       this.initFileList() //处理图片上传、文件上传字段
@@ -290,10 +297,11 @@ export default {
       ) {
         /* 首先处理数据源选项加载 */
         if (!!this.field.options.dsEnabled) {
+          // 清空原有选项
           this.field.options.optionItems.splice(
             0,
             this.field.options.optionItems.length
-          ) // 清空原有选项
+          )
           let curDSName = this.field.options.dsName
           let curDS = getDSByName(this.formConfig, curDSName)
           if (!!curDS) {
