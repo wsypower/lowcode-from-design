@@ -15,9 +15,8 @@
     <el-upload
       ref="fieldEditor"
       :disabled="field.options.disabled || isReadMode"
-      :action="realUploadURL"
+      :action="field.options.uploadURL"
       :headers="uploadHeaders"
-      :data="uploadData"
       :with-credentials="field.options.withCredentials"
       :multiple="field.options.multipleSelect"
       :file-list="fileList"
@@ -108,39 +107,22 @@ export default {
       oldFieldValue: null, //field组件change之前的值
       fieldModel: [],
       rules: [],
-
       uploadHeaders: {},
-      uploadData: {
-        key: '', //七牛云上传文件名
-        //token: '',  //七牛云上传token
-
-        //policy: '',  //又拍云上传policy
-        //authorization: '',  //又拍云上传签名
-      },
-      fileList: [], //上传文件列表
+      //上传文件列表
+      fileList: [
+        {
+          url: 'http://localhost:8000/1679900368301.png',
+        },
+        {
+          url: 'http://localhost:8000/1679900370898.png',
+        },
+      ],
       fileListBeforeRemove: [], //删除前的文件列表
       uploadBtnHidden: false,
 
       previewUrl: '',
       showPreviewDialogFlag: false,
     }
-  },
-  computed: {
-    realUploadURL() {
-      let uploadURL = this.field.options.uploadURL
-      if (
-        !!uploadURL &&
-        (uploadURL.indexOf('DSV.') > -1 || uploadURL.indexOf('DSV[') > -1)
-      ) {
-        let DSV = this.getGlobalDsv()
-        return eval(this.field.options.uploadURL)
-      }
-
-      return this.field.options.uploadURL
-    },
-  },
-  beforeCreate() {
-    /* 这里不能访问方法和属性！！ */
   },
 
   created() {
@@ -208,7 +190,6 @@ export default {
         return false
       }
 
-      this.uploadData.key = file.name
       return this.handleOnBeforeUpload(file)
     },
 
@@ -218,11 +199,8 @@ export default {
         let result = bfFunc.call(this, file)
         if (typeof result === 'boolean') {
           return result
-        } else {
-          return true
         }
       }
-
       return true
     },
 
@@ -255,9 +233,6 @@ export default {
     },
 
     handlePictureUpload(res, file, fileList) {
-      // console.log('test----', file)
-      // console.log('test2222----', fileList)
-
       if (file.status === 'success') {
         let customResult = null
         if (!!this.field.options.onUploadSuccess) {
@@ -270,12 +245,17 @@ export default {
           customResult = customFn.call(this, res, file, fileList)
         }
 
+        const simpleFileList = fileList.map((file) => {
+          return {
+            url: file.response || file.url,
+          }
+        })
+        this.fileList = deepClone(simpleFileList)
         this.updateFieldModelAndEmitDataChangeForUpload(
-          fileList,
+          simpleFileList,
           customResult,
           res
         )
-        this.fileList = deepClone(fileList)
         this.uploadBtnHidden = fileList.length >= this.field.options.limit
       }
     },
