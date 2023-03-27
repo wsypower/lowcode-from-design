@@ -15,13 +15,12 @@
       ref="fieldEditor"
       :disabled="field.options.disabled || isReadMode"
       v-model:file-list="fileList"
-      :data="uploadData"
       :style="styleVariables"
       :class="[
         'dynamicPseudoAfter',
         { hideUploadDiv: uploadBtnHidden || isReadMode },
       ]"
-      :action="realUploadURL"
+      :action="field.options.uploadURL"
       :headers="uploadHeaders"
       :with-credentials="field.options.withCredentials"
       :limit="field.options.limit"
@@ -109,9 +108,6 @@ export default {
       rules: [],
 
       uploadHeaders: {},
-      uploadData: {
-        key: '',
-      },
       fileList: [], //上传文件列表
       uploadBtnHidden: false,
 
@@ -124,26 +120,9 @@ export default {
     uploadBtnHidden() {
       return this.fileList.length >= this.field.options.limit
     },
-    realUploadURL() {
-      let uploadURL = this.field.options.uploadURL
-      if (
-        uploadURL &&
-        (uploadURL.indexOf('DSV.') > -1 || uploadURL.indexOf('DSV[') > -1)
-      ) {
-        let DSV = this.getGlobalDsv()
-        return eval(this.field.options.uploadURL)
-      }
-
-      return this.field.options.uploadURL
-    },
-  },
-  beforeCreate() {
-    /* 这里不能访问方法和属性！！ */
   },
 
   created() {
-    /* 注意：子组件mounted在父组件created之后、父组件mounted之前触发，故子组件mounted需要用到的prop
-         需要在父组件created中初始化！！ */
     this.registerToRefList()
     this.initFieldModel()
     this.initEventHandler()
@@ -202,7 +181,6 @@ export default {
         return false
       }
 
-      this.uploadData.key = file.name
       return this.execCustomBeforeUploadFn(file)
     },
 
@@ -230,8 +208,18 @@ export default {
           customResult = fn.call(this, res, file, fileList)
         }
 
-        this.fileList = deepClone(fileList)
-        this.syncFileAdd(fileList, customResult, res)
+        const simpleFileList = fileList.map((file) => {
+          const { name, response, url } = file
+          const simpleFile = {
+            name,
+            // 新上传的文件的url在response字段里，已上传文件在url字段里
+            url: response || url,
+          }
+          return simpleFile
+        })
+
+        this.fileList = deepClone(simpleFileList)
+        this.syncFileAdd(simpleFileList, customResult, res)
       }
     },
 

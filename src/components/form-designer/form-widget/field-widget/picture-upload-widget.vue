@@ -109,14 +109,7 @@ export default {
       rules: [],
       uploadHeaders: {},
       //上传文件列表
-      fileList: [
-        {
-          url: 'http://localhost:8000/1679900368301.png',
-        },
-        {
-          url: 'http://localhost:8000/1679900370898.png',
-        },
-      ],
+      fileList: [],
       fileListBeforeRemove: [], //删除前的文件列表
       uploadBtnHidden: false,
 
@@ -246,8 +239,11 @@ export default {
         }
 
         const simpleFileList = fileList.map((file) => {
+          const { name, response, url } = file
           return {
-            url: file.response || file.url,
+            name,
+            // 新上传的图片的url在response字段里，已上传文件在url字段里
+            url: response || url,
           }
         })
         this.fileList = deepClone(simpleFileList)
