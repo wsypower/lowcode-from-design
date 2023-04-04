@@ -605,7 +605,7 @@ export const basicFields = [
       optionItems: [
         { label: 'radio 1', value: '1' },
         { label: 'radio 2', value: '2' },
-        { label: 'radio 3', value: ' 3' },
+        { label: 'radio 3', value: '3' },
       ],
       required: false,
       requiredHint: '',
