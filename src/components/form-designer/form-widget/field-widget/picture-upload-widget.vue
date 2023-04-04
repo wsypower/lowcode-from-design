@@ -242,8 +242,9 @@ export default {
           const { name, response, url } = file
           return {
             name,
-            // 新上传的图片的url在response字段里，已上传文件在url字段里
-            url: response || url,
+            // 新上传的文件的url在response字段里，已上传文件在url字段里
+            // 必须先取response对象，因为新上传时 url 字段也有值，但是是本地的文件路径
+            url: response?.data?.url || url,
           }
         })
         this.fileList = deepClone(simpleFileList)

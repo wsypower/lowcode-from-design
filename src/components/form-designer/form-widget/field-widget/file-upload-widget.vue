@@ -213,7 +213,8 @@ export default {
           const simpleFile = {
             name,
             // 新上传的文件的url在response字段里，已上传文件在url字段里
-            url: response || url,
+            // 必须先取response对象，因为新上传时 url 字段也有值，但是是本地的文件路径
+            url: response?.data?.url || url,
           }
           return simpleFile
         })
