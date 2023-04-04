@@ -167,6 +167,7 @@ export default {
       }
 
       const fieldName = this.field.options.name
+
       if (
         this.formModel[fieldName] === undefined &&
         this.field.options.defaultValue !== undefined
@@ -179,10 +180,13 @@ export default {
       } else {
         // 将数字类型的字符串转为数字类型，否则option会选不中
         // NaN 不等于它本身，即NaN !== NaN, 判断相等需要用 Number.isNaN
-        if (Number.isNaN(+this.formModel[fieldName])) {
-          this.fieldModel = this.formModel[fieldName]
-        } else {
+        if (
+          typeof this.formModel[fieldName] === 'string' &&
+          !Number.isNaN(+this.formModel[fieldName])
+        ) {
           this.fieldModel = +this.formModel[fieldName]
+        } else {
+          this.fieldModel = this.formModel[fieldName]
         }
       }
       this.oldFieldValue = deepClone(this.fieldModel)
