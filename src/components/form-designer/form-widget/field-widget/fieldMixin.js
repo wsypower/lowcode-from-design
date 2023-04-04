@@ -178,16 +178,7 @@ export default {
         this.formModel[fieldName] = null
         // fieldModel的默认值就是null, 此时无需再次赋值了
       } else {
-        // 将数字类型的字符串转为数字类型，否则option会选不中
-        // NaN 不等于它本身，即NaN !== NaN, 判断相等需要用 Number.isNaN
-        if (
-          typeof this.formModel[fieldName] === 'string' &&
-          !Number.isNaN(+this.formModel[fieldName])
-        ) {
-          this.fieldModel = +this.formModel[fieldName]
-        } else {
-          this.fieldModel = this.formModel[fieldName]
-        }
+        this.fieldModel = this.formModel[fieldName]
       }
       this.oldFieldValue = deepClone(this.fieldModel)
       this.initFileList() //处理图片上传、文件上传字段
