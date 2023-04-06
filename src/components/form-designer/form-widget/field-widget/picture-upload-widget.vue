@@ -183,7 +183,7 @@ export default {
       fileSizeCheckResult = file.size / 1024 / 1024 <= uploadFileMaxSize
       if (!fileSizeCheckResult) {
         this.$message.error(
-          this.$('render.hint.fileSizeExceed') + uploadFileMaxSize + 'MB'
+          this.i18nt('render.hint.fileSizeExceed') + uploadFileMaxSize + 'MB'
         )
         return false
       }
