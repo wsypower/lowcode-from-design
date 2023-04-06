@@ -180,6 +180,7 @@ export default {
       } else {
         this.fieldModel = this.formModel[fieldName]
       }
+      console.log('fieldModel inited', this.fieldModel)
       this.oldFieldValue = deepClone(this.fieldModel)
       this.initFileList() //处理图片上传、文件上传字段
     },
@@ -201,6 +202,7 @@ export default {
           this.fileList.splice(0, 0, deepClone(this.fieldModel))
         }
       }
+      console.log('fileList inited', this.fileList)
     },
 
     initEventHandler() {

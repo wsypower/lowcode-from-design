@@ -111,11 +111,16 @@ export default {
       //上传文件列表
       fileList: [],
       fileListBeforeRemove: [], //删除前的文件列表
-      uploadBtnHidden: false,
 
       previewUrl: '',
       showPreviewDialogFlag: false,
     }
+  },
+
+  computed: {
+    uploadBtnHidden: function () {
+      return this.fileList.length >= this.field?.options?.limit
+    },
   },
 
   created() {
@@ -253,7 +258,6 @@ export default {
           customResult,
           res
         )
-        this.uploadBtnHidden = this.fileList.length >= this.field.options.limit
       }
     },
 
@@ -286,7 +290,6 @@ export default {
     handlePictureRemove(file, fileList) {
       this.updateFieldModelAndEmitDataChangeForRemove(file, fileList)
       this.fileList = deepClone(fileList)
-      this.uploadBtnHidden = fileList.length >= this.field.options.limit
 
       if (!!this.field.options.onFileRemove) {
         let customFn = new Function(
