@@ -253,7 +253,7 @@ export default {
           customResult,
           res
         )
-        this.uploadBtnHidden = fileList.length >= this.field.options.limit
+        this.uploadBtnHidden = this.fileList.length >= this.field.options.limit
       }
     },
 
