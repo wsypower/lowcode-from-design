@@ -409,7 +409,7 @@ export function getDefaultFormConfig() {
     modelName: 'formData',
     refName: 'vForm',
     rulesName: 'rules',
-    labelWidth: 80,
+    labelWidth: 100,
     labelPosition: 'left',
     size: 'default',
     labelAlign: 'label-left-align',

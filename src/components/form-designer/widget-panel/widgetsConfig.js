@@ -456,7 +456,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '单行输入',
       labelAlign: '',
       type: 'text',
       defaultValue: '',
@@ -505,7 +505,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '多行输入',
       labelAlign: '',
       rows: 3,
       defaultValue: '',
@@ -546,7 +546,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '计数器',
       labelAlign: '',
       defaultValue: 0,
       placeholder: '',
@@ -586,7 +586,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '单选项',
       labelAlign: '',
       defaultValue: null,
       columnWidth: '200px',
@@ -630,7 +630,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '多选项',
       labelAlign: '',
       defaultValue: [],
       columnWidth: '200px',
@@ -674,7 +674,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '下拉选项',
       labelAlign: '',
       defaultValue: '',
       placeholder: '',
@@ -892,7 +892,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '开关',
       labelAlign: '',
       defaultValue: null,
       columnWidth: '200px',
@@ -925,7 +925,7 @@ export const basicFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '滑块',
       labelAlign: '',
       columnWidth: '200px',
       showStops: true,
@@ -965,7 +965,7 @@ export const basicFields = [
       name: '',
       columnWidth: '200px',
       hidden: false,
-      textContent: 'static text',
+      textContent: '静态文字',
       //-------------------
       customClass: '', //自定义css类名
       //-------------------
@@ -982,7 +982,7 @@ export const basicFields = [
       name: '',
       columnWidth: '200px',
       hidden: false,
-      htmlContent: '<b>html text</b>',
+      htmlContent: '<b>html 文本</b>',
       //-------------------
       customClass: '', //自定义css类名
       //-------------------
@@ -997,7 +997,7 @@ export const basicFields = [
     formItemFlag: false,
     options: {
       name: '',
-      label: '',
+      label: '按钮',
       columnWidth: '200px',
       size: '',
       displayStyle: 'block',
@@ -1023,7 +1023,7 @@ export const basicFields = [
     formItemFlag: false,
     options: {
       name: '',
-      label: '',
+      label: '分隔线',
       columnWidth: '200px',
       direction: 'horizontal',
       contentPosition: 'center',
@@ -1044,7 +1044,7 @@ export const advancedFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '图片上传',
       labelAlign: '',
       labelWidth: null,
       labelHidden: false,
@@ -1087,7 +1087,7 @@ export const advancedFields = [
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '文件上传',
       labelAlign: '',
       labelWidth: null,
       labelHidden: false,

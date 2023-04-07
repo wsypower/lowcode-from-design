@@ -246,7 +246,7 @@ export default {
 
   .el-form.widget-form {
     position: relative;
-    padding: 24px;
+
     height: 100%;
     overflow: auto;
 
@@ -277,6 +277,7 @@ export default {
   }
 
   .widget-form-inner {
+    box-sizing: border-box;
     // 设置min-height: 100%虽然高度上显示正确，但会出现【容器中子元素未撑满高度时就出现滚动条的bug】
     // 设置固定值就不会出现这个问题。因此计算固定值
     // 最后的1px是calc计算的结果和父元素的实际高度有零点几的像素差值，所以多减1px来使其高度小于父元素的高度，避免滚动条
@@ -284,6 +285,7 @@ export default {
     // 取消calc, 此方案在H5布局下初始渲染时（即便表单为空）会出现滚动条
     // 改为设置其容器 widget-form-container的高度为calc，也能修复滚动条的问题，同时H5布局下也正常
     min-height: 100%;
+    padding: 24px;
   }
 
   .el-form.widget-form :deep(.el-row) {

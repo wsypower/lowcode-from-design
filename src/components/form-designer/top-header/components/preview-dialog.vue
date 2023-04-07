@@ -8,19 +8,22 @@
       :append-to-body="true"
       :destroy-on-close="true"
       center
-      width="75%"
+      :width="
+        designer.isPCLayout
+          ? designer.pcFormWidth
+          : designer.h5CurrentPhone.width
+      "
+      custom-class="preview-dialog"
       @close="notifyClose"
     >
-      <div>
-        <div class="form-render-wrapper">
-          <VFormRender
-            ref="previewFormRef"
-            :preview-state="true"
-            :form-json="previewFormJson"
-            :global-dsv="props.globalDsv"
-          >
-          </VFormRender>
-        </div>
+      <div class="form-render-wrapper">
+        <VFormRender
+          ref="previewFormRef"
+          :preview-state="true"
+          :form-json="previewFormJson"
+          :global-dsv="props.globalDsv"
+        >
+        </VFormRender>
       </div>
       <template #footer>
         <div class="dialog-footer">
@@ -121,11 +124,18 @@ function notifyClose() {
 }
 </script>
 
-<style lang="scss" scoped>
-.dialog-footer {
-  margin-top: -24px;
-}
-.form-render-wrapper {
-  min-height: 150px;
+<style lang="scss">
+.preview-dialog {
+  height: 80%;
+  overflow: hidden;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .el-dialog__body {
+    height: calc(100% - 54px - 62px);
+    overflow: auto;
+  }
 }
 </style>
