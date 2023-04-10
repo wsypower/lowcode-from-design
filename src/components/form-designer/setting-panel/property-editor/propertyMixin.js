@@ -11,7 +11,9 @@ export default {
     emitDefaultValueChange() {
       if (!!this.designer) {
         if (!!this.designer.formWidget) {
-          let fieldWidget = this.designer.formWidget.getWidgetRef(this.designer.selectedWidget.options.name)
+          let fieldWidget = this.designer.formWidget.getWidgetRef(
+            this.designer.selectedWidget.options.name
+          )
           if (!!fieldWidget && !!fieldWidget.refreshDefaultValue) {
             fieldWidget.refreshDefaultValue()
           }
@@ -32,16 +34,17 @@ export default {
 
     onMultipleSelected(val) {
       if (val) {
-        this.optionModel.defaultValue = []  //清空原默认值!!
+        this.optionModel.defaultValue = [] //清空原默认值!!
       } else {
-        if (!!this.optionModel.defaultValue && (this.optionModel.defaultValue.length > 0)) {
+        if (
+          !!this.optionModel.defaultValue &&
+          this.optionModel.defaultValue.length > 0
+        ) {
           this.optionModel.defaultValue = this.optionModel.defaultValue[0]
         } else {
           this.optionModel.defaultValue = ''
         }
       }
     },
-
-
-  }
+  },
 }

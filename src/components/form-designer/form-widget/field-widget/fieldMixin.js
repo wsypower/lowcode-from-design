@@ -167,20 +167,17 @@ export default {
       }
 
       const fieldName = this.field.options.name
-
-      if (
-        this.formModel[fieldName] === undefined &&
-        this.field.options.defaultValue !== undefined
-      ) {
-        this.fieldModel = this.field.options.defaultValue
-      } else if (this.formModel[fieldName] === undefined) {
-        //如果formModel为空对象，则初始化字段值为null!!
-        this.formModel[fieldName] = null
-        // fieldModel的默认值就是null, 此时无需再次赋值了
+      if (this.formModel[fieldName] === undefined) {
+        //当表单数据为空时，以默认值初始化字段值
+        if (this.field.options.defaultValue !== undefined) {
+          this.fieldModel = this.field.options.defaultValue
+        }
+        this.formModel[fieldName] = this.fieldModel
       } else {
+        // 表单数据有值时，以表单数据初始化
         this.fieldModel = this.formModel[fieldName]
       }
-      console.log('fieldModel inited', this.fieldModel)
+
       this.oldFieldValue = deepClone(this.fieldModel)
       this.initFileList() //处理图片上传、文件上传字段
     },

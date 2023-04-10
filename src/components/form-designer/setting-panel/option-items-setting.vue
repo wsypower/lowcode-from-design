@@ -271,8 +271,8 @@ export default {
     addOption() {
       let newValue = this.optionModel.optionItems.length + 1
       this.optionModel.optionItems.push({
-        value: newValue,
-        label: 'new option',
+        value: String(newValue),
+        label: 'new option' + newValue,
       })
     },
 

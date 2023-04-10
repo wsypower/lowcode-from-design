@@ -72,8 +72,8 @@ export default {
   },
   data() {
     return {
-      oldFieldValue: null, //field组件change之前的值
-      fieldModel: null,
+      oldFieldValue: 0, //field组件change之前的值
+      fieldModel: 0,
       rules: [],
     }
   },
