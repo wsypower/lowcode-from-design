@@ -764,6 +764,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:deep(.el-row) {
+  margin-bottom: 10px;
+}
 .empty-tip {
   margin-top: 48px;
   display: flex;
