@@ -810,6 +810,8 @@ export const basicFields = [
       label: '',
       labelAlign: '',
       type: 'date',
+      format: 'YYYY-MM-DD', //日期显示格式
+      valueFormat: 'x', //日期对象格式
       defaultValue: null,
       placeholder: '',
       columnWidth: '200px',
@@ -822,8 +824,6 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'YYYY-MM-DD', //日期显示格式
-      valueFormat: 'x', //日期对象格式
       required: false,
       requiredHint: '',
       validation: '',

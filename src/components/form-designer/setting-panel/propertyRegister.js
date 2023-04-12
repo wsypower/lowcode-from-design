@@ -9,6 +9,8 @@ const COMMON_PROPERTIES = {
   label: 'label-editor',
   labelAlign: 'labelAlign-editor',
   type: 'type-editor',
+  format: 'format-editor',
+  valueFormat: 'valueFormat-editor',
   defaultValue: 'defaultValue-editor',
   placeholder: 'placeholder-editor',
   startPlaceholder: 'startPlaceholder-editor',
@@ -35,8 +37,7 @@ const COMMON_PROPERTIES = {
   showPassword: 'showPassword-editor',
   textContent: 'textContent-editor',
   htmlContent: 'htmlContent-editor',
-  format: 'format-editor',
-  valueFormat: 'valueFormat-editor',
+
   filterable: 'filterable-editor',
   allowCreate: 'allowCreate-editor',
   remote: 'remote-editor',
