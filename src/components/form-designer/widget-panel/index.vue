@@ -1,148 +1,57 @@
 <template>
   <el-scrollbar class="side-scroll-bar" :style="{ height: scrollerHeight }">
     <div>
-      <el-tabs v-model="firstTab" class="tabs-wrap">
+      <el-tabs v-model="currentTab" class="tabs-wrap">
         <el-tab-pane name="componentLib">
           <template #label>
-            <span
-              ><svg-icon icon-class="widget-lib" />
-              {{ i18nt('designer.componentLib') }}</span
-            >
+            <span><svg-icon icon-class="widget-lib" />组件库</span>
           </template>
-
           <el-collapse v-model="activeNames" class="widget-collapse">
-            <el-collapse-item
-              v-if="containers.length"
-              name="1"
-              :title="i18nt('designer.containerTitle')"
-            >
-              <draggable
-                tag="ul"
-                :list="containers"
-                item-key="key"
-                :group="{ name: 'dragGroup', pull: 'clone', put: false }"
-                :clone="handleContainerWidgetClone"
-                ghost-class="ghost"
-                :sort="false"
-                :move="checkContainerMove"
-                @end="onContainerDragEnd"
+            <template v-for="item in widgetsDataArr" :key="item.typeValue">
+              <el-collapse-item
+                v-if="item.list.length"
+                :name="item.typeValue"
+                :title="item.typeLabel"
               >
-                <template #item="{ element: ctn }">
-                  <li
-                    class="container-widget-item"
-                    :title="ctn.displayName"
-                    @dblclick="addContainerByDbClick(ctn)"
-                  >
-                    <svg-icon :icon-class="ctn.icon" class-name="widget-icon" />
-                    <span>{{
-                      i18n2t(
-                        `designer.widgetLabel.${ctn.type}`,
-                        `extension.widgetLabel.${ctn.type}`
-                      )
-                    }}</span>
-                  </li>
-                </template>
-              </draggable>
-            </el-collapse-item>
-
-            <el-collapse-item
-              v-if="basicFields.length"
-              name="2"
-              :title="i18nt('designer.basicFieldTitle')"
-            >
-              <draggable
-                tag="ul"
-                :list="basicFields"
-                item-key="key"
-                :group="{ name: 'dragGroup', pull: 'clone', put: false }"
-                :move="checkFieldMove"
-                :clone="handleFieldWidgetClone"
-                ghost-class="ghost"
-                :sort="false"
-              >
-                <template #item="{ element: fld }">
-                  <li
-                    class="field-widget-item"
-                    :title="fld.displayName"
-                    @dblclick="addFieldByDbClick(fld)"
-                  >
-                    <svg-icon :icon-class="fld.icon" class-name="widget-icon" />
-                    <span>{{
-                      i18n2t(
-                        `designer.widgetLabel.${fld.type}`,
-                        `extension.widgetLabel.${fld.type}`
-                      )
-                    }}</span>
-                  </li>
-                </template>
-              </draggable>
-            </el-collapse-item>
-
-            <el-collapse-item
-              v-if="advancedFields.length"
-              name="3"
-              :title="i18nt('designer.advancedFieldTitle')"
-            >
-              <draggable
-                tag="ul"
-                :list="advancedFields"
-                item-key="key"
-                :group="{ name: 'dragGroup', pull: 'clone', put: false }"
-                :move="checkFieldMove"
-                :clone="handleFieldWidgetClone"
-                ghost-class="ghost"
-                :sort="false"
-              >
-                <template #item="{ element: fld }">
-                  <li
-                    class="field-widget-item"
-                    :title="fld.displayName"
-                    @dblclick="addFieldByDbClick(fld)"
-                  >
-                    <svg-icon :icon-class="fld.icon" class-name="widget-icon" />
-                    <span>{{
-                      i18n2t(
-                        `designer.widgetLabel.${fld.type}`,
-                        `extension.widgetLabel.${fld.type}`
-                      )
-                    }}</span>
-                  </li>
-                </template>
-              </draggable>
-            </el-collapse-item>
-
-            <el-collapse-item
-              v-if="customFields.length"
-              name="4"
-              :title="i18nt('designer.customFieldTitle')"
-            >
-              <draggable
-                tag="ul"
-                :list="customFields"
-                item-key="key"
-                :group="{ name: 'dragGroup', pull: 'clone', put: false }"
-                :move="checkFieldMove"
-                :clone="handleFieldWidgetClone"
-                ghost-class="ghost"
-                :sort="false"
-              >
-                <template #item="{ element: fld }">
-                  <li
-                    class="field-widget-item"
-                    :title="fld.displayName"
-                    @dblclick="addFieldByDbClick(fld)"
-                  >
-                    <svg-icon :icon-class="fld.icon" class-name="widget-icon" />
-                    <span>{{
-                      i18n2t(
-                        `designer.widgetLabel.${fld.type}`,
-                        `extension.widgetLabel.${fld.type}`
-                      )
-                    }}</span>
-                  </li>
-                </template>
-              </draggable>
-            </el-collapse-item>
+                <draggable
+                  tag="ul"
+                  :list="item.list"
+                  item-key="key"
+                  :group="{ name: 'dragGroup', pull: 'clone', put: false }"
+                  ghost-class="ghost"
+                  :sort="false"
+                  :move="item.isContainer ? checkContainerMove : checkFieldMove"
+                  :clone="
+                    item.isContainer
+                      ? handleContainerWidgetClone
+                      : handleFieldWidgetClone
+                  "
+                >
+                  <template #item="{ element: elem }">
+                    <li
+                      class="container-widget-item"
+                      :title="elem.displayName"
+                      @dblclick="
+                        item.isContainer
+                          ? addContainerByDbClick(elem)
+                          : addFieldByDbClick(elem)
+                      "
+                    >
+                      <svg-icon
+                        :icon-class="elem.icon"
+                        class-name="widget-icon"
+                      />
+                      <span>{{
+                        i18n2t(
+                          `designer.widgetLabel.${elem.type}`,
+                          `extension.widgetLabel.${elem.type}`
+                        )
+                      }}</span>
+                    </li>
+                  </template>
+                </draggable>
+              </el-collapse-item>
+            </template>
           </el-collapse>
         </el-tab-pane>
       </el-tabs>
@@ -157,9 +66,11 @@ import {
   basicFields as BFS,
   advancedFields as AFS,
   customFields as CFS,
+  containers,
 } from './widgetsConfig'
 import { addWindowResizeHandler, generateId } from '@/utils/util'
 import i18n from '@/utils/i18n'
+import TypeEditor from '../setting-panel/property-editor/type-editor.vue'
 
 export default {
   name: 'FieldPanel',
@@ -175,7 +86,7 @@ export default {
     return {
       designerConfig: this.getDesignerConfig(),
 
-      firstTab: 'componentLib',
+      currentTab: 'componentLib',
 
       scrollerHeight: 0,
 
@@ -185,10 +96,10 @@ export default {
       basicFields: [],
       advancedFields: [],
       customFields: [],
+
+      // 分类组件数据
+      widgetsDataArr: [],
     }
-  },
-  computed: {
-    //
   },
   created() {
     this.loadWidgets()
@@ -258,6 +169,30 @@ export default {
       }).filter((fld) => {
         return !this.isBanned(fld.type)
       })
+
+      this.widgetsDataArr = [
+        {
+          typeValue: '1',
+          typeLabel: '容器',
+          list: this.containers,
+          isContainer: true,
+        },
+        {
+          typeValue: '2',
+          typeLabel: '基础字段',
+          list: this.basicFields,
+        },
+        {
+          typeValue: '3',
+          typeLabel: '高级字段',
+          list: this.advancedFields,
+        },
+        {
+          typeValue: '4',
+          typeLabel: 'customFields',
+          list: this.customFields,
+        },
+      ]
     },
 
     handleContainerWidgetClone(origin) {
@@ -276,11 +211,6 @@ export default {
     /* draggable组件的move钩子是在内部子组件被拖放到其他draggable组件时触发！！ */
     checkFieldMove(evt) {
       return this.designer.checkFieldMove(evt)
-    },
-
-    onContainerDragEnd(evt) {
-      //console.log('Drag end of container: ')
-      //console.log(evt)
     },
 
     addContainerByDbClick(container) {
