@@ -1,3 +1,5 @@
+import { deepClone } from '@/utils/util'
+
 export const containers = [
   {
     type: 'grid',
@@ -448,6 +450,443 @@ export const containers = [
   //   },
   // },
 ]
+
+export const basicFieldsOptionsMap = {
+  input: {
+    name: '',
+    label: '单行输入',
+    labelAlign: '',
+    type: 'text',
+    defaultValue: '',
+    placeholder: '',
+    columnWidth: '200px',
+    size: '',
+    labelWidth: null,
+    labelHidden: false,
+    readonly: false,
+    disabled: false,
+    hidden: false,
+    clearable: true,
+    showPassword: false,
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    minLength: null,
+    maxLength: null,
+    showWordLimit: false,
+    prefixIcon: '',
+    suffixIcon: '',
+    appendButton: false,
+    appendButtonDisabled: false,
+    buttonIcon: 'custom-search',
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onInput: '',
+    onChange: '',
+    onFocus: '',
+    onBlur: '',
+    onValidate: '',
+    onAppendButtonClick: '',
+  },
+
+  textarea: {
+    name: '',
+    label: '多行输入',
+    labelAlign: '',
+    rows: 3,
+    defaultValue: '',
+    placeholder: '',
+    columnWidth: '200px',
+    size: '',
+    labelWidth: null,
+    labelHidden: false,
+    readonly: false,
+    disabled: false,
+    hidden: false,
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    minLength: null,
+    maxLength: null,
+    showWordLimit: false,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onInput: '',
+    onChange: '',
+    onFocus: '',
+    onBlur: '',
+    onValidate: '',
+  },
+
+  number: {
+    name: '',
+    label: '计数器',
+    labelAlign: '',
+    defaultValue: 0,
+    placeholder: '',
+    columnWidth: '200px',
+    size: '',
+    labelWidth: null,
+    labelHidden: false,
+    disabled: false,
+    hidden: false,
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    min: -100000000000,
+    max: 100000000000,
+    precision: 0,
+    step: 1,
+    controlsPosition: 'right',
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onFocus: '',
+    onBlur: '',
+    onValidate: '',
+  },
+
+  radio: {
+    name: '',
+    label: '单选项',
+    labelAlign: '',
+    defaultValue: '',
+    columnWidth: '200px',
+    size: '',
+    displayStyle: 'inline',
+    buttonStyle: false,
+    border: false,
+    labelWidth: null,
+    labelHidden: false,
+    disabled: false,
+    hidden: false,
+    dsEnabled: false, // 是否使用数据源数据
+    dsName: '', // 数据源名称
+    labelKey: 'label',
+    valueKey: 'value',
+    optionItems: [
+      { label: 'radio 1', value: '1' },
+      { label: 'radio 2', value: '2' },
+      { label: 'radio 3', value: '3' },
+    ],
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onValidate: '',
+  },
+
+  checkbox: {
+    name: '',
+    label: '多选项',
+    labelAlign: '',
+    defaultValue: [],
+    columnWidth: '200px',
+    size: '',
+    displayStyle: 'inline',
+    buttonStyle: false,
+    border: false,
+    labelWidth: null,
+    labelHidden: false,
+    disabled: false,
+    hidden: false,
+    dsEnabled: false, // 是否使用数据源数据
+    dsName: '', // 数据源名称
+    labelKey: 'label',
+    valueKey: 'value',
+    optionItems: [
+      { label: 'check 1', value: '1' },
+      { label: 'check 2', value: '2' },
+      { label: 'check 3', value: '3' },
+    ],
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onValidate: '',
+  },
+
+  select: {
+    name: '',
+    label: '下拉选项',
+    labelAlign: '',
+    defaultValue: '',
+    placeholder: '',
+    columnWidth: '200px',
+    size: '',
+    labelWidth: null,
+    labelHidden: false,
+    disabled: false,
+    hidden: false,
+    clearable: true,
+    filterable: false,
+    allowCreate: false,
+    remote: false,
+    automaticDropdown: false, //自动下拉
+    multiple: false,
+    multipleLimit: 0,
+    dsEnabled: false, // 是否使用数据源数据
+    dsName: '', // 数据源名称
+    labelKey: 'label',
+    valueKey: 'value',
+    optionItems: [
+      { label: 'select 1', value: 'option 1' },
+      { label: 'select 2', value: 'option 2' },
+      { label: 'select 3', value: 'option 3' },
+    ],
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onRemoteQuery: '',
+    onChange: '',
+    onFocus: '',
+    onBlur: '',
+    onValidate: '',
+  },
+
+  date: {
+    name: '',
+    label: '',
+    labelAlign: '',
+    type: 'date',
+    format: 'YYYY-MM-DD', //日期显示格式
+    valueFormat: 'x', //日期对象格式
+    defaultValue: null,
+    placeholder: '',
+    columnWidth: '200px',
+    size: '',
+    autoFullWidth: true,
+    labelWidth: null,
+    labelHidden: false,
+    readonly: false,
+    disabled: false,
+    hidden: false,
+    clearable: true,
+    editable: false,
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onFocus: '',
+    onBlur: '',
+    onValidate: '',
+  },
+
+  'date-range': {
+    name: '',
+    label: '',
+    labelAlign: '',
+    type: 'daterange',
+    defaultValue: null,
+    startPlaceholder: '',
+    endPlaceholder: '',
+    columnWidth: '200px',
+    size: '',
+    autoFullWidth: true,
+    labelWidth: null,
+    labelHidden: false,
+    readonly: false,
+    disabled: false,
+    hidden: false,
+    clearable: true,
+    editable: false,
+    format: 'YYYY-MM-DD', //日期显示格式
+    valueFormat: 'x', // 值要时间戳格式
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onFocus: '',
+    onBlur: '',
+    onValidate: '',
+  },
+
+  switch: {
+    name: '',
+    label: '开关',
+    labelAlign: '',
+    defaultValue: false,
+    columnWidth: '200px',
+    size: '',
+    labelWidth: null,
+    labelHidden: false,
+    disabled: false,
+    hidden: false,
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    switchWidth: 40,
+    activeText: '',
+    inactiveText: '',
+    activeColor: null,
+    inactiveColor: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onValidate: '',
+  },
+
+  slider: {
+    name: '',
+    label: '滑块',
+    labelAlign: '',
+    columnWidth: '200px',
+    showStops: true,
+    size: '',
+    labelWidth: null,
+    labelHidden: false,
+    disabled: false,
+    hidden: false,
+    required: false,
+    requiredHint: '',
+    validation: '',
+    validationHint: '',
+    //-------------------
+    customClass: '', //自定义css类名
+    labelIcon: null,
+    labelIconPosition: 'rear',
+    labelTooltip: null,
+    min: 0,
+    max: 100,
+    step: 10,
+    range: false,
+    //vertical: false,
+    height: null,
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+    onChange: '',
+    onValidate: '',
+  },
+
+  'static-text': {
+    name: '',
+    columnWidth: '200px',
+    hidden: false,
+    textContent: '静态文字',
+    //-------------------
+    customClass: '', //自定义css类名
+    //-------------------
+    onCreated: '',
+    onMounted: '',
+
+    'html-text': {
+      name: '',
+      columnWidth: '200px',
+      hidden: false,
+      htmlContent: '<b>html 文本</b>',
+      //-------------------
+      customClass: '', //自定义css类名
+      //-------------------
+      onCreated: '',
+      onMounted: '',
+    },
+
+    button: {
+      name: '',
+      label: '按钮',
+      columnWidth: '200px',
+      size: '',
+      displayStyle: 'block',
+      disabled: false,
+      hidden: false,
+      type: '',
+      plain: false,
+      round: false,
+      circle: false,
+      icon: null,
+      //-------------------
+      customClass: '', //自定义css类名
+      //-------------------
+      onCreated: '',
+      onMounted: '',
+      onClick: '',
+    },
+
+    divider: {
+      name: '',
+      label: '分隔线',
+      columnWidth: '200px',
+      direction: 'horizontal',
+      contentPosition: 'center',
+      hidden: false,
+      //-------------------
+      customClass: '', //自定义css类名
+      //-------------------
+      onCreated: '',
+      onMounted: '',
+    },
+  },
+}
 
 export const basicFields = [
   {
