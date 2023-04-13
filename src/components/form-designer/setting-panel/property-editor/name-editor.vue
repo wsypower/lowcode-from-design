@@ -82,6 +82,15 @@ export default {
         return
       }
 
+      const reg = /^[A-Za-z][A-Za-z0-9_]*[A-Za-z0-9]$/
+      if (!reg.test(newName)) {
+        this.selectedWidget.options.name = oldName
+        this.$message.info(
+          '名称首字符必须为字母，尾字符必须为字母或数字，中间字符必须为字母，数字或下划线'
+        )
+        return
+      }
+
       if (!!this.designer.formWidget) {
         let foundRef = this.designer.formWidget.getWidgetRef(newName) // 检查newName是否已存在！！
         if (!!foundRef) {
