@@ -1162,8 +1162,11 @@ export function createDesigner(vueInstance) {
       let newWidget = deepClone(origin)
       let tempId = generateId()
       newWidget.id = newWidget.type.replace(/-/g, '') + tempId
-      //console.log('test id===', newWidget.id)
-      newWidget.options.name = newWidget.id
+
+      if (!newWidget.options.name) {
+        newWidget.options.name = newWidget.id
+      }
+
       newWidget.options.label =
         newWidget.options.label || newWidget.type.toLowerCase()
 

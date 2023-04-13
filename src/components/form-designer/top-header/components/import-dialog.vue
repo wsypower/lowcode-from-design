@@ -33,7 +33,7 @@
 import useImport from '@/hooks/useImport'
 import CodeEditor from '@/components/code-editor/index'
 
-const emit = defineEmits('close')
+const emit = defineEmits(['close', 'import'])
 const props = defineProps({
   visible: {
     type: Boolean,

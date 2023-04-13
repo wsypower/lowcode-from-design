@@ -2,12 +2,16 @@
   <el-scrollbar class="side-scroll-bar" :style="{ height: scrollerHeight }">
     <div>
       <el-tabs v-model="currentTab" class="tabs-wrap">
-        <el-tab-pane name="componentLib">
+        <el-tab-pane v-for="tab in tabs" :name="tab.name">
           <template #label>
-            <span><svg-icon icon-class="widget-lib" />组件库</span>
+            <span>{{ tab.label }}</span>
           </template>
-          <el-collapse v-model="activeNames" class="widget-collapse">
-            <template v-for="item in widgetsDataArr" :key="item.typeValue">
+          <el-collapse
+            v-loading="!loaded"
+            v-model="tab.currentCollapse"
+            class="widget-collapse"
+          >
+            <template v-for="item in tab.widgetsList" :key="item.typeValue">
               <el-collapse-item
                 v-if="item.list.length"
                 :name="item.typeValue"
@@ -30,7 +34,7 @@
                   <template #item="{ element: elem }">
                     <li
                       class="container-widget-item"
-                      :title="elem.displayName"
+                      :title="elem.label"
                       @dblclick="
                         item.isContainer
                           ? addContainerByDbClick(elem)
@@ -41,12 +45,7 @@
                         :icon-class="elem.icon"
                         class-name="widget-icon"
                       />
-                      <span>{{
-                        i18n2t(
-                          `designer.widgetLabel.${elem.type}`,
-                          `extension.widgetLabel.${elem.type}`
-                        )
-                      }}</span>
+                      <span>{{ elem.options.label }}</span>
                     </li>
                   </template>
                 </draggable>
@@ -65,12 +64,11 @@ import {
   containers as CONS,
   basicFields as BFS,
   advancedFields as AFS,
-  customFields as CFS,
-  containers,
+  basicFieldsConfig,
 } from './widgetsConfig'
-import { addWindowResizeHandler, generateId } from '@/utils/util'
+import { customFields } from './customWidgetsConfig'
+import { addWindowResizeHandler, generateId, deepClone } from '@/utils/util'
 import i18n from '@/utils/i18n'
-import TypeEditor from '../setting-panel/property-editor/type-editor.vue'
 
 export default {
   name: 'FieldPanel',
@@ -84,28 +82,42 @@ export default {
   inject: ['getBannedWidgets', 'getDesignerConfig'],
   data() {
     return {
+      loaded: false,
       designerConfig: this.getDesignerConfig(),
 
-      currentTab: 'componentLib',
+      tabs: [
+        {
+          // 基础组件
+          name: 'basicWidgets',
+          label: '基础组件',
+          widgetsList: [],
+          currentCollapse: [],
+        },
+      ],
+      currentTab: 'basicWidgets',
 
       scrollerHeight: 0,
 
-      activeNames: ['1', '2', '3', '4'],
-
-      containers: [],
-      basicFields: [],
-      advancedFields: [],
+      // 自定义组件
       customFields: [],
-
-      // 分类组件数据
-      widgetsDataArr: [],
     }
   },
   created() {
-    this.loadWidgets()
+    this.initBasicWidgets()
+    this.getCustomWidgets().then((res) => {
+      this.tabs.unshift({
+        name: 'customWidgets',
+        label: '自定义组件',
+        widgetsList: res,
+        currentCollapse: res[0].typeValue,
+      })
+      this.currentTab = this.tabs[0].name
+      this.loaded = true
+    })
   },
   mounted() {
     this.scrollerHeight = window.innerHeight - 48 + 'px'
+
     addWindowResizeHandler(() => {
       this.$nextTick(() => {
         this.scrollerHeight = window.innerHeight - 48 + 'px'
@@ -113,88 +125,89 @@ export default {
     })
   },
   methods: {
-    isBanned(wName) {
-      return this.getBannedWidgets().indexOf(wName) > -1
-    },
-
-    loadWidgets() {
-      this.containers = CONS.map((con) => {
+    initBasicWidgets() {
+      const containers = CONS.map((con) => {
         return {
           key: generateId(),
           ...con,
-          displayName: this.i18n2t(
-            `designer.widgetLabel.${con.type}`,
-            `extension.widgetLabel.${con.type}`
-          ),
         }
       }).filter((con) => {
         return !con.internal && !this.isBanned(con.type)
       })
 
-      this.basicFields = BFS.map((fld) => {
+      const basicFields = BFS.map((fld) => {
         return {
           key: generateId(),
           ...fld,
-          displayName: this.i18n2t(
-            `designer.widgetLabel.${fld.type}`,
-            `extension.widgetLabel.${fld.type}`
-          ),
         }
       }).filter((fld) => {
         return !this.isBanned(fld.type)
       })
 
-      this.advancedFields = AFS.map((fld) => {
+      const advancedFields = AFS.map((fld) => {
         return {
           key: generateId(),
           ...fld,
-          displayName: this.i18n2t(
-            `designer.widgetLabel.${fld.type}`,
-            `extension.widgetLabel.${fld.type}`
-          ),
         }
       }).filter((fld) => {
         return !this.isBanned(fld.type)
       })
 
-      this.customFields = CFS.map((fld) => {
-        return {
-          key: generateId(),
-          ...fld,
-          displayName: this.i18n2t(
-            `designer.widgetLabel.${fld.type}`,
-            `extension.widgetLabel.${fld.type}`
-          ),
-        }
-      }).filter((fld) => {
-        return !this.isBanned(fld.type)
-      })
-
-      this.widgetsDataArr = [
+      this.tabs[0].widgetsList = [
         {
           typeValue: '1',
           typeLabel: '容器',
-          list: this.containers,
+          list: containers,
           isContainer: true,
         },
         {
           typeValue: '2',
           typeLabel: '基础字段',
-          list: this.basicFields,
+          list: basicFields,
         },
         {
           typeValue: '3',
           typeLabel: '高级字段',
-          list: this.advancedFields,
-        },
-        {
-          typeValue: '4',
-          typeLabel: 'customFields',
-          list: this.customFields,
+          list: advancedFields,
         },
       ]
+      this.tabs[0].currentCollapse = ['1']
     },
 
+    getCustomWidgets() {
+      return new Promise((resolve) => {
+        const fields = customFields.map((category) => {
+          const list = category.list.map((item) => {
+            const { type } = item
+            const fieldConfig = basicFieldsConfig[type]
+
+            if (!fieldConfig) {
+              return item
+            }
+
+            return {
+              ...fieldConfig,
+              ...item,
+              options: {
+                ...fieldConfig.options,
+                ...item.options,
+              },
+            }
+          })
+
+          return {
+            ...category,
+            list,
+          }
+        })
+
+        resolve(fields)
+      })
+    },
+
+    isBanned(wName) {
+      return this.getBannedWidgets().indexOf(wName) > -1
+    },
     handleContainerWidgetClone(origin) {
       return this.designer.copyNewContainerWidget(origin)
     },

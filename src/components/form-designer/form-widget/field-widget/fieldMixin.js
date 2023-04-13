@@ -31,7 +31,7 @@ export default {
     },
 
     widgetSize() {
-      return this.field.options.size
+      return this.field.options.size || 'default'
     },
 
     subFormName() {
