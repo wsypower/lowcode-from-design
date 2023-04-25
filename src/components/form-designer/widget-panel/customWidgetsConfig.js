@@ -1,6 +1,6 @@
 export const customFields = [
   {
-    typeValue: '111',
+    // typeValue: '111',
     typeLabel: '人',
     list: [
       {
@@ -34,8 +34,6 @@ export const customFields = [
         options: {
           label: '性别',
           name: 'gender',
-          // labelKey: 'label',
-          // valueKey: 'value',
           optionItems: [
             { label: '男', value: '1' },
             { label: '女', value: '2' },
@@ -123,7 +121,7 @@ export const customFields = [
     ],
   },
   {
-    typeValue: '222',
+    // typeValue: '222',
     typeLabel: '部门',
     list: [
       {

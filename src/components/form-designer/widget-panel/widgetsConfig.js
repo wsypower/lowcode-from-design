@@ -721,7 +721,7 @@ export const basicFieldsConfig = {
     formItemFlag: true,
     options: {
       name: '',
-      label: '',
+      label: '日期',
       labelAlign: '',
       type: 'date',
       format: 'YYYY-MM-DD', //日期显示格式
@@ -873,6 +873,7 @@ export const basicFieldsConfig = {
     formItemFlag: false,
     options: {
       name: '',
+      label: '静态文字',
       columnWidth: '200px',
       hidden: false,
       textContent: '静态文字',
@@ -889,6 +890,7 @@ export const basicFieldsConfig = {
     formItemFlag: false,
     options: {
       name: '',
+      label: 'HTML',
       columnWidth: '200px',
       hidden: false,
       htmlContent: '<b>html 文本</b>',

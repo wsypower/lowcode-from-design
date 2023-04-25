@@ -11,10 +11,10 @@
             v-model="tab.currentCollapse"
             class="widget-collapse"
           >
-            <template v-for="item in tab.widgetsList" :key="item.typeValue">
+            <template v-for="(item, index) in tab.widgetsList" :key="index">
               <el-collapse-item
                 v-if="item.list.length"
-                :name="item.typeValue"
+                :name="item.typeLabel"
                 :title="item.typeLabel"
               >
                 <draggable
@@ -107,9 +107,9 @@ export default {
     this.getCustomWidgets().then((res) => {
       this.tabs.unshift({
         name: 'customWidgets',
-        label: '自定义组件',
+        label: '业务组件',
         widgetsList: res,
-        currentCollapse: res[0].typeValue,
+        currentCollapse: res[0].typeLabel,
       })
       this.currentTab = this.tabs[0].name
       this.loaded = true
@@ -155,23 +155,20 @@ export default {
 
       this.tabs[0].widgetsList = [
         {
-          typeValue: '1',
           typeLabel: '容器',
           list: containers,
           isContainer: true,
         },
         {
-          typeValue: '2',
           typeLabel: '基础字段',
           list: basicFields,
         },
         {
-          typeValue: '3',
           typeLabel: '高级字段',
           list: advancedFields,
         },
       ]
-      this.tabs[0].currentCollapse = ['1']
+      this.tabs[0].currentCollapse = ['容器', '基础字段']
     },
 
     getCustomWidgets() {
