@@ -105,13 +105,12 @@ export default {
   created() {
     this.initBasicWidgets()
     this.getCustomWidgets().then((res) => {
-      this.tabs.unshift({
+      this.tabs.push({
         name: 'customWidgets',
         label: '业务组件',
         widgetsList: res,
-        currentCollapse: res[0].typeLabel,
+        currentCollapse: res.map((item) => item.typeLabel),
       })
-      this.currentTab = this.tabs[0].name
       this.loaded = true
     })
   },
@@ -168,7 +167,7 @@ export default {
           list: advancedFields,
         },
       ]
-      this.tabs[0].currentCollapse = ['容器', '基础字段']
+      this.tabs[0].currentCollapse = ['容器', '基础字段', '高级字段']
     },
 
     getCustomWidgets() {
