@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import axios from 'axios'
 import App from './App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -16,10 +15,6 @@ import VFormRender from '@/components/form-render/index'
 import { addDirective } from '@/utils/directive'
 import { installI18n } from '@/utils/i18n'
 // import { loadExtension } from '@/extension/extension-loader'
-
-if (typeof window !== 'undefined') {
-  window.axios = axios
-}
 
 const vfApp = createApp(App)
 

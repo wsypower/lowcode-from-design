@@ -70,9 +70,6 @@ export default {
       return !!this.getDesignerConfig().widgetNameReadonly
     },
   },
-  mounted() {
-    console.log(222, this.optionModel)
-  },
   methods: {
     updateWidgetNameAndRef(newName) {
       let oldName = this.designer.selectedWidgetName

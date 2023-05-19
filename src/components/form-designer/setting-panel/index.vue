@@ -324,7 +324,6 @@ export default {
   },
   created() {
     this.on$('editEventHandler', (eventParams) => {
-      //debugger
       this.editEventHandler(eventParams[0], eventParams[1])
     })
 
@@ -421,8 +420,6 @@ export default {
     },
 
     editEventHandler(eventName, eventParams) {
-      //debugger
-
       this.curEventName = eventName
       this.eventHeader = `${
         this.optionModel.name

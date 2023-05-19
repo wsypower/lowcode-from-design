@@ -1,6 +1,5 @@
 export const customFields = [
   {
-    // typeValue: '111',
     typeLabel: '人',
     list: [
       {
@@ -120,8 +119,8 @@ export const customFields = [
       },
     ],
   },
+
   {
-    // typeValue: '222',
     typeLabel: '部门',
     list: [
       {
@@ -137,6 +136,36 @@ export const customFields = [
         options: {
           name: 'deptDesc',
           label: '部门职能',
+        },
+      },
+
+      {
+        type: 'picture-upload',
+        options: {
+          name: 'deptImgs',
+          label: '部门风采',
+          multipleSelect: false,
+          showFileList: true,
+          uploadURL: '',
+          uploadTip: '',
+          limit: 5,
+          fileMaxSize: 5, //MB
+          fileTypes: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+        },
+      },
+
+      {
+        type: 'file-upload',
+        options: {
+          name: 'deptDoc',
+          label: '员工手册',
+          multipleSelect: false,
+          showFileList: true,
+          uploadURL: '',
+          uploadTip: '',
+          limit: 2,
+          fileMaxSize: 5, //MB
+          fileTypes: ['doc', 'docx', 'xls', 'xlsx', 'pdf', 'txt'],
         },
       },
     ],

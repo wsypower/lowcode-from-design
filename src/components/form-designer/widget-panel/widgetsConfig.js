@@ -478,7 +478,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       minLength: null,
       maxLength: null,
@@ -524,7 +524,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       minLength: 0,
       maxLength: 100000000,
@@ -562,7 +562,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       min: -100000000000,
       max: 100000000000,
@@ -612,7 +612,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -655,7 +655,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -703,7 +703,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -745,7 +745,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -787,7 +787,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -816,7 +816,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       switchWidth: 40,
       activeText: '',
@@ -852,7 +852,7 @@ export const basicFieldsConfig = {
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       min: 0,
       max: 100,
@@ -1049,7 +1049,7 @@ export const advancedFields = [
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -1092,7 +1092,7 @@ export const advancedFields = [
       //-------------------
       customClass: '', //自定义css类名
       labelIcon: null,
-      labelIconPosition: 'rear',
+      labelIconPosition: 'front',
       labelTooltip: null,
       //-------------------
       onCreated: '',
@@ -1127,7 +1127,7 @@ export const advancedFields = [
   //     //-------------------
   //     customClass: '', //自定义css类名
   //     labelIcon: null,
-  //     labelIconPosition: 'rear',
+  //     labelIconPosition: 'front',
   //     labelTooltip: null,
   //     minLength: null,
   //     maxLength: null,
@@ -1179,7 +1179,7 @@ export const advancedFields = [
   //     //-------------------
   //     customClass: '', //自定义css类名
   //     labelIcon: null,
-  //     labelIconPosition: 'rear',
+  //     labelIconPosition: 'front',
   //     labelTooltip: null,
   //     //-------------------
   //     onCreated: '',

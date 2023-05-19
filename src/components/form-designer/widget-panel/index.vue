@@ -7,45 +7,58 @@
             <span>{{ tab.label }}</span>
           </template>
           <el-collapse
-            v-loading="!loaded"
             v-model="tab.currentCollapse"
             class="widget-collapse"
+            v-loading="tab.name === 'business' && !fieldGroupLoaded"
           >
-            <template v-for="(item, index) in tab.widgetsList" :key="index">
+            <template
+              v-for="(fieldGroup, groupIdx) in tab.fieldGroupList"
+              :key="groupIdx"
+            >
               <el-collapse-item
-                v-if="item.list.length"
-                :name="item.typeLabel"
-                :title="item.typeLabel"
+                :name="fieldGroup.name"
+                :title="fieldGroup.name"
+                @click="loadFieldList(fieldGroup)"
               >
                 <draggable
                   tag="ul"
-                  :list="item.list"
+                  v-if="fieldGroup.fieldList?.length"
+                  :list="fieldGroup.fieldList"
                   item-key="key"
                   :group="{ name: 'dragGroup', pull: 'clone', put: false }"
                   ghost-class="ghost"
                   :sort="false"
-                  :move="item.isContainer ? checkContainerMove : checkFieldMove"
+                  :move="
+                    fieldGroup.isContainer ? checkContainerMove : checkFieldMove
+                  "
                   :clone="
-                    item.isContainer
+                    fieldGroup.isContainer
                       ? handleContainerWidgetClone
                       : handleFieldWidgetClone
                   "
                 >
-                  <template #item="{ element: elem }">
+                  <template #item="{ element: field }">
                     <li
                       class="container-widget-item"
-                      :title="elem.label"
-                      @dblclick="
-                        item.isContainer
-                          ? addContainerByDbClick(elem)
-                          : addFieldByDbClick(elem)
+                      :title="field.label || field.options?.label"
+                      @dblclick.stop="
+                        fieldGroup.isContainer
+                          ? addContainerByDbClick(field)
+                          : addFieldByDbClick(field)
                       "
                     >
+                      <el-icon
+                        v-if="field.icon.startsWith('ElIcon')"
+                        class="widget-icon"
+                      >
+                        <component :is="field.icon.slice(6)" />
+                      </el-icon>
                       <svg-icon
-                        :icon-class="elem.icon"
+                        v-else
+                        :icon-class="field.icon"
                         class-name="widget-icon"
                       />
-                      <span>{{ elem.options.label }}</span>
+                      <span>{{ field.options.label }}</span>
                     </li>
                   </template>
                 </draggable>
@@ -66,9 +79,9 @@ import {
   advancedFields as AFS,
   basicFieldsConfig,
 } from './widgetsConfig'
-import { customFields } from './customWidgetsConfig'
 import { addWindowResizeHandler, generateId, deepClone } from '@/utils/util'
 import i18n from '@/utils/i18n'
+import { getFieldGroupList, getFieldList, getFieldJson } from '@/api/field'
 
 export default {
   name: 'FieldPanel',
@@ -82,19 +95,27 @@ export default {
   inject: ['getBannedWidgets', 'getDesignerConfig'],
   data() {
     return {
-      loaded: false,
       designerConfig: this.getDesignerConfig(),
+      fieldGroupList: [],
+      fieldGroupLoaded: false,
 
       tabs: [
         {
           // 基础组件
-          name: 'basicWidgets',
+          name: 'basic',
           label: '基础组件',
-          widgetsList: [],
+          fieldGroupList: [],
+          currentCollapse: [],
+        },
+        {
+          name: 'business',
+          label: '业务组件',
+          isBusiness: true,
+          fieldGroupList: [],
           currentCollapse: [],
         },
       ],
-      currentTab: 'basicWidgets',
+      currentTab: 'basic',
 
       scrollerHeight: 0,
 
@@ -102,18 +123,12 @@ export default {
       customFields: [],
     }
   },
+
   created() {
     this.initBasicWidgets()
-    this.getCustomWidgets().then((res) => {
-      this.tabs.push({
-        name: 'customWidgets',
-        label: '业务组件',
-        widgetsList: res,
-        currentCollapse: res.map((item) => item.typeLabel),
-      })
-      this.loaded = true
-    })
+    this.loadFieldGroupList()
   },
+
   mounted() {
     this.scrollerHeight = window.innerHeight - 48 + 'px'
 
@@ -123,7 +138,85 @@ export default {
       })
     })
   },
+
   methods: {
+    async loadFieldGroupList() {
+      try {
+        this.fieldGroupList = (await getFieldGroupList()) || []
+        this.tabs[1].fieldGroupList = this.fieldGroupList
+        this.tabs[1].currentCollapse = [this.fieldGroupList[0].name]
+
+        // 加载第一个字段组的字段列表
+        if (this.fieldGroupList.length) {
+          await this.loadFieldList(this.fieldGroupList[0])
+        }
+
+        this.fieldGroupLoaded = true
+      } catch (e) {
+        this.fieldGroupLoaded = true
+      }
+    },
+
+    async loadFieldList(fieldGroup) {
+      if (
+        !fieldGroup ||
+        !fieldGroup.id ||
+        fieldGroup.fieldList ||
+        fieldGroup.loaded
+      ) {
+        return
+      }
+
+      getFieldList({ categoryId: fieldGroup.id }).then((list) => {
+        const tasks = list.map((field) => this.getFieldOptions(field))
+
+        Promise.all(tasks).then((res) => {
+          fieldGroup.fieldList = res
+          fieldGroup.loaded = true
+          console.info('xxx', fieldGroup)
+        })
+      })
+    },
+
+    async getFieldOptions(field) {
+      if (!field || !field.id || field.templateJson) {
+        return
+      }
+
+      // 构造适用于前端的数据结构
+      field.type = field.widgetType
+      field.options = {
+        label: field.label,
+        labelIcon: field.icon.slice(6)
+      }
+
+      return await getFieldJson({ id: field.id }).then((options) => {
+        const fieldConfig =
+          basicFieldsConfig[field.type] || advancedFieldsConfig[field.type]
+        let ret = null
+
+        if (fieldConfig) {
+          ret = {
+            ...fieldConfig,
+            ...field,
+            options: {
+              ...fieldConfig.options,
+              ...field.options,
+              ...options,
+            },
+            // 标记为业务组件, 当属性时变更时需同步到server端
+            isBusiness: true,
+          }
+        } else {
+          ret = {
+            ...field,
+            options,
+          }
+        }
+        return ret
+      })
+    },
+
     initBasicWidgets() {
       const containers = CONS.map((con) => {
         return {
@@ -152,53 +245,22 @@ export default {
         return !this.isBanned(fld.type)
       })
 
-      this.tabs[0].widgetsList = [
+      this.tabs[0].fieldGroupList = [
         {
-          typeLabel: '容器',
-          list: containers,
+          name: '容器',
+          fieldList: containers,
           isContainer: true,
         },
         {
-          typeLabel: '基础字段',
-          list: basicFields,
+          name: '基础字段',
+          fieldList: basicFields,
         },
         {
-          typeLabel: '高级字段',
-          list: advancedFields,
+          name: '高级字段',
+          fieldList: advancedFields,
         },
       ]
       this.tabs[0].currentCollapse = ['容器', '基础字段', '高级字段']
-    },
-
-    getCustomWidgets() {
-      return new Promise((resolve) => {
-        const fields = customFields.map((category) => {
-          const list = category.list.map((item) => {
-            const { type } = item
-            const fieldConfig = basicFieldsConfig[type]
-
-            if (!fieldConfig) {
-              return item
-            }
-
-            return {
-              ...fieldConfig,
-              ...item,
-              options: {
-                ...fieldConfig.options,
-                ...item.options,
-              },
-            }
-          })
-
-          return {
-            ...category,
-            list,
-          }
-        })
-
-        resolve(fields)
-      })
     },
 
     isBanned(wName) {

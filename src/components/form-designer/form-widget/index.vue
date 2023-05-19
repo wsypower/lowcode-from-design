@@ -223,6 +223,20 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.widget-form-inner {
+  .el-form-item__label .el-icon {
+    &, svg {
+      width: 1.1em;
+      height: 1.1em;
+    }
+    & {
+      margin: 0 5px 0 0 !important;
+    }
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .container-scroll-bar {
   :deep(.el-scrollbar__wrap),

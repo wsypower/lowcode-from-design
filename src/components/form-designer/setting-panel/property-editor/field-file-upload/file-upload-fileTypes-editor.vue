@@ -39,6 +39,7 @@
           {value: 'xls', label: 'xls'},
           {value: 'docx', label: 'docx'},
           {value: 'xlsx', label: 'xlsx'},
+          {value: 'txt', label: 'txt'},
         ],
       }
     }

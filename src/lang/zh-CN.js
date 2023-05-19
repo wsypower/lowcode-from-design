@@ -239,7 +239,7 @@ export default {
       showFileList: '显示文件列表',
       limit: '最大上传数量',
       fileMaxSize: '文件大小限制(MB)',
-      fileTypes: '上传文件类型',
+      fileTypes: '文件类型限制',
       fileTypesHelp: '支持添加其他文件类型',
       headers: '上传请求头',
 

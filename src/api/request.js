@@ -21,7 +21,7 @@ service.interceptors.response.use(
      */
     const res = response.data
     if (res.code === 2 || res.code === 200) {
-      return res
+      return res.data
     }
     // failed
     return Promise.reject(res.msg)

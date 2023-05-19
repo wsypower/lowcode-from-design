@@ -692,7 +692,6 @@ export default {
   methods: {
     //表格拖动排序
     dragSort() {
-      //debugger
       const el = this.$refs.singleTable.$el.querySelectorAll(
         '.el-table__body-wrapper .el-table__body > tbody'
       )[0]

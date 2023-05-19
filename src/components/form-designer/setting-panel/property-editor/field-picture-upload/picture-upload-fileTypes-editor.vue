@@ -39,6 +39,7 @@
           {value: 'jpeg', label: 'jpeg'},
           {value: 'png', label: 'png'},
           {value: 'gif', label: 'gif'},
+          {value: 'webp', label: 'webp'},
         ],
       }
     }

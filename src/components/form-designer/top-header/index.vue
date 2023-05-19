@@ -101,43 +101,37 @@
         <svg-icon icon-class="op-code" @click="showCodeDialog"
       /></el-tooltip>
 
-      <i class="divider" style="margin-right: 0"></i>
-      <el-tooltip
-        effect="light"
-        :content="`${
-          hasWidget
-            ? isPublished
-              ? '模板发布后不可修改'
-              : '保存模板'
-            : '请先创建模板'
-        }`"
-        placement="bottom"
-      >
-        <svg-icon
-          icon-class="op-save"
-          :class-name="`upload-icon ${
-            !hasWidget || isPublished ? 'disabled' : ''
-          }`"
-          @click="saveTemplate"
-      /></el-tooltip>
-      <el-tooltip
-        effect="light"
-        :content="`${
-          formId ? (isPublished ? '模板已发布' : '发布模板') : '请先保存模板'
-        }`"
-        placement="bottom"
-      >
-        <el-icon v-if="isPublishing" class="loading-icon is-loading">
-          <Loading />
-        </el-icon>
-        <svg-icon
-          v-else
-          icon-class="op-upload"
-          :class-name="`upload-icon ${
-            !formId || isPublished ? 'disabled' : ''
-          }`"
-          @click="publishTemplate"
-      /></el-tooltip>
+      <template v-if="hasId">
+        <i class="divider" style="margin-right: 0"></i>
+        <el-tooltip effect="light" content="保存" placement="bottom">
+          <el-icon v-if="isSaving" class="loading-icon is-loading">
+            <Loading />
+          </el-icon>
+          <svg-icon
+            v-else
+            icon-class="op-save"
+            :class-name="`upload-icon ${
+              !hasWidget || isPublished ? 'disabled' : ''
+            }`"
+            @click="onSave"
+        /></el-tooltip>
+
+        <el-tooltip
+          effect="light"
+          content="发布"
+          placement="bottom"
+          v-if="isFormMode"
+        >
+          <el-icon v-if="isPublishing" class="loading-icon is-loading">
+            <Loading />
+          </el-icon>
+          <svg-icon
+            v-else
+            icon-class="op-upload"
+            :class-name="`upload-icon ${!hasWidget || isPublished ? 'disabled' : ''}`"
+            @click="publishForm"
+        /></el-tooltip>
+      </template>
 
       <!-- 调整设置面板组件尺寸 -->
       <!-- <i class="divider"></i> -->
@@ -213,7 +207,6 @@ const props = defineProps({
 
 // const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 // const settingSizes = ref(['default', 'large', 'small'])
-
 // const formSize = ref(props.designer.pcFormWidth)
 
 const { previewDialogVisible, showPreviewDialog, hidePreviewDialog } =
@@ -274,25 +267,35 @@ function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
 }
 
-// 表单模板id，保存后由后端返回，更新及上传时要携带
-const formId = ref(null)
+// 表单id
+const formId = ref('')
+// 模板id
+const templateId = ref('')
+const hasId = computed(() => !!formId.value || !!templateId.value)
+const isFormMode = computed(() => !!formId.value)
+// 是否正在保存
+const isSaving = ref(false)
+// 是否在本系统保存过（在本系统保存过后才会产生表单内容）
+const isSaved = ref(false)
 const isPublishing = ref(false)
 const isPublished = ref(false)
 
 onMounted(() => {
   formId.value = parseParam('formId')
+  templateId.value = parseParam('templateId')
+
   if (formId.value) {
-    loadTemplate()
+    loadForm()
   }
 })
 
-function loadTemplate() {
+function loadForm() {
   axios
-    .get(`/viewMeta?id=${formId.value}`)
+    .get(`/design/viewMeta?id=${formId.value}`)
     .then((res) => {
       // 有可能url中给的id并没有匹配到模板，只有匹配到时才解析并赋值
-      if (res && res.data) {
-        props.designer.loadFormJson(JSON.parse(res.data))
+      if (res) {
+        props.designer.loadFormJson(JSON.parse(res))
       }
     })
     .catch((e) => {})
@@ -322,12 +325,22 @@ function genFormJson() {
   }
 }
 
-async function saveTemplate() {
-  if (!renderRef.value || isPublished.value) {
+async function onSave() {
+  isFormMode.value ? saveForm() : saveTempalte()
+}
+
+async function saveTempalte() {}
+
+async function saveForm() {
+  if (!renderRef.value || isPublished.value || isSaving.value) {
     return
   }
+
+  isSaving.value = true
+
   const { widgetList, formConfig } = props.designer
   const { formName, formDesc } = formConfig
+
   const templateData = {
     name: formName,
     description: formDesc,
@@ -338,23 +351,27 @@ async function saveTemplate() {
     // 表单项的值与类型
     formWidgets: await renderRef.value.getFieldWidgets(),
   }
+
   if (formId.value) {
     templateData.id = formId.value
   }
 
   // 发送请求
-  axios
-    .post('/draft', templateData)
+  return axios
+    .post('/design/draft', templateData)
     .then((res) => {
-      formId.value = res.data
+      formId.value = res
       showMsg('模板保存成功~')
+      isSaving.value = false
+      isSaved.value = true
     })
     .catch((err) => {
       showMsg(err, 'error')
+      isSaving.value = false
     })
 }
 
-function publishTemplate() {
+function publishForm() {
   if (isPublished.value || !formId.value) {
     return
   }
@@ -363,10 +380,14 @@ function publishTemplate() {
     title: '提示',
     msg: '模板发布后不可再更改，是否确认发布？',
   })
-    .then(() => {
+    .then(async () => {
+      if (!isSaved.value) {
+        await saveForm()
+      }
+
       isPublishing.value = true
       axios
-        .post(`/publish?id=${formId.value}`)
+        .post(`/design/publish?id=${formId.value}`)
         .then(() => {
           isPublishing.value = false
           isPublished.value = true
