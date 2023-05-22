@@ -28,4 +28,3 @@ export function getFieldJson(params = {}) {
     method: 'GET',
   })
 }
-

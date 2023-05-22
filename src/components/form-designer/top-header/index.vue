@@ -128,7 +128,9 @@
           <svg-icon
             v-else
             icon-class="op-upload"
-            :class-name="`upload-icon ${!hasWidget || isPublished ? 'disabled' : ''}`"
+            :class-name="`upload-icon ${
+              !hasWidget || isPublished ? 'disabled' : ''
+            }`"
             @click="publishForm"
         /></el-tooltip>
       </template>
@@ -190,6 +192,7 @@ import ImportDialog from './components/import-dialog.vue'
 import ExportDialog from './components/export-dialog.vue'
 import CodeDialog from './components/code-dialog.vue'
 import { parseParam } from '@/utils/util'
+import { getForm, saveForm, getTemplate, saveTemplate } from '@/api/template'
 
 const { showMsg, showConfirm } = useMsg()
 
@@ -267,12 +270,12 @@ function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
 }
 
-// 表单id
-const formId = ref('')
-// 模板id
-const templateId = ref('')
-const hasId = computed(() => !!formId.value || !!templateId.value)
-const isFormMode = computed(() => !!formId.value)
+// 页面是否已渲染完成，
+// 待页面渲染完后再去加载vrender，否则render会获取不到designer.widgetList
+const designerMounted = ref(false)
+// render form ref, 其getFormData()方法貌似有bug，当表单模板实时更新时，该方法得到的数据不是实时的，是上一次的
+const renderRef = ref(null)
+
 // 是否正在保存
 const isSaving = ref(false)
 // 是否在本系统保存过（在本系统保存过后才会产生表单内容）
@@ -280,34 +283,72 @@ const isSaved = ref(false)
 const isPublishing = ref(false)
 const isPublished = ref(false)
 
+const formId = ref('')
+const templateId = ref('')
+const templateInfo = ref({})
+const formJson = ref({})
+const formInfo = ref({})
+
+const hasId = computed(() => !!formId.value || !!templateId.value)
+const isFormMode = computed(() => !!formId.value)
+
 onMounted(() => {
   formId.value = parseParam('formId')
   templateId.value = parseParam('templateId')
 
   if (formId.value) {
     loadForm()
+    return
+  }
+
+  if (templateId.value) {
+    loadTemplate()
   }
 })
 
 function loadForm() {
-  axios
-    .get(`/design/viewMeta?id=${formId.value}`)
+  getForm(formId.value)
     .then((res) => {
-      // 有可能url中给的id并没有匹配到模板，只有匹配到时才解析并赋值
+      // 当id匹配到表单时才解析并赋值
       if (res) {
-        props.designer.loadFormJson(JSON.parse(res))
+        formInfo.value = res
+
+        if (!res.formJson) {
+          formInfo.value.formJson = {
+            formConfig: {
+              formName: res.name,
+              formDesc: res.description,
+            },
+          }
+        } else if (typeof res.formJson === 'string') {
+          formInfo.value.formJson = JSON.parse(res.formJson)
+        }
+        res.formJson && props.designer.loadFormJson(res.formJson)
       }
     })
-    .catch((e) => {})
+    .catch(() => {})
 }
 
-// 页面是否已渲染完成，
-// 待页面渲染完后再去加载vrender，否则render会获取不到designer.widgetList
-const designerMounted = ref(false)
-// render form ref, 其getFormData()方法貌似有bug，当表单模板实时更新时，该方法得到的数据不是实时的，是上一次的
-const renderRef = ref(null)
-// 表单json
-const formJson = ref({})
+function loadTemplate() {
+  getTemplate(templateId.value)
+    .then((res) => {
+      // 当id匹配到模板时才解析并赋值
+      if (res) {
+        templateInfo.value = res
+        const json = res.templateJson || {}
+
+        if (!json.formConfig) {
+          json.formConfig = {
+            formName: res.name,
+            formDesc: res.description,
+          }
+        }
+
+        props.designer.loadFormJson(json)
+      }
+    })
+    .catch(() => {})
+}
 
 watch(() => props.designer.widgetList, genFormJson, {
   deep: true,
@@ -326,12 +367,34 @@ function genFormJson() {
 }
 
 async function onSave() {
-  isFormMode.value ? saveForm() : saveTempalte()
+  isFormMode.value ? persistForm() : persistTempalte()
 }
 
-async function saveTempalte() {}
+async function persistTempalte() {
+  if (isSaving.value) {
+    return
+  }
 
-async function saveForm() {
+  isSaving.value = true
+
+  const { widgetList, formConfig } = props.designer
+  const data = {
+    ...templateInfo.value,
+    name: formConfig.formName,
+    description: formConfig.formDesc,
+    templateJson: {
+      widgetList,
+      formConfig,
+    },
+  }
+
+  saveTemplate(data).then(() => {
+    isSaving.value = false
+    showMsg('模板保存成功~')
+  })
+}
+
+async function persistForm() {
   if (!renderRef.value || isPublished.value || isSaving.value) {
     return
   }
@@ -341,7 +404,7 @@ async function saveForm() {
   const { widgetList, formConfig } = props.designer
   const { formName, formDesc } = formConfig
 
-  const templateData = {
+  const data = {
     name: formName,
     description: formDesc,
     formJson: {
@@ -353,12 +416,11 @@ async function saveForm() {
   }
 
   if (formId.value) {
-    templateData.id = formId.value
+    data.id = formId.value
   }
 
   // 发送请求
-  return axios
-    .post('/design/draft', templateData)
+  return saveForm(data)
     .then((res) => {
       formId.value = res
       showMsg('模板保存成功~')
