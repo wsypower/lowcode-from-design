@@ -111,7 +111,7 @@
             v-else
             icon-class="op-save"
             :class-name="`upload-icon ${
-              !hasWidget || isPublished ? 'disabled' : ''
+              !hasWidgets || isPublished ? 'disabled' : ''
             }`"
             @click="onSave"
         /></el-tooltip>
@@ -129,7 +129,7 @@
             v-else
             icon-class="op-upload"
             :class-name="`upload-icon ${
-              !hasWidget || isPublished ? 'disabled' : ''
+              !hasWidgets || isPublished ? 'disabled' : ''
             }`"
             @click="publishForm"
         /></el-tooltip>
@@ -240,7 +240,7 @@ const redoDisabled = computed(() =>
     ? !props.designer.redoEnabled()
     : false
 )
-const hasWidget = computed(() => props.designer.widgetList.length > 0)
+const hasWidgets = computed(() => props.designer.widgetList.length > 0)
 
 function undo() {
   props.designer.undoHistoryStep()
@@ -371,7 +371,7 @@ async function onSave() {
 }
 
 async function persistTempalte() {
-  if (isSaving.value) {
+  if (isSaving.value || !hasWidgets.value) {
     return
   }
 
@@ -395,7 +395,7 @@ async function persistTempalte() {
 }
 
 async function persistForm() {
-  if (!renderRef.value || isPublished.value || isSaving.value) {
+  if (!renderRef.value || !hasWidgets.value || isPublished.value || isSaving.value) {
     return
   }
 
@@ -434,7 +434,7 @@ async function persistForm() {
 }
 
 function publishForm() {
-  if (isPublished.value || !formId.value) {
+  if (isPublished.value || !formId.value || !hasWidgets.value) {
     return
   }
 
