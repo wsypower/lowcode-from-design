@@ -159,7 +159,6 @@
       :designer="designer"
       :globalDsv="globalDsv"
       @close="hideImportDialog"
-      @import="genFormJson"
     />
 
     <export-dialog
@@ -211,6 +210,9 @@ const props = defineProps({
 // const settingSize = ref(localStorage.getItem('v_form_settingSize') || 'default')
 // const settingSizes = ref(['default', 'large', 'small'])
 // const formSize = ref(props.designer.pcFormWidth)
+// function notifySettingSizeChange(size) {
+//   emit('sizeChange', size)
+// }
 
 const { previewDialogVisible, showPreviewDialog, hidePreviewDialog } =
   usePreview()
@@ -240,7 +242,7 @@ const redoDisabled = computed(() =>
     ? !props.designer.redoEnabled()
     : false
 )
-const hasWidgets = computed(() => props.designer.widgetList.length > 0)
+
 
 function undo() {
   props.designer.undoHistoryStep()
@@ -262,10 +264,6 @@ function onPhoneChange(phoneIndex) {
   props.designer.selectPhone(phoneIndex)
 }
 
-// function notifySettingSizeChange(size) {
-//   emit('sizeChange', size)
-// }
-
 function clearFormWidget() {
   props.designer && props.designer.clearDesigner()
 }
@@ -276,23 +274,35 @@ const designerMounted = ref(false)
 // render form ref, 其getFormData()方法貌似有bug，当表单模板实时更新时，该方法得到的数据不是实时的，是上一次的
 const renderRef = ref(null)
 
-// 是否正在保存
+// 是否正在持久化
 const isSaving = ref(false)
-// 是否在本系统保存过（在本系统保存过后才会产生表单内容）
-const isSaved = ref(false)
+// 是否存在未持久化的变更
+const hasUnsavedChange = ref(false)
+
+// 发布
 const isPublishing = ref(false)
 const isPublished = ref(false)
-
 const formId = ref('')
 const templateId = ref('')
 const templateInfo = ref({})
-const formJson = ref({})
 const formInfo = ref({})
 
 const hasId = computed(() => !!formId.value || !!templateId.value)
 const isFormMode = computed(() => !!formId.value)
+const hasWidgets = computed(() => props.designer.widgetList.length > 0)
+const formJson = computed(() => {
+  return {
+    widgetList: props.designer.widgetList,
+    formConfig: props.designer.formConfig,
+  }
+})
+
+watch(() => props.designer.widgetList, () => {
+  hasUnsavedChange.value = true
+}, { deep: true })
 
 onMounted(() => {
+  designerMounted.value = true
   formId.value = parseParam('formId')
   templateId.value = parseParam('templateId')
 
@@ -348,22 +358,6 @@ function loadTemplate() {
       }
     })
     .catch(() => {})
-}
-
-watch(() => props.designer.widgetList, genFormJson, {
-  deep: true,
-})
-
-onMounted(() => {
-  genFormJson()
-  designerMounted.value = true
-})
-
-function genFormJson() {
-  formJson.value = {
-    widgetList: props.designer.widgetList,
-    formConfig: props.designer.formConfig,
-  }
 }
 
 async function onSave() {
@@ -425,7 +419,7 @@ async function persistForm() {
       formId.value = res
       showMsg('模板保存成功~')
       isSaving.value = false
-      isSaved.value = true
+      hasUnsavedChange.value = false
     })
     .catch((err) => {
       showMsg(err, 'error')
@@ -443,8 +437,8 @@ function publishForm() {
     msg: '模板发布后不可再更改，是否确认发布？',
   })
     .then(async () => {
-      if (!isSaved.value) {
-        await saveForm()
+      if (hasUnsavedChange.value) {
+        await persistForm()
       }
 
       isPublishing.value = true
@@ -460,9 +454,7 @@ function publishForm() {
           showMsg(err, 'error')
         })
     })
-    .catch((err) => {
-      showMsg(err, 'error')
-    })
+    .catch(() => {})
 }
 
 // 打开渲染器，查看表单效果
