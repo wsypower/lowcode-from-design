@@ -322,6 +322,7 @@ function loadForm() {
       // 当id匹配到表单时才解析并赋值
       if (res) {
         formInfo.value = res
+        isPublished.value = res.status === '3' 
 
         if (!res.formJson) {
           formInfo.value.formJson = {
@@ -333,6 +334,7 @@ function loadForm() {
         } else if (typeof res.formJson === 'string') {
           formInfo.value.formJson = JSON.parse(res.formJson)
         }
+
         res.formJson && props.designer.loadFormJson(res.formJson)
       }
     })
