@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vite --host",
     "build": "vite build",
-    "deploy": "vite build && rsync -lahzv ./lowcode public:/opt/nginx/html/static-web",
+    "deploy": "vite build && rsync -lahzv ./lowcode public:/opt/nginx/html",
     "lib": "vite build --config vite-lib.config.js",
     "lib-render": "vite build --config vite-lib-render.config.js",
     "preview": "vite preview",
