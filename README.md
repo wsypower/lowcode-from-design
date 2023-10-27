@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 21:17:02
+ * @LastEditTime: 2023-10-27 21:30:28
  * @LastEditors: wsy
 -->
 
@@ -51,15 +51,25 @@
 
 ## 说明文档/二次开发文档
 
-[详细内容](https://lowcode-from-design.wsypower.com/)
+[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
+
+#### 文档手册简介
+
+- 快速上手
+- 应用示例
+- 产品功能描述
+- 组件接口文档
+- 设计表单流程说明
+- 使用手册
+- 二次开发文档
 
 ## 性能测试
 
-[详细内容](https://lowcode-from-design.wsypower.com/)
+[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
 
 ## 使用/部署方式说明
 
-[详细内容](https://lowcode-from-design.wsypower.com/)
+[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
 
 ## 预览
   [![license](https://github.com/wsypower/lowcode-from-design/blob/master/public/Light-2.png?raw=true)](LICENSE)
