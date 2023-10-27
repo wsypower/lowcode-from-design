@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-02-28 10:33:35
- * @LastEditTime: 2023-03-02 09:39:40
+ * @LastEditTime: 2023-10-27 14:56:36
  * @LastEditors: wsy
  */
 import { defineConfig } from 'vite'
@@ -22,7 +22,7 @@ export default defineConfig({
     vueJsx({}),
 
     //解决引入commonjs模块后打包出现的{'default' is not exported by XXX}错误!!
-    commonjs({requireReturnsDefault: true}),  /* 配置requireReturnsDefault属性，
+    commonjs({ requireReturnsDefault: true }),  /* 配置requireReturnsDefault属性，
     解决打包后引入VForm出现的"Axios is not a constructor"错！！ */
 
     //可视化Bundle
@@ -39,7 +39,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-        "@": resolve(__dirname, 'src'), // 路径别名
+      "@": resolve(__dirname, 'src'), // 路径别名
     },
     extensions: ['.js', '.vue', '.json', '.ts'] // 使用路径别名时想要省略的后缀名，可以自己 增减
   },
@@ -61,7 +61,7 @@ export default defineConfig({
     //minify: false,
     lib: {
       entry: resolve(__dirname, 'install.js'),
-      name: 'VFormDesigner',
+      name: 'lowcodeDesigner',
       fileName: (format) => `designer.${format}.js`
     },
     rollupOptions: {
