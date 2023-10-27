@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 21:30:28
+ * @LastEditTime: 2023-10-27 21:31:28
  * @LastEditors: wsy
 -->
 
@@ -51,9 +51,7 @@
 
 ## 说明文档/二次开发文档
 
-[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
-
-#### 文档手册简介
+#### 文档手册简介 [详细内容查看](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
 
 - 快速上手
 - 应用示例
