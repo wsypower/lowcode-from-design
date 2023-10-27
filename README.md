@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 21:51:56
+ * @LastEditTime: 2023-10-27 22:06:27
  * @LastEditors: wsy
 -->
 
@@ -15,6 +15,27 @@
   ![HTML5](https://img.shields.io/badge/-HTML5-red?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-blue?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-yellow?logo=javascript&logoColor=white) ![Vue](https://img.shields.io/badge/-Vue-34495e?logo=vue.js) ![Vite](https://img.shields.io/badge/-Vite-646cff?logo=vite&logoColor=white) ![Rollup](https://img.shields.io/badge/-Rollup-ef3335?logo=rollup.js&logoColor=white)
   
 </div>
+
+## 描述
+
+项目分为前后端两部分组件，需要下载安装对应的组件部分，当前组件为前端组件
+
+动态表单生成器是一个创新的低代码组件，专为快速而简便地创建、管理和定制表单而设计。通过拖拽式的界面，用户可以轻松地设计出符合业务需求的表单，无需编写任何代码。该组件提供多种字段类型和验证选项，使得创建复杂表单变得简单快捷。
+#### 组件主要特点
+- 拖拽式设计界面:
+  - 提供直观的拖拽式设计界面，使得无需编程知识的用户也能轻松创建和修改表单。
+- 多样化的字段类型:
+  - 支持文本、数字、日期、多选框、下拉列表等多种字段类型，满足不同业务场景的需求。
+- 强大的验证功能:
+  - 内置多种验证规则，确保收集到的数据准确无误。
+- 自动数据收集与管理:
+  - 提供自动数据收集和管理功能，方便用户实时查看和分析数据。
+- 高度可定制与扩展:
+  - 支持高度定制和扩展，以满足特定的业务需求。
+- 响应式设计:
+  - 具备响应式设计，确保在各种设备和屏幕尺寸上的完美显示和操作。
+- 无缝集成:
+  - 能够无缝集成到现有的系统和应用中，提高业务流程的效率和自动化程度。
 
 ## 浏览器支持情况
 
