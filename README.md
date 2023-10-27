@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 20:32:37
+ * @LastEditTime: 2023-10-27 20:40:13
  * @LastEditors: wsy
 -->
-<div align="center" style="width:100%;display: flex;justify-content:center">
+<div align="center">
   <img alt="VbenAdmin Logo" width="300" height="84" src="https://raw.githubusercontent.com/wsypower/lowcode-from-design/f69d1816e0b1477f73be4bdb3517146a95892ab6/public/logo.svg">
 
   [![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
@@ -33,3 +33,12 @@
 18. 栅格容器支持PC/Pad/H5多终端响应式布局；
 19. 内置表单模板功能，常见表单模板化、一键生成；
 20. 支持组件层次结构树视图查看；
+
+## 浏览器支持情况
+
+本地开发建议使用`Chrome 64+`浏览器,不支持`IE`浏览器
+
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                             not support                                                                                              |                                                                                              62 versions                                                                                               |                                                                                                    60 versions                                                                                                    |                                                                                                  58 versions                                                                                                  |                                                                                                last 2 versions                                                                                                |
