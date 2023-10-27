@@ -1,6 +1,6 @@
 {
   "name": "lowcode",
-  "version": "3.1.4",
+  "version": "1.0.1",
   "private": false,
   "scripts": {
     "serve": "vite --host",
