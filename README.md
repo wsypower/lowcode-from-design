@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 21:32:49
+ * @LastEditTime: 2023-10-27 21:38:44
  * @LastEditors: wsy
 -->
 
@@ -61,13 +61,11 @@
 - 使用手册
 - 二次开发文档
 
-## 性能测试
+## [性能测试](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
 
-[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
+## [使用/部署方式说明](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
 
-## 使用/部署方式说明
-
-[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
+## [更新日志](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
 
 ## 预览
   [![license](https://github.com/wsypower/lowcode-from-design/blob/master/public/Light-2.png?raw=true)](LICENSE)
