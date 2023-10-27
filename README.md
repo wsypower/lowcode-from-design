@@ -2,15 +2,17 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 20:59:41
+ * @LastEditTime: 2023-10-27 21:11:10
  * @LastEditors: wsy
 -->
 
 <br/>
 <div align="center">
-  <img alt="VbenAdmin Logo" width="300" height="84" src="https://raw.githubusercontent.com/wsypower/lowcode-from-design/f69d1816e0b1477f73be4bdb3517146a95892ab6/public/logo.svg">
+  <img alt="lowCode Logo" width="300" height="84" src="https://raw.githubusercontent.com/wsypower/lowcode-from-design/f69d1816e0b1477f73be4bdb3517146a95892ab6/public/logo.svg">
+  <br/>
 
-  [![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
+  ![HTML5](https://img.shields.io/badge/-HTML5-red?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-blue?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-yellow?logo=javascript&logoColor=white) ![Vue](https://img.shields.io/badge/-Vue-34495e?logo=vue.js) ![Vite](https://img.shields.io/badge/-Vite-646cff?logo=vite&logoColor=white) ![Rollup](https://img.shields.io/badge/-Rollup-ef3335?logo=rollup.js&logoColor=white)
+  
 </div>
 
 ## 功能一览表
