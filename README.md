@@ -2,11 +2,11 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 20:05:39
+ * @LastEditTime: 2023-10-27 20:26:15
  * @LastEditors: wsy
 -->
 <div align="center">
-<img alt="VbenAdmin Logo" width="300" height="84" src="https://docs.srdcloud.cn/file/Ee32MwL2ppsMoLA2">
+<img alt="VbenAdmin Logo" width="300" height="84" src="https://raw.githubusercontent.com/wsypower/lowcode-from-design/f69d1816e0b1477f73be4bdb3517146a95892ab6/public/logo.svg">
 
 [![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
 </div>
