@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-02-28 10:33:35
- * @LastEditTime: 2023-10-27 14:56:36
+ * @LastEditTime: 2023-10-27 15:09:00
  * @LastEditors: wsy
  */
 import { defineConfig } from 'vite'
@@ -61,7 +61,7 @@ export default defineConfig({
     //minify: false,
     lib: {
       entry: resolve(__dirname, 'install.js'),
-      name: 'lowcodeDesigner',
+      name: 'lowcode',
       fileName: (format) => `designer.${format}.js`
     },
     rollupOptions: {
