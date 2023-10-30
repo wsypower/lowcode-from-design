@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wsy
  * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-27 22:06:27
+ * @LastEditTime: 2023-10-30 14:24:29
  * @LastEditors: wsy
 -->
 
@@ -84,7 +84,7 @@
 
 ## 后台部署方式说明
 
-[详细内容](https://docs.srdcloud.cn/docs/473QyXa7ZatnnJ3w?)
+[详细内容](https://docs.srdcloud.cn/docs/m4kMLgevoxu0l6qD)
 
 
 ## 性能测试
