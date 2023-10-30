@@ -1,11 +1,3 @@
-<!--
- * @Description: 
- * @Author: wsy
- * @Date: 2023-10-27 14:38:24
- * @LastEditTime: 2023-10-30 14:24:29
- * @LastEditors: wsy
--->
-
 <br/>
 <div align="center">
   <img alt="lowCode Logo" width="300" height="84" src="https://raw.githubusercontent.com/wsypower/lowcode-from-design/f69d1816e0b1477f73be4bdb3517146a95892ab6/public/logo.svg">
@@ -18,7 +10,7 @@
 
 ## 描述
 
-项目分为前后端两部分组件，需要下载安装对应的组件部分，当前组件为前端组件
+项目分为前后端两部分组件，需要下载安装对应的组件部分，当前组件为前端组件,后端组件应搜索`lowcode-form-api`
 
 动态表单生成器是一个创新的低代码组件，专为快速而简便地创建、管理和定制表单而设计。通过拖拽式的界面，用户可以轻松地设计出符合业务需求的表单，无需编写任何代码。该组件提供多种字段类型和验证选项，使得创建复杂表单变得简单快捷。
 #### 组件主要特点
