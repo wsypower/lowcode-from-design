@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: wsy
+ * @Date: 2023-10-27 14:38:24
+ * @LastEditTime: 2023-10-30 09:34:50
+ * @LastEditors: wsy
+ */
 export default {
   render: {
 
@@ -18,7 +25,7 @@ export default {
       blankCellContent: '--',
 
       uploadError: '上传错误: ',
-      uploadExceed: '最大上传数量(${uploadLimit})已超出.',
+      uploadExceed: '最大上传数量已超出.',
       unsupportedFileType: '不支持格式: ',
       fileSizeExceed: '文件大小已超出: ',
       refNotFound: '组件未找到: ',
@@ -38,4 +45,4 @@ export default {
       nonSubFormType: '组件类型不是子表单',
     }
   }
-}
+};

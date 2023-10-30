@@ -446,4 +446,4 @@ export default {
       dsDuplicatedNameError: 'Duplicate datasource name.',
     },
   },
-}
+};

@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: wsy
+ * @Date: 2023-10-27 14:38:24
+ * @LastEditTime: 2023-10-30 09:35:22
+ * @LastEditors: wsy
+ */
 export default {
   extension: {
     widgetLabel: {
@@ -23,4 +30,4 @@ export default {
     },
 
   }
-}
+};

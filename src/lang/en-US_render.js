@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: wsy
+ * @Date: 2023-10-27 14:38:24
+ * @LastEditTime: 2023-10-30 09:34:35
+ * @LastEditors: wsy
+ */
 export default {
   render: {
 
@@ -18,7 +25,7 @@ export default {
       blankCellContent: '--',
 
       uploadError: 'Upload error: ',
-      uploadExceed: 'The maximum number(${uploadLimit}) of file uploads has been exceeded.',
+      uploadExceed: 'The maximum number of file uploads has been exceeded.',
       unsupportedFileType: 'Unsupported format: ',
       fileSizeExceed: 'File size out of limit: ',
       refNotFound: 'Ref not found: ',
@@ -38,4 +45,4 @@ export default {
       nonSubFormType: 'The type of widget don\'t match sub-form',
     }
   }
-}
+};

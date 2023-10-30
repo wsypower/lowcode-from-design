@@ -443,4 +443,4 @@ export default {
       dsDuplicatedNameError: '数据源名称重复，请修改！',
     },
   },
-}
+};
